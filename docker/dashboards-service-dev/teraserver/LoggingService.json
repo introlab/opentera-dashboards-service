@@ -1,13 +1,13 @@
 {
     "Service": {
-      "name": "DashboardsService",
-      "hostname": "dashboards-service",
-      "port": 5055,
+      "name": "LoggingService",
+      "hostname": "127.0.0.1",
+      "port": 4041,
       "debug_mode": true
     },
     "Backend": {
       "hostname": "proxy",
-      "port": 40100
+      "port": 40090
     },
     "Redis": {
       "hostname": "cache",
@@ -16,11 +16,12 @@
       "username": "",
       "password": ""
     },
-    "DashboardsService" : {
+    "Logging" : {
+      "level": "trace"
     },
     "Database": {
       "db_type": "QPSQL",
-      "name": "dashboards_service",
+      "name": "openteralogs",
       "url": "db",
       "port": 5432,
       "username": "teraagent",

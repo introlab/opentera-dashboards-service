@@ -1,0 +1,114 @@
+version: '3.8'
+#Name not working on older docker versions
+#name: dashboards-service-dev
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5452:5432'
+    volumes:
+      - db:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/create_tables.sql
+    networks:
+      - app-network-dashboards
+
+  cache:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - '6399:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/data
+    networks:
+      - app-network-dashboards
+
+  cert-generator:
+    build:
+      context: ./
+      dockerfile: ./certificates/Dockerfile
+    image: opentera-cert-generator-dashboards
+    volumes:
+      - certificates:/opentera/teraserver/python/config/certificates
+
+  proxy:
+    image: nginx
+    restart: always
+    volumes:
+      - ./nginx/opentera.conf:/etc/nginx/opentera.conf
+      - ./nginx/opentera-dahboards-service.conf:/etc/nginx/opentera-dashboards-service.conf
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - certificates:/etc/certificates
+      - nginx-logs:/etc/nginx/logs
+    depends_on:
+      - cert-generator
+    ports:
+      - '40100:40100'
+    networks:
+      - app-network-dashboards
+
+  opentera-server:
+    build:
+      context: ../../
+      dockerfile: ./docker/dashboards-service-dev/teraserver/Dockerfile
+    image: opentera-server-dashboards
+    restart: always
+    volumes:
+      - ./teraserver/TeraServerConfig.ini:/root/opentera/teraserver/python/config/TeraServerConfig.ini
+      - ./teraserver/FileTransferService.json:/root/opentera/teraserver/python/services/FileTransferService/FileTransferService.json
+      - ./teraserver/LoggingService.json:/root/opentera/teraserver/python/services/LoggingService/LoggingService.json
+      - ./teraserver/VideoRehabService.json:/root/opentera/teraserver/python/services/VideoRehabService/VideoRehabService.json
+      - files:/root/opentera/teraserver/python/services/FileTransferService/files
+      - certificates:/root/opentera/teraserver/python/config/certificates
+    ports:
+    # Debugpy port
+    - '5688:5688'
+    networks:
+      - app-network-dashboards
+    depends_on:
+      - cert-generator
+      - proxy
+      - cache
+      - db
+
+  dashboards-service:
+    build:
+      context: ../../
+      dockerfile: ./docker/dashboards-service-dev/dashboards-service/Dockerfile
+    image: dashboards-service
+    restart: always
+    volumes:
+      - ./dashboards-service/DashboardsService.json:/dashboards-service/DashboardsService.json
+      - ./dashboards-service/iceServers.json:/dashboards-service/config/iceServers.json
+      - ../../:/dashboards-service
+      - files:/dashboards-service/files
+    ports:
+    # Debugpy port (default port)
+    - '5689:5689'
+    networks:
+      - app-network-dashboards
+    depends_on:
+      - opentera-server
+
+volumes:
+  db:
+    driver: local
+
+  cache:
+    driver: local
+
+  certificates:
+    driver: local
+
+  nginx-logs:
+    driver: local
+
+  files:
+    driver: local
+
+networks:
+  app-network-dashboards:
