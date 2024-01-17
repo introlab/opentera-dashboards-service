@@ -1,0 +1,29 @@
+{
+    "Service": {
+      "name": "Dashboards-Service",
+      "hostname": "dashboards-service",
+      "port": 5055,
+      "debug_mode": true
+    },
+    "Backend": {
+      "hostname": "proxy",
+      "port": 40100
+    },
+    "Redis": {
+      "hostname": "db",
+      "port": 6379,
+      "db": 0,
+      "username": "",
+      "password": ""
+    },
+    "OMRService" : {
+    },
+    "Database": {
+      "db_type": "QPSQL",
+      "name": "omrservice",
+      "url": "db",
+      "port": 5432,
+      "username": "opentera",
+      "password": "opentera"
+    }
+  }
