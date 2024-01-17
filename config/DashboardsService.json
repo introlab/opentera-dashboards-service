@@ -1,6 +1,6 @@
 {
     "Service": {
-      "name": "Dashboards-Service",
+      "name": "DashboardsService",
       "hostname": "dashboards-service",
       "port": 5055,
       "debug_mode": true
@@ -10,7 +10,7 @@
       "port": 40100
     },
     "Redis": {
-      "hostname": "db",
+      "hostname": "cache",
       "port": 6379,
       "db": 0,
       "username": "",
@@ -20,7 +20,7 @@
     },
     "Database": {
       "db_type": "QPSQL",
-      "name": "omrservice",
+      "name": "dashboards_service",
       "url": "db",
       "port": 5432,
       "username": "opentera",
