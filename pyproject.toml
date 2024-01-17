@@ -1,0 +1,26 @@
+[project]
+name = "DashboardsService"
+version = "0.0.1"
+authors = [
+    {name = "Dominic Létourneau", email="dominic.letourneau@usherbrooke.ca"},
+    {name = "Simon Brière", email="simon.briere@usherbrooke.ca"}
+]
+description = "Dashboards Service for OpenTera"
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+]
+
+# Add dependencies
+dynamic = ["dependencies"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+# Add pylint configuration
+# https://pylint.readthedocs.io/en/latest/user_guide/run.html#command-line-options
+[tool.pylint]
+disable = ["missing-docstring", "missing-class-docstring", "missing-function-docstring", "invalid-name"]
+format = {max-line-length = 120}
