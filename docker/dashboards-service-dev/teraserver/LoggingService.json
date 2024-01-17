@@ -7,7 +7,7 @@
     },
     "Backend": {
       "hostname": "proxy",
-      "port": 40090
+      "port": 40100
     },
     "Redis": {
       "hostname": "cache",

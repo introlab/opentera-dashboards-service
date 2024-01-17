@@ -7,7 +7,7 @@
 	},
 	"Backend": {
 		"hostname": "proxy",
-		"port": 40090
+		"port": 40100
 	},
 	"Redis": {
 	    "hostname": "cache",
@@ -18,7 +18,7 @@
 	},
 	"WebRTC": {
 	    "hostname": "127.0.0.1",
-	    "external_port": 40090,
+	    "external_port": 40100,
 	    "local_base_port": 8080,
 	    "max_sessions": 50,
 	    "working_directory": "../../../easyrtc",
