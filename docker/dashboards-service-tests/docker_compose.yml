@@ -18,6 +18,7 @@ services:
     restart: always
     ports:
       - '40100:40100'
+      - '5055:5055'
     networks:
       - app-network-dashboards-tests
     depends_on:

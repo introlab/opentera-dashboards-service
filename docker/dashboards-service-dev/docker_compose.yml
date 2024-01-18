@@ -75,24 +75,24 @@ services:
       - cache
       - db
 
-  dashboards-service:
-    build:
-      context: ../../
-      dockerfile: ./docker/dashboards-service-dev/dashboards-service/Dockerfile
-    image: dashboards-service
-    restart: always
-    volumes:
-      - ./dashboards-service/DashboardsService.json:/dashboards-service/DashboardsService.json
-      - ./dashboards-service/iceServers.json:/dashboards-service/config/iceServers.json
-      - ../../:/dashboards-service
-      - files:/dashboards-service/files
-    ports:
-    # Debugpy port (default port)
-    - '5689:5689'
-    networks:
-      - app-network-dashboards
-    depends_on:
-      - opentera-server
+  #dashboards-service:
+  #  build:
+  #    context: ../../
+  #    dockerfile: ./docker/dashboards-service-dev/dashboards-service/Dockerfile
+  #  image: dashboards-service
+  #  restart: always
+  #  volumes:
+  #    - ./dashboards-service/DashboardsService.json:/dashboards-service/DashboardsService.json
+  #    - ./dashboards-service/iceServers.json:/dashboards-service/config/iceServers.json
+  #    - ../../:/dashboards-service
+  #    - files:/dashboards-service/files
+  #  ports:
+  #  # Debugpy port (default port)
+  #  - '5689:5689'
+  #  networks:
+  #    - app-network-dashboards
+  #  depends_on:
+  #    - opentera-server
 
 volumes:
   db:

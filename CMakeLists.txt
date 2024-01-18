@@ -4,16 +4,52 @@ project(opentera_dashboards_service)
 
 
 if(NOT CMAKE_BUILD_TYPE )
-  MESSAGE(STATUS "undefined build type, set to release" )
-  set(CMAKE_BUILD_TYPE Release )
+    MESSAGE(STATUS "undefined build type, set to release" )
+    set(CMAKE_BUILD_TYPE Release )
 elseif(NOT (${CMAKE_BUILD_TYPE} STREQUAL "Release" OR ${CMAKE_BUILD_TYPE} STREQUAL "Debug" ))
-  message(FATAL_ERROR "CMAKE_BUILD_TYPE must be either Release or Debug")
+    message(FATAL_ERROR "CMAKE_BUILD_TYPE must be either Release or Debug")
 endif()
 
 # Make sure venv is installed first
 if(NOT PYTHON_ENV_DIRECTORY)
-  MESSAGE(STATUS, "Python env directory not specified, using default : ${CMAKE_CURRENT_SOURCE_DIR}/venv")
-  set(PYTHON_ENV_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/venv)
+    set(PYTHON_VERSION 3.11)
+
+    MESSAGE(STATUS, "Python env directory not specified, using default : ${CMAKE_CURRENT_SOURCE_DIR}/venv")
+    set(PYTHON_ENV_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/venv)
+
+    # Create venv with conda
+    if(WIN32)
+        set(conda_executable "conda.bat")
+    else(WIN32)
+        set(conda_executable "conda")
+    endif(WIN32)
+
+    # Check if conda is installed
+    find_program(CONDA_EXECUTABLE ${conda_executable})
+    if(NOT CONDA_EXECUTABLE)
+        message(FATAL_ERROR "conda executable not found, please install conda and try again")
+    else(NOT CONDA_EXECUTABLE)
+        message(STATUS "conda executable found : ${CONDA_EXECUTABLE}")
+    endif(NOT CONDA_EXECUTABLE)
+
+    # Check if venv exists
+    if(NOT EXISTS ${PYTHON_ENV_DIRECTORY})
+        message(STATUS "Creating python virtual environment in ${PYTHON_ENV_DIRECTORY}")
+        execute_process(COMMAND ${CONDA_EXECUTABLE} install -m -c anaconda -y -p ${PYTHON_ENV_DIRECTORY} python=${PYTHON_VERSION})
+    else(NOT EXISTS ${PYTHON_ENV_DIRECTORY})
+        message(STATUS "Python virtual environment already exists in ${PYTHON_ENV_DIRECTORY}")
+    endif(NOT EXISTS ${PYTHON_ENV_DIRECTORY})
+
+    # Set Python executable
+    if(WIN32)
+        set(PYTHON_EXECUTABLE ${PYTHON_ENV_DIRECTORY}/bin/python.exe)
+    else(WIN32)
+        set(PYTHON_EXECUTABLE ${PYTHON_ENV_DIRECTORY}/bin/python)
+    endif(WIN32)
+
+    # Install requirements
+    message(STATUS "Installing python requirements")
+    execute_process(COMMAND ${PYTHON_EXECUTABLE} -m pip install -r ${CMAKE_CURRENT_SOURCE_DIR}/requirements.txt)
 endif()
 
 
