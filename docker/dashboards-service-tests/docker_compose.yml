@@ -1,0 +1,46 @@
+version: '3.8'
+#Name not working on older docker versions
+#name: dashboards-service-dev
+services:
+  cache:
+    image: redis:7.2-alpine
+    restart: always
+    ports:
+      - '6399:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    networks:
+      -  app-network-dashboards-tests
+
+  proxy:
+    build:
+      dockerfile: ./nginx/Dockerfile
+    image: opentera-proxy-dashboards-tests
+    restart: always
+    ports:
+      - '40100:40100'
+    networks:
+      - app-network-dashboards-tests
+    depends_on:
+      - opentera-server
+
+  opentera-server:
+    build:
+      dockerfile: ./teraserver/Dockerfile
+    image: opentera-server-dashboards-tests
+    restart: always
+    volumes:
+      - ./teraserver/TeraServerConfig.ini:/root/opentera/teraserver/python/config/TeraServerConfig.ini
+      - ./teraserver/FileTransferService.json:/root/opentera/teraserver/python/services/FileTransferService/FileTransferService.json
+      - ./teraserver/LoggingService.json:/root/opentera/teraserver/python/services/LoggingService/LoggingService.json
+      - ./teraserver/VideoRehabService.json:/root/opentera/teraserver/python/services/VideoRehabService/VideoRehabService.json
+
+    ports:
+    # Debugpy port
+    - '5688:5688'
+    networks:
+      - app-network-dashboards-tests
+    depends_on:
+      - cache
+
+networks:
+  app-network-dashboards-tests:
