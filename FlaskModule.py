@@ -141,15 +141,14 @@ authorizations = {
 }
 
 # API
-# TODO: Update API title and description according to service
 api = CustomAPI(flask_app, version='1.0.0', title='OMRService API',
-                description='OMRService API Documentation', doc='/doc', prefix='/api',
+                description='DasiboardsService API Documentation', doc='/doc', prefix='/api',
                 authorizations=authorizations)
 
-# Namespaces (will be routed to /omr/api/)
-service_api_ns = api.namespace('', description='API for service') #TODO Better identifie this api
-user_api_ns = api.namespace('user', description='API for user calls')
-participant_api_ns = api.namespace('participant', description='API for participant calls')
+# Namespaces (will be routed to /dashboards/api/)
+service_api_ns = api.namespace('', description='Service API for Dashboards Services')
+user_api_ns = api.namespace('user', description='User API for Dashboards Services')
+participant_api_ns = api.namespace('participant', description='Participant API for Dashboards Services')
 
 
 class FlaskModule(BaseModule):
@@ -173,10 +172,9 @@ class FlaskModule(BaseModule):
         flask_app.config.update({'BABEL_DEFAULT_LOCALE': 'fr'})
         flask_app.config.update({'SESSION_COOKIE_SECURE': True})
 
-        flask_app.config.update({'UPLOAD_FOLDER': config.specific_service_config['files_directory']})
 
         # Init API
-        self.init_api(self, self.service, service_api_ns)
+        self.init_service_api(self, self.service, service_api_ns)
         self.init_user_api(self, self.service, user_api_ns)
         self.init_participant_api(self, self.service, participant_api_ns)
 
@@ -226,79 +224,22 @@ class FlaskModule(BaseModule):
         pass
 
     @staticmethod
-    def init_api(module: object, service: object, api_ns=service_api_ns, additional_args=dict()):
+    def init_service_api(module: object, service: object, api_ns=service_api_ns, additional_args={}):
         # Default arguments
         kwargs = {'flaskModule': module, 'service': service} | additional_args
-        from API.QueryAssetFileInfos import QueryAssetFileInfos
-        from API.QueryAssetFile import QueryAssetFile
-        from API.QueryVersion import QueryVersion
-        from API.QueryStartSession import QueryStartSession
-        from API.QueryStopSession import QueryStopSession
-
-
-        # Those 2 APIs are required for any service that support assets
-        api_ns.add_resource(QueryAssetFileInfos,    '/assets/infos', resource_class_kwargs=kwargs)
-        api_ns.add_resource(QueryAssetFile,         '/assets', resource_class_kwargs=kwargs)
-
-        # Version API - general information about the service
-        api_ns.add_resource(QueryVersion,           '/version', resource_class_kwargs=kwargs)
-
-        # Sessions
-        api_ns.add_resource(QueryStartSession,      '/start_session', resource_class_kwargs=kwargs)
-        api_ns.add_resource(QueryStopSession,       '/stop_session', resource_class_kwargs=kwargs)
 
 
     @staticmethod
-    def init_user_api(module: object, service: object, api_ns=user_api_ns, additional_args=dict()):
+    def init_user_api(module: object, service: object, api_ns=user_api_ns, additional_args={}):
         # Default arguments
         kwargs = {'flaskModule': module, 'service': service} | additional_args
 
-        from API.User.UserQueryOmrParticipant import UserQueryOmrParticipant
-        from API.User.UserQueryOmrParticipantPhone import UserQueryOmrParticipantPhone
-        from API.User.UserQueryOmrParticipantCheckup import UserQueryOmrParticipantCheckup
-        from API.User.UserQueryOmrParticipantProtocol import UserQueryOmrParticipantProtocol
-        from API.User.UserQueryOmrProtocolExercise import UserQueryOmrProtocolExercise
-
-        # Participants
-        api_ns.add_resource(UserQueryOmrParticipant, '/omr_participant', resource_class_kwargs=kwargs)
-
-        # Participant's Phone(s)
-        api_ns.add_resource(UserQueryOmrParticipantPhone, '/omr_participant_phone', resource_class_kwargs=kwargs)
-
-        # Participant's Checkups
-        api_ns.add_resource(UserQueryOmrParticipantCheckup, '/omr_checkup', resource_class_kwargs=kwargs)
-
-        # Participant's Protocols
-        api_ns.add_resource(UserQueryOmrParticipantProtocol, '/omr_participant_protocol', resource_class_kwargs=kwargs)
-
-        # Protocol's exercises
-        api_ns.add_resource(UserQueryOmrProtocolExercise, '/omr_protocol_exercise', resource_class_kwargs=kwargs)
 
     @staticmethod
-    def init_participant_api(module: object, service: object, api_ns=participant_api_ns, additional_args=dict()):
+    def init_participant_api(module: object, service: object, api_ns=participant_api_ns, additional_args={}):
         # Default arguments
         kwargs = {'flaskModule': module, 'service': service} | additional_args
 
-        from API.Participant.ParticipantQueryOmrParticipant import ParticipantQueryOmrParticipant
-        from API.Participant.ParticipantQueryOmrParticipantPhone import ParticipantQueryOmrParticipantPhone
-        from API.Participant.ParticipantQueryOmrParticipantCheckup import ParticipantQueryOmrParticipantCheckup
-        from API.Participant.ParticipantQueryOmrParticipantProtocol import ParticipantQueryOmrParticipantProtocol
-        from API.Participant.ParticipantQueryOmrProtocolExercise import ParticipantQueryOmrProtocolExercise
-
-        # Participants
-        api_ns.add_resource(ParticipantQueryOmrParticipant, '/omr_participant', resource_class_kwargs=kwargs)
-
-        # Participant's Phone(s)
-        api_ns.add_resource(ParticipantQueryOmrParticipantPhone, '/omr_participant_phone', resource_class_kwargs=kwargs)
-
-        # Participant's Checkups
-        api_ns.add_resource(ParticipantQueryOmrParticipantCheckup, '/omr_checkup', resource_class_kwargs=kwargs)
-
-        # Participant's Protocols
-        api_ns.add_resource(ParticipantQueryOmrParticipantProtocol, '/omr_participant_protocol', resource_class_kwargs=kwargs)
-
-        # Protocol's exercises
-        api_ns.add_resource(ParticipantQueryOmrProtocolExercise, '/omr_protocol_exercise', resource_class_kwargs=kwargs)
 
 
     def init_views(self):
@@ -306,16 +247,6 @@ class FlaskModule(BaseModule):
         args = []
         kwargs = {'flaskModule': self}
 
-        # Default view
-        from views.Index import Index
-        from views.Doctor import Doctor
-        from views.Patient import Patient
-        from views.Kine import Kine
-        flask_app.add_url_rule('/', view_func=Index.as_view('index', *args, **kwargs))
-        flask_app.add_url_rule('/patient', view_func=Patient.as_view('patient', *args, **kwargs))
-        flask_app.add_url_rule('/doctor', view_func=Doctor.as_view('doctor', *args, **kwargs))
-        flask_app.add_url_rule('/kine', view_func=Kine.as_view('kine', *args, **kwargs))
-        # TODO Define any view you might be using here
 
 @flask_app.errorhandler(404)
 def page_not_found(e):

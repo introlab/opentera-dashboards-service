@@ -1,0 +1,29 @@
+{
+    "Service": {
+      "name": "DashboardsService",
+      "hostname": "127.0.0.1",
+      "port": 5055,
+      "debug_mode": true
+    },
+    "Backend": {
+      "hostname": "127.0.0.1",
+      "port": 40100
+    },
+    "Redis": {
+      "hostname": "127.0.0.1",
+      "port": 6399,
+      "db": 0,
+      "username": "",
+      "password": ""
+    },
+    "DashboardsService" : {
+    },
+    "Database": {
+      "db_type": "QPSQL",
+      "name": "dashboards_service",
+      "url": "127.0.0.1",
+      "port": 5452,
+      "username": "teraagent",
+      "password": "tera"
+    }
+  }

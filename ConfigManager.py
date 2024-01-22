@@ -8,13 +8,11 @@ class DashboardsServiceConfig:
         pass
 
     def validate_specific_service_config(self, config: dict):
-        # TODO: Create an entry specific for that service in the json config file and properly manage here the settings
-        #  For now, only "files_directory" which will hold the files is defined.
         if 'DashboardsService' in config:
-            required_fields = ['files_directory']
+            required_fields = []
             for field in required_fields:
                 if field not in config['DashboardsService']:
-                    print('ERROR: OMRService Config - missing field :' + field)
+                    print('ERROR: DashboardsService Config - missing field :' + field)
                     return False
 
             # Every field is present, update configuration
