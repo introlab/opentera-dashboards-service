@@ -12,8 +12,8 @@ Window {
     visible: true
     title: "DashboardsViewer"
 
-    Screen01 {
-        id: mainScreen
+    LoginForm {
+        id: loginForm
     }
 
     InputPanel {
@@ -26,8 +26,8 @@ Window {
                 easing.type: Easing.InOutQuad
             }
         }
-        anchors.leftMargin: Constants.width/10
-        anchors.rightMargin: Constants.width/10
+        anchors.leftMargin: parent.width/10
+        anchors.rightMargin: parent.width/10
         anchors.left: parent.left
         anchors.right: parent.right
     }
