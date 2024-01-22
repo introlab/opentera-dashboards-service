@@ -52,7 +52,7 @@ if __name__ == '__main__':
     # Load configuration
     if not Globals.config_man.load_config(args.config):
         print('Invalid config')
-        exit(1)
+        sys.exit(1)
 
     # Global redis client
     Globals.redis_client = RedisClient(Globals.config_man.redis_config)
