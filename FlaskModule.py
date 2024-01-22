@@ -255,16 +255,24 @@ class FlaskModule(BaseModule):
         from views.Index import Index
         flask_app.add_url_rule('/', view_func=Index.as_view('index', *args, **kwargs))
 
+        from views.Dashboards import DashboardsIndex
+        flask_app.add_url_rule('/dashboards', view_func=DashboardsIndex.as_view('dashboards', *args, **kwargs))
+
+
 
 @flask_app.errorhandler(404)
 def page_not_found(e):
+    print(e)
     return flask_app.send_static_file('404.html')
 
 
 @flask_app.after_request
 def apply_caching(response):
-    # This is required to expose the backend API to rendered webpages from other sources, such as services
+    # TODO Fix for WebAssembly CORS
     response.headers["Access-Control-Allow-Origin"] = "*"
     response.headers["Access-Control-Allow-Headers"] = "*"
     response.headers["Access-Control-Allow-Methods"] = "*"
+    response.headers['Cross-Origin-Opener-Policy'] = 'same-origin'
+    response.headers['Cross-Origin-Embedder-Policy'] = 'require-corp'
+    response.headers['Cross-Origin-Resource-Policy'] = 'cross-origin'
     return response
