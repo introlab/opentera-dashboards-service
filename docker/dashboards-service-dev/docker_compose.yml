@@ -46,6 +46,8 @@ services:
       - nginx-logs:/etc/nginx/logs
     depends_on:
       - cert-generator
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - '40100:40100'
     networks:

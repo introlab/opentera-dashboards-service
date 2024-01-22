@@ -234,11 +234,15 @@ class FlaskModule(BaseModule):
         # Default arguments
         kwargs = {'flaskModule': module, 'service': service} | additional_args
 
+        pass
+
 
     @staticmethod
     def init_participant_api(module: object, service: object, api_ns=participant_api_ns, additional_args={}):
         # Default arguments
         kwargs = {'flaskModule': module, 'service': service} | additional_args
+
+        pass
 
 
 
@@ -246,6 +250,10 @@ class FlaskModule(BaseModule):
         # Default arguments
         args = []
         kwargs = {'flaskModule': self}
+
+        # Add views
+        from views.Index import Index
+        flask_app.add_url_rule('/', view_func=Index.as_view('index', *args, **kwargs))
 
 
 @flask_app.errorhandler(404)
