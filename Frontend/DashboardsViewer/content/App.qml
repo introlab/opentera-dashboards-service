@@ -6,8 +6,8 @@ import DashboardsViewer
 import QtQuick.VirtualKeyboard 6.2
 
 Window {
-    width: mainScreen.width
-    height: mainScreen.height
+    width: Constants.width
+    height: Constants.height
 
     visible: true
     title: "DashboardsViewer"

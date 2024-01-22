@@ -5,6 +5,10 @@ option(BUILD_QDS_COMPONENTS "Build design studio components" ON)
 
 project(DashboardsViewerApp LANGUAGES CXX)
 
+if(EMSCRIPTEN)
+    add_compile_definitions(WEBASSEMBLY)
+endif()
+
 set(CMAKE_AUTOMOC ON)
 
 find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick)
