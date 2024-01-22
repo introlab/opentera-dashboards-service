@@ -19,7 +19,7 @@ Rectangle {
         width: 100
         height: 50
         anchors.bottom: parent.bottom
-        anchors.right: parent.right
+        anchors.horizontalCenter: parent.horizontalCenter
         text: qsTr("Login")
     }
 

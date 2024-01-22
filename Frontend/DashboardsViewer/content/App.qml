@@ -4,6 +4,7 @@
 import QtQuick 6.2
 import DashboardsViewer
 import QtQuick.VirtualKeyboard 6.2
+import QtQuick.Controls 6.2
 
 Window {
     width: Constants.width
@@ -12,8 +13,17 @@ Window {
     visible: true
     title: "DashboardsViewer"
 
-    LoginForm {
-        id: loginForm
+    StackView {
+        id: stackview
+        initialItem: loginView
+        anchors.fill: parent
+    }
+
+    Component {
+        id: loginView
+        LoginForm {
+            id: loginForm
+        }
     }
 
     InputPanel {
