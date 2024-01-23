@@ -13,6 +13,8 @@ Rectangle {
     anchors.fill: parent
 
     property alias button: button
+    property alias username: inputUsername.text
+    property alias password: inputPassword.text
 
     Button {
         id: button

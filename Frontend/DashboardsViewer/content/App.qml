@@ -21,11 +21,40 @@ Window {
 
     Component {
         id: loginView
-        LoginForm {
+        Login {
             id: loginForm
         }
     }
 
+    Component {
+        id: dashboardView
+        Dashboard {
+            id: dashboardForm
+
+            onButtonClicked: function() {
+                // Hide dashboard
+                UserClient.disconnect();
+            }
+        }
+    }
+
+    Connections {
+        target: UserClient
+        onLoginSucceeded: function() {
+            console.log("login success!");
+
+            //Show Dashboard
+            stackview.push(dashboardView);
+        }
+        onLogoutSucceeded: function() {
+            console.log("logout success!");
+            stackview.pop()
+        }
+    }
+
+
+
+/*
     InputPanel {
         id: inputPanel
         property bool showKeyboard :  active
@@ -40,6 +69,8 @@ Window {
         anchors.rightMargin: parent.width/10
         anchors.left: parent.left
         anchors.right: parent.right
+
     }
+ */
 }
 

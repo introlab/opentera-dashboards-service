@@ -3,6 +3,7 @@
 
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QDebug>
 
 #include "app_environment.h"
@@ -13,6 +14,7 @@
 #include <emscripten.h>
 #endif
 
+#include "UserClient.h"
 
 int main(int argc, char *argv[])
 {
@@ -31,7 +33,7 @@ int main(int argc, char *argv[])
     qDebug() << "WebAssembly App running with window.location.href : " << app_url;
 #endif
 
-
+    UserClient client;
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
@@ -47,6 +49,8 @@ int main(int argc, char *argv[])
 
     engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
     engine.addImportPath(":/");
+
+    engine.rootContext()->setContextProperty("UserClient", &client);
 
     engine.load(url);
 
