@@ -7,6 +7,7 @@ project(DashboardsViewerApp LANGUAGES CXX)
 
 if(EMSCRIPTEN)
     add_compile_definitions(WEBASSEMBLY)
+    add_compile_definitions(OPENTERA_WEBASSEMBLY)
 endif()
 
 set(CMAKE_AUTOMOC ON)
@@ -16,6 +17,9 @@ find_package(Qt6 6.2 REQUIRED COMPONENTS Core Gui Qml Quick)
 if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
 endif()
+
+add_subdirectory(submodules)
+
 
 qt_add_executable(DashboardsViewerApp src/main.cpp)
 
@@ -30,6 +34,7 @@ target_link_libraries(DashboardsViewerApp PRIVATE
     Qt6::Gui
     Qt6::Qml
     Qt6::Quick
+    opentera_libs_client_user
 )
 
 if (BUILD_QDS_COMPONENTS)
@@ -53,15 +58,17 @@ install(TARGETS DashboardsViewerApp
 set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
     "Path to the custom QML components defined by the project")
 
-add_custom_target(deploy-to-opentera-dashboards-service ALL
-    DEPENDS DashboardsViewerApp
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.html ${PROJECT_SOURCE_DIR}/../../static
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.js ${PROJECT_SOURCE_DIR}/../../static
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.wasm ${PROJECT_SOURCE_DIR}/../../static
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/qtloader.js ${PROJECT_SOURCE_DIR}/../../static
-    # TODO Replace logo with something else
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/qtlogo.svg ${PROJECT_SOURCE_DIR}/../../static
-    # This file is only present if we use threaded webassembly
-    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.worker.js ${PROJECT_SOURCE_DIR}/../../static
+if(EMSCRIPTEN)
+    add_custom_target(deploy-to-opentera-dashboards-service ALL
+        DEPENDS DashboardsViewerApp
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.html ${PROJECT_SOURCE_DIR}/../../static
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.js ${PROJECT_SOURCE_DIR}/../../static
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.wasm ${PROJECT_SOURCE_DIR}/../../static
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/qtloader.js ${PROJECT_SOURCE_DIR}/../../static
+        # TODO Replace logo with something else
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/qtlogo.svg ${PROJECT_SOURCE_DIR}/../../static
+        # This file is only present if we use threaded webassembly
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.worker.js ${PROJECT_SOURCE_DIR}/../../static
 
-)
+    )
+endif(EMSCRIPTEN)
