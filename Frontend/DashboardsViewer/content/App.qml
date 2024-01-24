@@ -20,9 +20,10 @@ Window {
     }
 
     Component {
-        id: loginView
+        id: loginView      
         Login {
             id: loginForm
+            anchors.fill: parent
         }
     }
 
@@ -30,6 +31,7 @@ Window {
         id: dashboardView
         Dashboard {
             id: dashboardForm
+            anchors.fill: parent
 
             onButtonClicked: function() {
                 // Hide dashboard
@@ -39,6 +41,18 @@ Window {
     }
 
     Connections {
+
+        function qmlObjectToDict(qmlObject) {
+                var dict = {}
+                for (var key in qmlObject) {
+                    if (qmlObject.hasOwnProperty(key)) {
+                        console.log(key, qmlObject[key])
+                        dict[key] = qmlObject[key]
+                    }
+                }
+                return dict
+            }
+
         target: UserClient
         onLoginSucceeded: function() {
             console.log("login success!");
@@ -49,6 +63,13 @@ Window {
         onLogoutSucceeded: function() {
             console.log("logout success!");
             stackview.pop()
+        }
+        onOnlineParticipants: function(results) {
+           for (var i = 0; i < results.length; i++)
+           {
+               var myObject = results[i]
+               console.log(i, " ", myObject["id_participant"])
+           }
         }
     }
 
