@@ -10,71 +10,103 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 
 Rectangle {
-    anchors.fill: parent
-
     property alias button: button
     property alias username: inputUsername.text
     property alias password: inputPassword.text
+    property alias infoText: textArea.text
 
-    Button {
-        id: button
-        width: 100
-        height: 50
-        anchors.bottom: parent.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr("Login")
-    }
+    anchors.fill: parent
+    visible: true
+    border.color: "#dc1010"
+    width: 800
+    height: 600
 
-    Text {
-        id: fixedWelcomeText
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr("Opentera Dashboards Login")
-        font.pixelSize: 34
-    }
+    Column {
+        id: login_password_column
+        spacing: 10
+        anchors.fill: parent
 
-    Text {
-        id: username
-        width: 300
-        height: 50
-        anchors.top: fixedWelcomeText.bottom
-        topPadding: 10
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr("Username")
-        font.pixelSize: 28
-        horizontalAlignment: Text.AlignHCenter
-    }
+        Text {
+            id: fixedWelcomeText
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: qsTr("Opentera Dashboards Login")
+            font.pixelSize: 60
+        }
 
-    TextInput {
-        id: inputUsername
-        anchors.top: username.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: 300
-        height: 50
-        font.pixelSize: 28
-        horizontalAlignment: Text.AlignHCenter
-        selectedTextColor: "#941b1b"
-    }
+        Text {
+            id: username
+            height: 40
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: qsTr("Username")
+            font.pixelSize: 28
+            horizontalAlignment: Text.AlignHCenter
+        }
 
-    Text {
-        id: password
-        height: 50
-        anchors.top: inputUsername.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        text: qsTr("Password")
-        font.pixelSize: 28
-        horizontalAlignment: Text.AlignHCenter
-    }
+        Rectangle {
+            id: inputUsernameRectangle
+            anchors.horizontalCenter: parent.horizontalCenter
+            border.color: "#3a1212"
+            width: 300
+            height: 50
 
-    TextInput {
-        id: inputPassword
-        anchors.top: password.bottom
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: 300
-        height: 50
-        font.pixelSize: 28
-        horizontalAlignment: Text.AlignHCenter
-        echoMode: TextInput.Password
+            TextInput {
+                id: inputUsername
+                anchors.fill: parent
+                font.pixelSize: 28
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                selectedTextColor: "#941b1b"
+                maximumLength: 20
+                focus: true
+                KeyNavigation.tab: inputPassword
+            }
+        }
+
+        Text {
+            id: password
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: 50
+            text: qsTr("Password")
+            font.pixelSize: 28
+            horizontalAlignment: Text.AlignHCenter
+        }
+
+        Rectangle {
+            id: inputPasswordRectangle
+            anchors.horizontalCenter: parent.horizontalCenter
+            border.color: "#3a1212"
+            width: 300
+            height: 50
+
+            TextInput {
+                id: inputPassword
+                anchors.fill: parent
+                font.pixelSize: 28
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                wrapMode: Text.WrapAnywhere
+                echoMode: TextInput.Password
+                maximumLength: 20
+                KeyNavigation.tab: button
+            }
+        }
+
+        Button {
+            id: button
+            width: 100
+            height: 50
+            enabled: true
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: qsTr("Login")
+        }
+
+        TextArea {
+            id: textArea
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 500
+            height: 200
+            visible: true
+            placeholderText: qsTr("")
+        }
     }
 }
