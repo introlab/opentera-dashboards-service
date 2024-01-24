@@ -11,8 +11,9 @@ qt6_add_qml_module(content
         Login.qml
         Dashboard.qml
         DashboardForm.ui.qml
+        OnlineParticipant.qml
+        OnlineParticipantForm.ui.qml
         LoginForm.ui.qml
-        Screen01.ui.qml
     RESOURCES
         fonts/fonts.txt
 )

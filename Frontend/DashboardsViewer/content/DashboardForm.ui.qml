@@ -14,22 +14,32 @@ Item {
     height: 768
 
     property alias button: button
+    property alias flow_view: flow_view
+
+    Text {
+        id: dashboardText
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        text: qsTr("DASHBOARD")
+        font.pixelSize: 60
+        height: 60
+        horizontalAlignment: Text.AlignHCenter
+    }
 
     Button {
         id: button
-        x: 64
-        y: 64
+        anchors.left: parent.left
+        anchors.top: parent.top
+        width: 150
+        height: 60
         text: qsTr("Logout")
     }
 
-    Text {
-        id: text1
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalCenter
-        x: 348
-        y: 377
-        text: qsTr("DASHBOARD")
-        font.pixelSize: 60
-        horizontalAlignment: Text.AlignHCenter
+    Flow {
+        id: flow_view
+        spacing: 10
+        anchors.top: dashboardText.bottom
+        anchors.bottom: parent.bottom
+        width: parent.width
     }
 }

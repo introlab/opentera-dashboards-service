@@ -12,6 +12,9 @@ Window {
 
     visible: true
     title: "DashboardsViewer"
+    id: mainWindow
+
+
 
     StackView {
         id: stackview
@@ -19,16 +22,24 @@ Window {
         anchors.fill: parent
     }
 
-    Component {
-        id: loginView      
+    Item {
+        id: loginView
+        visible: true
         Login {
             id: loginForm
             anchors.fill: parent
         }
     }
 
-    Component {
+    Item {
         id: dashboardView
+        visible: false
+
+        function addOnlineParticipant(participant)
+        {
+            dashboardForm.addOnlineParticipant(participant)
+        }
+
         Dashboard {
             id: dashboardForm
             anchors.fill: parent
@@ -40,35 +51,76 @@ Window {
         }
     }
 
-    Connections {
+    Timer {
+        id: getParticipantsTimer
+        interval: 5000
+        running: false
+        repeat: true
 
-        function qmlObjectToDict(qmlObject) {
-                var dict = {}
-                for (var key in qmlObject) {
-                    if (qmlObject.hasOwnProperty(key)) {
-                        console.log(key, qmlObject[key])
-                        dict[key] = qmlObject[key]
-                    }
-                }
-                return dict
+        onTriggered: function() {
+            if (UserClient.isConnected())
+            {
+                console.log("getParticipantsTimer");
+                UserClient.getOnlineParticipants();
             }
+        }
+    }
 
+    Timer {
+        id: getUsersTimer
+        interval: 5000
+        running: false
+        repeat: true
+
+        onTriggered: function() {
+            if (UserClient.isConnected())
+            {
+                console.log("getUsersTimer");
+                UserClient.getOnlineUsers();
+            }
+        }
+    }
+
+    Timer {
+        id: getDevicesTimer
+        interval: 5000
+        running: false
+        repeat: true
+
+        onTriggered: function() {
+            if (UserClient.isConnected())
+            {
+                console.log("getDevicesTimer");
+                UserClient.getOnlineDevices();
+            }
+        }
+    }
+
+    Connections {
         target: UserClient
         onLoginSucceeded: function() {
             console.log("login success!");
 
             //Show Dashboard
             stackview.push(dashboardView);
+
+            getParticipantsTimer.running = true;
+            getUsersTimer.running = true;
+            getDevicesTimer.running = true;
         }
         onLogoutSucceeded: function() {
             console.log("logout success!");
             stackview.pop()
+
+            getParticipantsTimer.running = false;
+            getUsersTimer.running = false;
+            getDevicesTimer.running = false;
         }
-        onOnlineParticipants: function(results) {
-           for (var i = 0; i < results.length; i++)
+        onOnlineParticipants: function(participantList) {
+           for (var i = 0; i < participantList.length; i++)
            {
-               var myObject = results[i]
-               console.log(i, " ", myObject["id_participant"])
+               var myObject = participantList[i]
+               dashboardView.addOnlineParticipant(myObject)
            }
         }
     }
