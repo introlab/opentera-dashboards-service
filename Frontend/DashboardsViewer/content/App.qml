@@ -14,8 +14,6 @@ Window {
     title: "DashboardsViewer"
     id: mainWindow
 
-
-
     StackView {
         id: stackview
         initialItem: loginView
@@ -37,6 +35,7 @@ Window {
 
         function addOnlineParticipant(participant)
         {
+            console.log("dashboardView adding participant.")
             dashboardForm.addOnlineParticipant(participant)
         }
 
@@ -51,6 +50,20 @@ Window {
         }
     }
 
+    Item {
+        id: signalReceiver
+        function onOnlineParticipantsAnswer(participantList) {
+            console.log("QML onOnlineParticipantsAnswer", participantList, participantList.length)
+            for (var i = 0; i < participantList.length; i++)
+            {
+                var myObject = participantList[i]
+                console.log("QML participant info", myObject)
+                dashboardView.addOnlineParticipant(myObject)
+            }
+         }
+    }
+
+
     Timer {
         id: getParticipantsTimer
         interval: 5000
@@ -61,7 +74,7 @@ Window {
             if (UserClient.isConnected())
             {
                 console.log("getParticipantsTimer");
-                UserClient.getOnlineParticipants();
+                UserClient.getOnlineParticipants(signalReceiver);
             }
         }
     }
@@ -93,8 +106,20 @@ Window {
                 console.log("getDevicesTimer");
                 UserClient.getOnlineDevices();
             }
-        }
+        }          
     }
+
+    /*
+    function onOnlineParticipantsAnswer(participantList) {
+        console.log("QML onOnlineParticipantsAnswer", participantList, participantList.length)
+        for (var i = 0; i < participantList.length; i++)
+        {
+            var myObject = participantList[i]
+            console.log("QML participant info", myObject)
+            //dashboardView.addOnlineParticipant(myObject)
+        }
+     }
+     */
 
     Connections {
         target: UserClient
@@ -116,13 +141,16 @@ Window {
             getUsersTimer.running = false;
             getDevicesTimer.running = false;
         }
-        onOnlineParticipants: function(participantList) {
-           for (var i = 0; i < participantList.length; i++)
-           {
-               var myObject = participantList[i]
-               dashboardView.addOnlineParticipant(myObject)
-           }
-        }
+
+        onOnlineParticipantsAnswer: function(participantList) {
+            console.log("QML onOnlineParticipantsAnswer", participantList, participantList.length)
+            for (var i = 0; i < participantList.length; i++)
+            {
+                var myObject = participantList[i]
+                console.log("QML participant info", myObject)
+                //dashboardView.addOnlineParticipant(myObject)
+            }
+         }
     }
 
 

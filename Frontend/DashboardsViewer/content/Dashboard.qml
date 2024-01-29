@@ -17,7 +17,7 @@ DashboardForm {
 
         if (component.status === Component.Ready)
         {
-            // Create dynamic object
+            // Create dynamic object, can add dict wit data sources...
             var participantObject = component.createObject(flow_view);
             // Update from dict
             participantObject.update(participant)

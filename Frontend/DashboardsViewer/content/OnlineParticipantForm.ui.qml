@@ -21,15 +21,13 @@ Item {
     Column {
         id: column
         anchors.fill: parent
-        width: parent.width
-        height: parent.height
         spacing: 10
 
         Rectangle {
             id: background
             color: "#2da1d3"
-            anchors.fill: parent
-
+            width: parent.width
+            height: parent.height
 
             /*
             qml: OnlineParticipants  0  [id_participant] : 1

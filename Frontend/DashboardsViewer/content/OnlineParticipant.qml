@@ -22,6 +22,10 @@ OnlineParticipantForm {
         participant_name = participantObject["participant_name"];
     }
 
+
+
+
+    /*
     Timer {
         id: timeToLiveTimer
         interval: 10000
@@ -34,4 +38,6 @@ OnlineParticipantForm {
             currentOnlineParticipant.destroy();
         }
     }
+    */
+
 }
