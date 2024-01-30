@@ -6,6 +6,8 @@ import DashboardsViewer
 import QtQuick.VirtualKeyboard 6.2
 import QtQuick.Controls 6.2
 
+import OpenTera 1.0
+
 Window {
     width: Constants.width
     height: Constants.height
@@ -125,6 +127,16 @@ Window {
         target: UserClient
         onLoginSucceeded: function() {
             console.log("login success!");
+
+            //After login, test wapper
+            var params = {};
+            var headers = {};
+            var wrapper = UserClient.get("/api/user/participants/online", params, headers);
+            console.log("found wrapper", wrapper);
+
+            //TODO connect signals
+
+
 
             //Show Dashboard
             stackview.push(dashboardView);

@@ -15,6 +15,7 @@
 #endif
 
 #include "UserClient.h"
+#include "QNetworkReplyWrapper.h"
 
 int main(int argc, char *argv[])
 {
@@ -34,6 +35,9 @@ int main(int argc, char *argv[])
 #endif
 
     UserClient client;
+
+
+    qmlRegisterType<QNetworkReplyWrapper>("OpenTera", 1, 0, "NetworkReplyWrapper");
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
