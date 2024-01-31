@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.21.1)
 
-option(LINK_INSIGHT "Link Qt Insight Tracker library" ON)
-option(BUILD_QDS_COMPONENTS "Build design studio components" ON)
+option(LINK_INSIGHT "Link Qt Insight Tracker library" OFF)
+option(BUILD_QDS_COMPONENTS "Build design studio components" OFF)
 
 project(DashboardsViewerApp LANGUAGES CXX)
 
@@ -35,6 +35,7 @@ target_link_libraries(DashboardsViewerApp PRIVATE
     Qt6::Qml
     Qt6::Quick
     opentera_libs_client_user
+    opentera_libs_qmlplugin
 )
 
 if (BUILD_QDS_COMPONENTS)

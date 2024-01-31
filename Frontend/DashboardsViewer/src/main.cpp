@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     UserClient client;
 
 
-    qmlRegisterType<QNetworkReplyWrapper>("OpenTera", 1, 0, "NetworkReplyWrapper");
+    //qmlRegisterType<QNetworkReplyWrapper>("OpenTera", 1, 0, "NetworkReplyWrapper");
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);

@@ -6,7 +6,7 @@ import DashboardsViewer
 import QtQuick.VirtualKeyboard 6.2
 import QtQuick.Controls 6.2
 
-import OpenTera 1.0
+import OpenTeraLibs 1.0
 
 Window {
     width: Constants.width
