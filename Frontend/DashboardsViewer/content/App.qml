@@ -134,7 +134,10 @@ Window {
             var wrapper = UserClient.get("/api/user/participants/online", params, headers);
             console.log("found wrapper", wrapper);
 
-            //TODO connect signals
+            wrapper.requestSucceeded.connect(
+                                function(response) {
+                                    console.log("Hello world!", response)
+                                });
 
 
 
