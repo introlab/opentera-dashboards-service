@@ -76,7 +76,7 @@ Window {
             if (UserClient.isConnected())
             {
                 console.log("getParticipantsTimer");
-                UserClient.getOnlineParticipants(signalReceiver);
+
             }
         }
     }
@@ -91,7 +91,7 @@ Window {
             if (UserClient.isConnected())
             {
                 console.log("getUsersTimer");
-                UserClient.getOnlineUsers();
+
             }
         }
     }
@@ -106,7 +106,6 @@ Window {
             if (UserClient.isConnected())
             {
                 console.log("getDevicesTimer");
-                UserClient.getOnlineDevices();
             }
         }          
     }
@@ -156,16 +155,6 @@ Window {
             getUsersTimer.running = false;
             getDevicesTimer.running = false;
         }
-
-        onOnlineParticipantsAnswer: function(participantList) {
-            console.log("QML onOnlineParticipantsAnswer", participantList, participantList.length)
-            for (var i = 0; i < participantList.length; i++)
-            {
-                var myObject = participantList[i]
-                console.log("QML participant info", myObject)
-                //dashboardView.addOnlineParticipant(myObject)
-            }
-         }
     }
 
 
