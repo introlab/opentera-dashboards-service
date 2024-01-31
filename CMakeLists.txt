@@ -42,7 +42,7 @@ if(NOT PYTHON_ENV_DIRECTORY)
 
     # Set Python executable
     if(WIN32)
-        set(PYTHON_EXECUTABLE ${PYTHON_ENV_DIRECTORY}/bin/python.exe)
+        set(PYTHON_EXECUTABLE ${PYTHON_ENV_DIRECTORY}/python.exe)
     else(WIN32)
         set(PYTHON_EXECUTABLE ${PYTHON_ENV_DIRECTORY}/bin/python)
     endif(WIN32)
@@ -55,8 +55,8 @@ endif()
 
 # Python executables should be installed with the opentera package
 if(WIN32)
-    set(PYTHON_EXECUTABLE ${PYTHON_ENV_DIRECTORY}/bin/python.exe)
-    set(PYTHON_PIP_EXECUTABLE ${PYTHON_ENV_DIRECTORY}/bin/pip.exe)
+    set(PYTHON_EXECUTABLE ${PYTHON_ENV_DIRECTORY}/python.exe)
+    set(PYTHON_PIP_EXECUTABLE ${PYTHON_ENV_DIRECTORY}/Scripts/pip.exe)
     set(PYBABEL_EXECUTABLE ${PYTHON_ENV_DIRECTORY}/Scripts/pybabel.exe)
 else(WIN32)
     set(PYTHON_EXECUTABLE ${PYTHON_ENV_DIRECTORY}/bin/python)
