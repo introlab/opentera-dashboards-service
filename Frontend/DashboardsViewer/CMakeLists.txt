@@ -56,6 +56,7 @@ install(TARGETS DashboardsViewerApp
 )
 
 # make IDEs aware of the QML import path
+set(QT_QML_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/qml)
 set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
     "Path to the custom QML components defined by the project")
 
