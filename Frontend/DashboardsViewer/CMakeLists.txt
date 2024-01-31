@@ -18,6 +18,13 @@ if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
     qt_standard_project_setup()
 endif()
 
+
+# make IDEs aware of the QML import path
+set(QT_QML_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/qml)
+set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
+    "Path to the custom QML components defined by the project")
+
+
 add_subdirectory(submodules)
 
 
@@ -34,8 +41,9 @@ target_link_libraries(DashboardsViewerApp PRIVATE
     Qt6::Gui
     Qt6::Qml
     Qt6::Quick
-    opentera_libs_client_user
-    opentera_libs_qmlplugin
+    #opentera_libs_client_user
+    opentera_libs_client_user_qml
+    # opentera_libs_qmlplugin
 )
 
 if (BUILD_QDS_COMPONENTS)
@@ -55,10 +63,6 @@ install(TARGETS DashboardsViewerApp
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
-# make IDEs aware of the QML import path
-set(QT_QML_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/qml)
-set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
-    "Path to the custom QML components defined by the project")
 
 if(EMSCRIPTEN)
     add_custom_target(deploy-to-opentera-dashboards-service ALL
