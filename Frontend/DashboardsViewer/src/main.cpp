@@ -14,9 +14,6 @@
 #include <emscripten.h>
 #endif
 
-#include "UserClient.h"
-#include "QNetworkReplyWrapper.h"
-
 int main(int argc, char *argv[])
 {
     set_qt_environment();
@@ -34,7 +31,7 @@ int main(int argc, char *argv[])
     qDebug() << "WebAssembly App running with window.location.href : " << app_url;
 #endif
 
-    UserClient client;
+    //UserClient client;
 
 
     //qmlRegisterType<QNetworkReplyWrapper>("OpenTera", 1, 0, "NetworkReplyWrapper");
@@ -54,7 +51,7 @@ int main(int argc, char *argv[])
     engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
     engine.addImportPath(":/");
 
-    engine.rootContext()->setContextProperty("UserClient", &client);
+    //engine.rootContext()->setContextProperty("UserClient", &client);
 
     engine.load(url);
 

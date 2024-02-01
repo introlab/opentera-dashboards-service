@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import DashboardsViewer
 
+import OpenTeraLibs.UserClient
 
 LoginForm {
 
