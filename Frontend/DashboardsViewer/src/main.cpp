@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    QUrl app_url;
+    QUrl app_url("https://127.0.0.1:40100");
 
 #ifdef WEBASSEMBLY
     char* urlCStr = (char*)EM_ASM_PTR({ return stringToNewUTF8(window.location.href); });
@@ -30,11 +30,6 @@ int main(int argc, char *argv[])
 
     qDebug() << "WebAssembly App running with window.location.href : " << app_url;
 #endif
-
-    //UserClient client;
-
-
-    //qmlRegisterType<QNetworkReplyWrapper>("OpenTera", 1, 0, "NetworkReplyWrapper");
 
     QQmlApplicationEngine engine;
     const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
@@ -51,7 +46,8 @@ int main(int argc, char *argv[])
     engine.addImportPath(QCoreApplication::applicationDirPath() + "/qml");
     engine.addImportPath(":/");
 
-    //engine.rootContext()->setContextProperty("UserClient", &client);
+    QVariant AppURLVariant = QVariant::fromValue(app_url);
+    engine.rootContext()->setContextProperty("AppURL", AppURLVariant);
 
     engine.load(url);
 
