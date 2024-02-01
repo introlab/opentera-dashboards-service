@@ -1,9 +1,7 @@
-// Copyright (C) 2021 The Qt Company Ltd.
-// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
-
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QFontDatabase>
 #include <QDebug>
 
 #include "app_environment.h"
@@ -12,7 +10,24 @@
 
 #ifdef WEBASSEMBLY
 #include <emscripten.h>
+
 #endif
+
+void setupFonts(const QGuiApplication* app){
+    int id_font;
+
+    id_font = QFontDatabase::addApplicationFont(":/qt/qml/content/fonts/Arimo-VariableFont_wght.ttf");
+    if (id_font == -1){
+        qWarning() << "Unable to load Arimo font";
+    }
+
+    // Set default font
+    QFont defaultFont;
+    defaultFont.setFamily("Arimo Regular");
+    defaultFont.setPixelSize(18);
+    app->setFont(defaultFont);
+
+}
 
 int main(int argc, char *argv[])
 {
@@ -20,7 +35,7 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    QUrl app_url("https://127.0.0.1:40100");
+    QUrl app_url("https://127.0.0.1:40075");
 
 #ifdef WEBASSEMBLY
     char* urlCStr = (char*)EM_ASM_PTR({ return stringToNewUTF8(window.location.href); });
@@ -48,6 +63,9 @@ int main(int argc, char *argv[])
 
     QVariant AppURLVariant = QVariant::fromValue(app_url);
     engine.rootContext()->setContextProperty("AppURL", AppURLVariant);
+
+    // Setup fonts
+    setupFonts(&app);
 
     engine.load(url);
 
