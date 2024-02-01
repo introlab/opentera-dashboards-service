@@ -5,33 +5,44 @@ import OpenTeraLibs.UserClient
 
 LoginForm {
 
-
-    function login_button_pressed() {
-        console.log("Button Pressed");
-        console.log("Trying to reach QML Singleton UserClient Should return false");
-        console.log(UserClient.isConnected());
-        console.log("AppUrl", AppURL);
+    function do_login() {
+        console.log("Initating login to ", AppURL);
+        infoText.text = qsTr("Logging in...");
+        infoText.color = "lightgreen"
         UserClient.connect(AppURL, username, password);
     }
 
-    anchors.fill: parent
-    Keys.enabled: true
-    Keys.onEnterPressed: function() {
-        login_button_pressed();
+    function clear() {
+        username = "";
+        password = "";
+        infoText.text = qsTr("Welcome! Please login.");
+        infoText.color = Constants.textColor;
     }
 
-    button.onClicked: function() {
-        login_button_pressed();
+    onVisibleChanged: {
+        if (!visible)
+            clear();
+    }
+
+    //anchors.fill: parent
+    Keys.enabled: true
+    Keys.onEnterPressed: function() {
+        do_login();
+    }
+
+    btnLogin.onClicked: function() {
+        do_login();
     }
 
     Connections {
         target: UserClient
         onLoginSucceeded: function() {
-            console.log("login success!");
+            infoText.text = qsTr("Welcome") + " " + username + "!";
+            infoText.color = Constants.textColor;
         }
         onLoginFailed: function(error) {
-            console.log("login failed with error : ", error);
-            infoText = error;
+            infoText.text = error;
+            infoText.color = "red";
         }
     }
 }

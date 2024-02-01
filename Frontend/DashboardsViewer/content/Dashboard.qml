@@ -1,12 +1,13 @@
 import QtQuick 2.15
 
+import OpenTeraLibs.UserClient 1.0
+
 DashboardForm {
 
     signal buttonClicked()
 
     button.onClicked: function() {
-        console.log("Logout Button Pressed");
-        buttonClicked();
+        UserClient.disconnect();
     }
 
     function addOnlineParticipant(participant)

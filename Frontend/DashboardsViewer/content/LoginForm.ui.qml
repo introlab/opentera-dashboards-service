@@ -1,112 +1,155 @@
-
-
-/*
-This is a UI file (.ui.qml) that is intended to be edited in Qt Design Studio only.
-It is supposed to be strictly declarative and only uses a subset of QML. If you edit
-this file manually, you might introduce QML code that is not supported by Qt Design Studio.
-Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on .ui.qml files.
-*/
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Layouts
+import QtQuick.Effects
 
-Rectangle {
-    property alias button: button
+import DashboardsViewer
+
+Item {
+
+    property alias btnLogin: btnLogin
     property alias username: inputUsername.text
     property alias password: inputPassword.text
-    property alias infoText: textArea.text
+    property alias infoText: lblInfo
 
-    anchors.fill: parent
-    visible: true
-    border.color: "#dc1010"
-    width: 800
-    height: 600
+    Rectangle {
+        id: recBackground
 
-    Column {
-        id: login_password_column
-        spacing: 10
-        anchors.fill: parent
-
-        Text {
-            id: fixedWelcomeText
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Opentera Dashboards Login")
-            font.pixelSize: 60
-        }
-
-        Text {
-            id: username
-            height: 40
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Username")
-            font.pixelSize: 28
-            horizontalAlignment: Text.AlignHCenter
-        }
-
-        Rectangle {
-            id: inputUsernameRectangle
-            anchors.horizontalCenter: parent.horizontalCenter
-            border.color: "#3a1212"
-            width: 300
-            height: 50
-
-            TextInput {
-                id: inputUsername
-                anchors.fill: parent
-                font.pixelSize: 28
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-                selectedTextColor: "#941b1b"
-                maximumLength: 20
-                focus: true
-                KeyNavigation.tab: inputPassword
+        anchors.centerIn: parent
+        height: layoutMain.implicitHeight + layoutMain.anchors.margins * 2
+        width: layoutMain.implicitWidth + layoutMain.anchors.margins * 2
+        visible: true
+        border.color: "grey"
+        border.width: 2
+        radius: 10
+        gradient: Gradient {
+            GradientStop {
+                position: 0.0
+                color: Constants.lightBackgroundColor
+            }
+            GradientStop {
+                position: 0.5
+                color: Constants.highlightColor
+            }
+            GradientStop {
+                position: 1.0
+                color: Constants.lightBackgroundColor
             }
         }
 
-        Text {
-            id: password
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: 50
-            text: qsTr("Password")
-            font.pixelSize: 28
-            horizontalAlignment: Text.AlignHCenter
-        }
+        ColumnLayout {
+            id: layoutMain
+            spacing: 10
+            anchors.fill: parent
+            anchors.margins: 10
 
-        Rectangle {
-            id: inputPasswordRectangle
-            anchors.horizontalCenter: parent.horizontalCenter
-            border.color: "#3a1212"
-            width: 300
-            height: 50
+            Image {
+                id: imgLogo
+                source: "images/logos/LogoOpenTera.png"
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                fillMode: Image.PreserveAspectFit
+                height: 200
+                sourceSize.height: height
+            }
 
-            TextInput {
-                id: inputPassword
-                anchors.fill: parent
-                font.pixelSize: 28
+            Text {
+                id: txtUsername
+                text: qsTr("Username")
+                font.pixelSize: Constants.largeFontSize
+                font.bold: true
+                color: Constants.textColor
+                horizontalAlignment: Text.AlignHCenter
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            }
+
+            Rectangle {
+                id: recInputUsername
+                border.color: "#3a1212"
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.fillWidth: true
+                Layout.leftMargin: 10
+                Layout.rightMargin: 10
+                height: inputUsername.implicitHeight + 20
+
+                TextInput {
+                    id: inputUsername
+                    anchors.fill: parent
+                    font.pixelSize: Constants.baseFontSize
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    selectByMouse: true
+                    selectedTextColor: "#941b1b"
+                    maximumLength: 20
+                    focus: true
+                    KeyNavigation.tab: inputPassword
+                }
+            }
+
+            Text {
+                id: txtPassword
+                text: qsTr("Password")
+                font.pixelSize: Constants.largeFontSize
+                font.bold: true
+                color: Constants.textColor
+                horizontalAlignment: Text.AlignHCenter
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+            }
+
+            Rectangle {
+                id: recInputPassword
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                border.color: "#3a1212"
+                Layout.fillWidth: true
+                Layout.leftMargin: 10
+                Layout.rightMargin: 10
+                height: inputPassword.implicitHeight + 20
+
+                TextInput {
+                    id: inputPassword
+                    anchors.fill: parent
+                    font.pixelSize: Constants.baseFontSize
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    wrapMode: Text.WrapAnywhere
+                    echoMode: TextInput.Password
+                    selectByMouse: true
+                    maximumLength: 20
+                    KeyNavigation.tab: btnLogin
+                }
+            }
+
+            Button {
+                id: btnLogin
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.fillWidth: true
+
+                Layout.minimumHeight: recInputPassword.height
+                Layout.leftMargin: 10
+                Layout.rightMargin: 10
+
+                enabled: username && password
+                text: qsTr("Login")
+            }
+
+            Text {
+                id: lblInfo
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+
+                color: Constants.textColor
+                text: qsTr("Welcome! Please login.")
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
-                wrapMode: Text.WrapAnywhere
-                echoMode: TextInput.Password
-                maximumLength: 20
-                KeyNavigation.tab: button
+                wrapMode: Text.WordWrap
             }
         }
-
-        Button {
-            id: button
-            width: 100
-            height: 50
-            enabled: true
-            anchors.horizontalCenter: parent.horizontalCenter
-            text: qsTr("Login")
-        }
-
-        TextArea {
-            id: textArea
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: 500
-            height: 200
-            visible: true
-            placeholderText: qsTr("")
-        }
+    }
+    MultiEffect {
+        source: recBackground
+        anchors.fill: source
+        shadowEnabled: true
+        shadowHorizontalOffset: 2
+        shadowVerticalOffset: 2
     }
 }

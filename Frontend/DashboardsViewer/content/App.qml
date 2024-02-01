@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
 
 import QtQuick 6.2
-import DashboardsViewer
 import QtQuick.VirtualKeyboard 6.2
 import QtQuick.Controls 6.2
+
+import DashboardsViewer
 
 import OpenTeraLibs.UserClient 1.0
 
@@ -16,21 +17,57 @@ Window {
     title: "DashboardsViewer"
     id: mainWindow
 
+    Rectangle{
+        anchors.fill: parent
+        gradient: Gradient {
+                GradientStop { position: 0.0; color: Constants.backgroundColor }
+                GradientStop { position: 0.5; color: Constants.lightBackgroundColor }
+                GradientStop { position: 1.0; color: Constants.backgroundColor }
+            }
+    }
+
     StackView {
         id: stackview
-        initialItem: loginView
+        initialItem: Login {}
         anchors.fill: parent
     }
 
-    Item {
-        id: loginView
-        visible: true
-        Login {
-            id: loginForm
-            anchors.fill: parent
+    Connections {
+        target: UserClient
+        onLoginSucceeded: function() {
+
+            //After login, test wapper
+            /*var params = {};
+            var headers = {};
+            var wrapper = UserClient.get("/api/user/participants/online", params, headers);
+            console.log("found wrapper", wrapper);
+
+            wrapper.requestSucceeded.connect(
+                                function(response) {
+                                    console.log("Hello world!", response)
+                                });
+            */
+
+
+
+            //Show Dashboard
+            stackview.push("Dashboard.qml");
+
+            /*getParticipantsTimer.running = true;
+            getUsersTimer.running = true;
+            getDevicesTimer.running = true;*/
+        }
+        onLogoutSucceeded: function() {
+            console.log("logout success!");
+            stackview.pop(-1)
+
+            /*getParticipantsTimer.running = false;
+            getUsersTimer.running = false;
+            getDevicesTimer.running = false;*/
         }
     }
 
+/*
     Item {
         id: dashboardView
         visible: false
@@ -108,7 +145,7 @@ Window {
                 console.log("getDevicesTimer");
             }
         }          
-    }
+    }*/
 
     /*
     function onOnlineParticipantsAnswer(participantList) {
@@ -122,40 +159,7 @@ Window {
      }
      */
 
-    Connections {
-        target: UserClient
-        onLoginSucceeded: function() {
-            console.log("login success!");
 
-            //After login, test wapper
-            var params = {};
-            var headers = {};
-            var wrapper = UserClient.get("/api/user/participants/online", params, headers);
-            console.log("found wrapper", wrapper);
-
-            wrapper.requestSucceeded.connect(
-                                function(response) {
-                                    console.log("Hello world!", response)
-                                });
-
-
-
-            //Show Dashboard
-            stackview.push(dashboardView);
-
-            getParticipantsTimer.running = true;
-            getUsersTimer.running = true;
-            getDevicesTimer.running = true;
-        }
-        onLogoutSucceeded: function() {
-            console.log("logout success!");
-            stackview.pop()
-
-            getParticipantsTimer.running = false;
-            getUsersTimer.running = false;
-            getDevicesTimer.running = false;
-        }
-    }
 
 
 
