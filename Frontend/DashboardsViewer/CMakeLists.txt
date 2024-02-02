@@ -26,6 +26,7 @@ set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
 
 
 add_subdirectory(submodules)
+add_subdirectory(qml_cpp_modules)
 
 
 qt_add_executable(DashboardsViewerApp src/main.cpp)
@@ -45,6 +46,7 @@ target_link_libraries(DashboardsViewerApp PRIVATE
     # opentera_libs_client_user_qml
     # opentera_libs_qmlplugin
     opentera_libs_client_user_qmlplugin
+    dashboardviewer_qml_cpp_modules_config_parser_qmlplugin
 )
 
 if (BUILD_QDS_COMPONENTS)
