@@ -8,6 +8,7 @@ import QtQuick.Controls 6.2
 import DashboardsViewer
 import "screens"
 
+import DashboardsViewer.ConfigParser 1.0
 import OpenTeraLibs.UserClient 1.0
 
 Window {
