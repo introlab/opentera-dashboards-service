@@ -4,20 +4,59 @@ import QtQuick.Layouts
 import QtQuick.Effects
 
 import DashboardsViewer
+import "../ui"
 
 Item {
 
     property alias btnLogin: btnLogin
     property alias username: inputUsername.text
     property alias password: inputPassword.text
-    property alias infoText: lblInfo
+    property string infoText: ""
+
+    property alias fieldUsername: inputUsername
+    states: [
+        State {
+            name: "logging"
+            PropertyChanges {
+                target: lblInfo
+                color: "lightgreen"
+                text: qsTr("Logging in...")
+            }
+            PropertyChanges {
+                target: inputUsername
+                enabled: false
+                opacity: 0.5
+            }
+            PropertyChanges {
+                target: inputPassword
+                enabled: false
+                opacity: 0.5
+            }
+        },
+        State {
+            name: "loginSuccess"
+            PropertyChanges {
+                target: lblInfo
+                color: Constants.textColor
+                text: qsTr("Welcome!")
+            }
+        },
+        State {
+            name: "loginError"
+            PropertyChanges {
+                target: lblInfo
+                color: "yellow"
+                text: infoText
+            }
+        }
+    ]
 
     Rectangle {
         id: recBackground
 
         anchors.centerIn: parent
-        height: layoutMain.implicitHeight + layoutMain.anchors.margins * 2
-        width: layoutMain.implicitWidth + layoutMain.anchors.margins * 2
+        implicitHeight: layoutMain.implicitHeight + layoutMain.anchors.margins * 2
+        implicitWidth: 400 // layoutMain.implicitWidth + layoutMain.anchors.margins * 2
         visible: true
         border.color: "grey"
         border.width: 2
@@ -45,7 +84,7 @@ Item {
 
             Image {
                 id: imgLogo
-                source: "images/logos/LogoOpenTera.png"
+                source: "../images/logos/LogoOpenTera.png"
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 fillMode: Image.PreserveAspectFit
                 height: 200
@@ -59,6 +98,7 @@ Item {
                 font.bold: true
                 color: Constants.textColor
                 horizontalAlignment: Text.AlignHCenter
+                style: Text.Outline
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
 
@@ -69,6 +109,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.leftMargin: 10
                 Layout.rightMargin: 10
+                Layout.topMargin: -parent.spacing
                 height: inputUsername.implicitHeight + 20
 
                 TextInput {
@@ -78,7 +119,6 @@ Item {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     selectByMouse: true
-                    selectedTextColor: "#941b1b"
                     maximumLength: 20
                     focus: true
                     KeyNavigation.tab: inputPassword
@@ -92,6 +132,7 @@ Item {
                 font.bold: true
                 color: Constants.textColor
                 horizontalAlignment: Text.AlignHCenter
+                style: Text.Outline
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
 
@@ -102,6 +143,7 @@ Item {
                 Layout.fillWidth: true
                 Layout.leftMargin: 10
                 Layout.rightMargin: 10
+                Layout.topMargin: -parent.spacing
                 height: inputPassword.implicitHeight + 20
 
                 TextInput {
@@ -118,7 +160,7 @@ Item {
                 }
             }
 
-            Button {
+            BasicButton {
                 id: btnLogin
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 Layout.fillWidth: true
@@ -126,6 +168,7 @@ Item {
                 Layout.minimumHeight: recInputPassword.height
                 Layout.leftMargin: 10
                 Layout.rightMargin: 10
+                Layout.topMargin: parent.spacing
 
                 enabled: username && password
                 text: qsTr("Login")
@@ -137,11 +180,13 @@ Item {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
 
-                color: Constants.textColor
+                color: "cyan"
                 text: qsTr("Welcome! Please login.")
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 wrapMode: Text.WordWrap
+                style: Text.Outline
+                font.pixelSize: Constants.baseFontSize
             }
         }
     }

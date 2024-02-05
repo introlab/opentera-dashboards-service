@@ -9,6 +9,7 @@ QtObject {
     property string relativeFontDirectory: "fonts"
 
     /* Edit this comment to add your custom font */
+    readonly property int smallFontSize: baseFontSize * 0.8
     readonly property int baseFontSize: 18
     readonly property int largeFontSize: baseFontSize * 1.6
     /*readonly property font font: Qt.font({

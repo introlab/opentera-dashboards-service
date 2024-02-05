@@ -5,12 +5,16 @@ qt6_add_qml_module(content
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
         App.qml
-        Login.qml
-        Dashboard.qml
-        DashboardForm.ui.qml
         OnlineParticipant.qml
         OnlineParticipantForm.ui.qml
-        LoginForm.ui.qml
+
+        screens/Dashboard.qml
+        screens/DashboardForm.ui.qml
+        screens/Login.qml
+        screens/LoginForm.ui.qml
+
+        ui/BasicButton.ui.qml
+
 
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf

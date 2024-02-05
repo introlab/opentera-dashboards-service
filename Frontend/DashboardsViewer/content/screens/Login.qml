@@ -6,17 +6,24 @@ import OpenTeraLibs.UserClient
 LoginForm {
 
     function do_login() {
+        if (!btnLogin.enabled)
+            return;
+
         console.log("Initating login to ", AppURL);
-        infoText.text = qsTr("Logging in...");
-        infoText.color = "lightgreen"
+        /*infoText.text = qsTr("Logging in...");
+        infoText.color = "lightgreen"*/
+        state = "logging";
         UserClient.connect(AppURL, username, password);
     }
 
     function clear() {
         username = "";
         password = "";
-        infoText.text = qsTr("Welcome! Please login.");
-        infoText.color = Constants.textColor;
+        state = "";
+    }
+
+    Component.onCompleted: {
+        fieldUsername.forceActiveFocus();
     }
 
     onVisibleChanged: {
@@ -26,7 +33,7 @@ LoginForm {
 
     //anchors.fill: parent
     Keys.enabled: true
-    Keys.onEnterPressed: function() {
+    Keys.onReturnPressed: function() {
         do_login();
     }
 
@@ -37,12 +44,11 @@ LoginForm {
     Connections {
         target: UserClient
         onLoginSucceeded: function() {
-            infoText.text = qsTr("Welcome") + " " + username + "!";
-            infoText.color = Constants.textColor;
+            state = "loginSuccess";
         }
         onLoginFailed: function(error) {
-            infoText.text = error;
-            infoText.color = "red";
+            infoText = error;
+            state = "loginError";
         }
     }
 }

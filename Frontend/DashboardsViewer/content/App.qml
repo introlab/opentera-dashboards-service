@@ -6,6 +6,7 @@ import QtQuick.VirtualKeyboard 6.2
 import QtQuick.Controls 6.2
 
 import DashboardsViewer
+import "screens"
 
 import OpenTeraLibs.UserClient 1.0
 
@@ -51,7 +52,7 @@ Window {
 
 
             //Show Dashboard
-            stackview.push("Dashboard.qml");
+            stackview.push("screens/Dashboard.qml");
 
             /*getParticipantsTimer.running = true;
             getUsersTimer.running = true;
