@@ -26,7 +26,7 @@ set(QT_QML_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/qml)
 set(QML_IMPORT_PATH ${PROJECT_BINARY_DIR}/qml CACHE PATH
     "Path to the custom QML components defined by the project")
 
-
+add_subdirectory(resources)
 add_subdirectory(submodules)
 add_subdirectory(qml_cpp_modules)
 
@@ -49,6 +49,7 @@ target_link_libraries(DashboardsViewerApp PRIVATE
     # opentera_libs_qmlplugin
     opentera_libs_client_user_qmlplugin
     dashboardviewer_qml_cpp_modules_config_parser_qmlplugin
+    dashboardsviewer_resources
 )
 
 if (BUILD_QDS_COMPONENTS)

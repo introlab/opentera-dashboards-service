@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/dashboards">
+        <file>json/TestDashboard.json</file>
+    </qresource>
+</RCC>
