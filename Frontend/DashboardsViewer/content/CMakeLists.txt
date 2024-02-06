@@ -12,8 +12,11 @@ qt6_add_qml_module(content
         screens/DashboardForm.ui.qml
         screens/Login.qml
         screens/LoginForm.ui.qml
+        screens/ProjectSelector.qml
+        screens/ProjectSelectorForm.ui.qml
 
         ui/BasicButton.ui.qml
+        ui/BasicDialog.qml
 
 
     RESOURCES

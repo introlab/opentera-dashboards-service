@@ -53,15 +53,14 @@ Window {
 
 
             //Show Dashboard
-            stackview.push("screens/Dashboard.qml");
+            stackview.push("screens/ProjectSelector.qml");
 
             /*getParticipantsTimer.running = true;
             getUsersTimer.running = true;
             getDevicesTimer.running = true;*/
         }
         onLogoutSucceeded: function() {
-            console.log("logout success!");
-            stackview.pop(-1)
+            stackview.pop(null)
 
             /*getParticipantsTimer.running = false;
             getUsersTimer.running = false;
