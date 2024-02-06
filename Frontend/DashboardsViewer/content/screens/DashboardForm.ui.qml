@@ -14,6 +14,7 @@ Item {
     height: 768
 
     property alias button: button
+    property alias load_button: load_button
     property alias flow_view: flow_view
 
     Text {
@@ -33,6 +34,15 @@ Item {
         width: 150
         height: 60
         text: qsTr("Logout")
+    }
+
+    Button {
+        id: load_button
+        anchors.left: button.right
+        anchors.top: parent.top
+        width: 150
+        height: 60
+        text: qsTr("Load")
     }
 
     Flow {
