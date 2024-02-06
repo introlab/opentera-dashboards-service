@@ -1,4 +1,5 @@
 #include "ConfigParser.h"
+#include <QDebug>
 
 ConfigParser::ConfigParser(QObject *parent)
 :   QObject(parent)
@@ -13,7 +14,7 @@ ConfigParser::~ConfigParser()
 
 bool ConfigParser::parseConfig(const QString &configPath)
 {
-    Q_UNUSED(configPath)
+    qDebug() << "ConfigParser::parseConfig() called with configPath: " << configPath;
     return false;
 }
 
