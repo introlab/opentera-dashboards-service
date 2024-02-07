@@ -45,6 +45,7 @@ LoginForm {
         target: UserClient
         onLoginSucceeded: function() {
             state = "loginSuccess";
+            stackview.push("DashboardSelector.qml");
         }
         onLoginFailed: function(error) {
             infoText = error;

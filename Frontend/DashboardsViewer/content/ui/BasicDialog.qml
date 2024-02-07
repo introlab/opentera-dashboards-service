@@ -101,6 +101,7 @@ Item {
                 Text{
                     id: txtTitle
                     text: title
+                    elide: Text.ElideRight
                     horizontalAlignment: Text.AlignHCenter
                     style: Text.Outline
                     Layout.fillWidth: true
@@ -117,8 +118,9 @@ Item {
             anchors.top: headerBar.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            //anchors.bottom: parent.bottom
-            implicitHeight: childrenRect.height
+            anchors.bottom: parent.bottom
+            anchors.margins: recBackground.border.width
+            implicitHeight: childrenRect.height + childrenRect.y
             clip: true
         }
     }

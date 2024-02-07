@@ -36,35 +36,8 @@ Window {
 
     Connections {
         target: UserClient
-        onLoginSucceeded: function() {
-
-            //After login, test wapper
-            /*var params = {};
-            var headers = {};
-            var wrapper = UserClient.get("/api/user/participants/online", params, headers);
-            console.log("found wrapper", wrapper);
-
-            wrapper.requestSucceeded.connect(
-                                function(response) {
-                                    console.log("Hello world!", response)
-                                });
-            */
-
-
-
-            //Show Dashboard
-            stackview.push("screens/ProjectSelector.qml");
-
-            /*getParticipantsTimer.running = true;
-            getUsersTimer.running = true;
-            getDevicesTimer.running = true;*/
-        }
         onLogoutSucceeded: function() {
             stackview.pop(null)
-
-            /*getParticipantsTimer.running = false;
-            getUsersTimer.running = false;
-            getDevicesTimer.running = false;*/
         }
     }
 
