@@ -8,6 +8,7 @@ import DashboardsViewer 1.0
 
 Item {
     property alias btnOK: btnStart
+    property alias file_name: inputJSON.text
 
     Item {
         anchors.centerIn: parent
@@ -253,7 +254,7 @@ Item {
                             font.pixelSize: Constants.baseFontSize
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
-                            text: ":/json/dashboard/text.json"
+                            text: ":/dashboards/json/TestDashboard.json"
                         }
                     }
 

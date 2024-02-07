@@ -9,7 +9,6 @@
 class ConfigParser : public QObject
 {
     Q_OBJECT
-    QML_ELEMENT
 
 public:
     explicit ConfigParser(QObject *parent = nullptr);

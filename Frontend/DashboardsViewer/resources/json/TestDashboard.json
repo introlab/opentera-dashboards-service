@@ -1,4 +1,24 @@
 {
-   "version" : "1.0"
-
+   "version" : "1.0",
+   "name": "Participant Overview Dashboard",
+   "params": {
+      "site_id": "1",
+      "project_id": "1"
+   },
+   "layout": {
+        "type": "flow"
+   },
+   "widgets":[
+      {
+         "type": "Rectangle",
+         "properties": {
+            "background-color": "#f2f2f2",
+            "border-color": "#e0e0e0",
+            "border-width": 1,
+            "border-radius": 5,
+            "width" : 100,
+            "height" : 300
+         }
+      },
+   ]
 }

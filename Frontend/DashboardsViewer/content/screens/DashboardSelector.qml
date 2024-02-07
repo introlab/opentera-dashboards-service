@@ -6,6 +6,12 @@ DashboardSelectorForm {
 
     btnOK.onClicked:{
         stackview.push("Dashboard.qml")
+
+        // get current pushed element
+        var currentElement = stackview.currentItem;
+
+        // Set the element property
+        currentElement.json_file_name = file_name;
     }
 
 }
