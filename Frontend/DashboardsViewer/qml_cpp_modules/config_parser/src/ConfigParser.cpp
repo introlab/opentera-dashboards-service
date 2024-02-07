@@ -75,7 +75,7 @@ QVariantList ConfigParser::parseConfig(const QString &configPath)
         QTextStream textStream(&buffer);
 
         // Write import statements
-        textStream << "import QtQuick; import OpenTeraLibs.UserClient;\n";
+        textStream << "import QtQuick;\nimport OpenTeraLibs.UserClient;\nimport DashboardsViewer;import content\n";
 
         QJsonObject widget = widgets[i].toObject();
         QString type = widget["type"].toString();

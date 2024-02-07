@@ -19,6 +19,7 @@ qt6_add_qml_module(content
         ui/BasicDialog.qml
         ui/FlickableScrollBar.qml
 
+        widgets/ParticipantList.qml
 
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf
