@@ -5,7 +5,7 @@ import OpenTeraLibs.UserClient
 DashboardSelectorForm {
 
     btnOK.onClicked:{
-        stackView.push("Dashboard.qml")
+        stackview.push("Dashboard.qml")
     }
 
 }
