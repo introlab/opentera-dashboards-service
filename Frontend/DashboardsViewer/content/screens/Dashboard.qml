@@ -5,19 +5,43 @@ import DashboardsViewer.ConfigParser 1.0
 
 DashboardForm {
 
+    id: dashboard
     property string json_file_name : "dashboard.json"
 
     signal buttonClicked()
+
+    ConfigParser {
+        id: parser
+    }
+
 
     button.onClicked: function() {
         UserClient.disconnect();
     }
 
-    load_button.onClicked: function() {
+    loadButton.onClicked: function() {
         console.log("should load document", json_file_name)
+        var dynamicQML = parser.parseConfig(json_file_name);
 
-        var parser = new ConfigParser()
-        parser.parseConfig(json_file_name);
+        console.log("dynamicQML", dynamicQML)
+        if (dynamicQML.length > 0)
+        {
+           try {
+               //Create object from dynamicQML
+               var dynamicObject = Qt.createQmlObject(dynamicQML, flowView);
+
+               console.log("dynamicObject", dynamicObject)
+
+               if (dynamicObject !== null)
+               {
+                   flowView.append(dynamicObject);
+               }
+           }
+           catch(e) {
+               console.log("Error", e)
+           }
+        }
+
     }
 
     function addOnlineParticipant(participant)

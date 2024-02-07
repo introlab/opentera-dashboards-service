@@ -14,8 +14,8 @@ Item {
     height: 768
 
     property alias button: button
-    property alias load_button: load_button
-    property alias flow_view: flow_view
+    property alias loadButton: loadButton
+    property alias flowView: flowView
 
     Text {
         id: dashboardText
@@ -37,7 +37,7 @@ Item {
     }
 
     Button {
-        id: load_button
+        id: loadButton
         anchors.left: button.right
         anchors.top: parent.top
         width: 150
@@ -46,7 +46,7 @@ Item {
     }
 
     Flow {
-        id: flow_view
+        id: flowView
         spacing: 10
         anchors.top: dashboardText.bottom
         anchors.bottom: parent.bottom

@@ -12,7 +12,7 @@ endif()
 
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Websockets)
 
 qt_policy(SET QTP0001 NEW)
 
@@ -44,10 +44,8 @@ target_link_libraries(DashboardsViewerApp PRIVATE
     Qt6::Gui
     Qt6::Qml
     Qt6::Quick
-    # opentera_libs_client_user
-    # opentera_libs_client_user_qml
-    # opentera_libs_qmlplugin
     opentera_libs_client_user_qmlplugin
+    dashboardviewer_qml_cpp_modules_config_parser_qml
     dashboardviewer_qml_cpp_modules_config_parser_qmlplugin
     dashboardsviewer_resources
 )
