@@ -12,13 +12,22 @@
       {
          "type": "Rectangle",
          "properties": {
-            "background-color": "#f2f2f2",
-            "border-color": "#e0e0e0",
-            "border-width": 1,
-            "border-radius": 5,
-            "width" : 100,
-            "height" : 300
+            "color": "#f2f2f2",
+            "id": "rect1",
+            "radius": 5,
+            "width": 100,
+            "height": 300
          }
       },
+      {
+         "type": "Rectangle",
+         "properties": {
+            "color": "#f2f2f2",
+            "id": "rect2",
+            "radius": 5,
+            "width": 100,
+            "height": 300
+         }
+      }
    ]
 }

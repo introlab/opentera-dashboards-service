@@ -15,7 +15,7 @@ public:
     explicit ConfigParser(QObject *parent = nullptr);
     ~ConfigParser() override;
 
-    Q_INVOKABLE QString parseConfig(const QString &configPath);
+    Q_INVOKABLE QVariantList parseConfig(const QString &configPath);
 
 
 

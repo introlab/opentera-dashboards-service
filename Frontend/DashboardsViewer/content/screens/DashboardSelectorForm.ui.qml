@@ -254,7 +254,7 @@ Item {
                             font.pixelSize: Constants.baseFontSize
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
-                            text: ":/dashboards/json/TestDashboard.json"
+                            text: ":/dashboards/DashboardsViewer/resources/json/TestDashboard.json"
                         }
                     }
 

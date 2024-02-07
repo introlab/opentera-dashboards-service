@@ -22,23 +22,22 @@ DashboardForm {
     loadButton.onClicked: function() {
         console.log("should load document", json_file_name)
         var dynamicQML = parser.parseConfig(json_file_name);
-
         console.log("dynamicQML", dynamicQML)
+
         if (dynamicQML.length > 0)
         {
-           try {
-               //Create object from dynamicQML
-               var dynamicObject = Qt.createQmlObject(dynamicQML, flowView);
+           for (var i = 0; i < dynamicQML.length; i++)
+           {
 
-               console.log("dynamicObject", dynamicObject)
+               try {
+                   //Create object from dynamicQML
+                   var dynamicObject = Qt.createQmlObject(dynamicQML[i], flowView);
 
-               if (dynamicObject !== null)
-               {
-                   flowView.append(dynamicObject);
+                   console.log("dynamicObject", dynamicObject)
                }
-           }
-           catch(e) {
-               console.log("Error", e)
+               catch(e) {
+                   console.log("Error", e)
+               }
            }
         }
 
@@ -63,5 +62,4 @@ DashboardForm {
     function removeOnlineParticipant(item) {
         console.log("removeOnlineParticipant", item)
     }
-
 }
