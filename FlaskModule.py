@@ -21,7 +21,7 @@ import os
 
 
 # Flask application
-flask_app = Flask("OMRService")
+flask_app = Flask("DashboardsService")
 
 
 def get_locale():

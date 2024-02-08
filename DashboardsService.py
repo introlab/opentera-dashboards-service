@@ -1,11 +1,12 @@
 # Twisted
 import sys
 import json
-import os
 import argparse
 
 from twisted.internet import reactor
 from twisted.python import log
+
+from sqlalchemy.exc import OperationalError
 
 from opentera.services.ServiceOpenTeraWithAssets import ServiceOpenTera
 from opentera.redis.RedisClient import RedisClient
@@ -15,6 +16,7 @@ from opentera.redis.RedisVars import RedisVars
 from FlaskModule import FlaskModule, flask_app
 import Globals
 from ConfigManager import ConfigManager
+from libDashboards.db.DBManager import DBManager
 
 
 class DashboardsService(ServiceOpenTera):
@@ -43,10 +45,8 @@ if __name__ == '__main__':
     log.startLogging(sys.stdout)
 
     parser = argparse.ArgumentParser(description='DashboardsService')
-
-
     parser.add_argument('--enable_tests', help='Test mode for service.', default=False)
-    parser.add_argument('--config', help='Specify config file.', default='DashboardsService.json')
+    parser.add_argument('--config', help='Specify config file.', default='config/DashboardsService.json')
     args = parser.parse_args()
 
     # Load configuration
@@ -88,16 +88,15 @@ if __name__ == '__main__':
         'host': Globals.config_man.db_config['url'],
         'port': Globals.config_man.db_config['port']
     }
-
-    # TODO Handle open database here
-    # try:
-    #    if args.enable_tests:
-    #        Globals.db_man.open_local(None, echo=True)
-    #    else:
-    #        Globals.db_man.open(POSTGRES, Globals.config_man.service_config['debug_mode'])
-    #except OperationalError as e:
-    #    print("Unable to connect to database - please check settings in config file!", e)
-    #    quit()
+    Globals.db_man = DBManager()
+    try:
+        if args.enable_tests:
+            Globals.db_man.open_local(None, echo=True)
+        else:
+            Globals.db_man.open(POSTGRES, Globals.config_man.service_config['debug_mode'])
+    except OperationalError as e:
+        print("Unable to connect to database - please check settings in config file!", e)
+        quit()
 
     with flask_app.app_context():
         # Create the Service

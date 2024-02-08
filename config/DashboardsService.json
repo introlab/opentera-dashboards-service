@@ -1,16 +1,16 @@
 {
     "Service": {
       "name": "DashboardsService",
-      "hostname": "dashboards-service",
+      "hostname": "127.0.0.1",
       "port": 5055,
       "debug_mode": true
     },
     "Backend": {
-      "hostname": "proxy",
-      "port": 40100
+      "hostname": "127.0.0.1",
+      "port": 40075
     },
     "Redis": {
-      "hostname": "cache",
+      "hostname": "127.0.0.1",
       "port": 6379,
       "db": 0,
       "username": "",
@@ -20,8 +20,8 @@
     },
     "Database": {
       "db_type": "QPSQL",
-      "name": "dashboards_service",
-      "url": "db",
+      "name": "opentera_dashboards",
+      "url": "127.0.0.1",
       "port": 5432,
       "username": "teraagent",
       "password": "tera"
