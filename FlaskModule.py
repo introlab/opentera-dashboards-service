@@ -141,7 +141,7 @@ authorizations = {
 }
 
 # API
-api = CustomAPI(flask_app, version='1.0.0', title='OMRService API',
+api = CustomAPI(flask_app, version='1.0.0', title='DashboardsService API',
                 description='DasiboardsService API Documentation', doc='/doc', prefix='/api',
                 authorizations=authorizations)
 
@@ -171,7 +171,6 @@ class FlaskModule(BaseModule):
         flask_app.config.update({'SESSION_TYPE': 'redis'})
         flask_app.config.update({'BABEL_DEFAULT_LOCALE': 'fr'})
         flask_app.config.update({'SESSION_COOKIE_SECURE': True})
-
 
         # Init API
         self.init_service_api(self, self.service, service_api_ns)
@@ -228,14 +227,14 @@ class FlaskModule(BaseModule):
         # Default arguments
         kwargs = {'flaskModule': module, 'service': service} | additional_args
 
-
     @staticmethod
     def init_user_api(module: object, service: object, api_ns=user_api_ns, additional_args={}):
         # Default arguments
         kwargs = {'flaskModule': module, 'service': service} | additional_args
 
-        pass
+        from API.user.QueryDashboard import QueryDashboard
 
+        api_ns.add_resource(QueryDashboard, '/dashboards', resource_class_kwargs=kwargs)
 
     @staticmethod
     def init_participant_api(module: object, service: object, api_ns=participant_api_ns, additional_args={}):
@@ -243,8 +242,6 @@ class FlaskModule(BaseModule):
         kwargs = {'flaskModule': module, 'service': service} | additional_args
 
         pass
-
-
 
     def init_views(self):
         # Default arguments

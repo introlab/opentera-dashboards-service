@@ -31,8 +31,12 @@ class DBManager:
         self.app = app
         self.test = test
 
-    def create_defaults(self, config: ConfigManager, test=False):
-        pass
+    def create_defaults(self, test=False):
+        with self.app.app_context():
+            from libDashboards.db.models.DashDashboards import DashDashboards
+            if DashDashboards.get_count() == 0:
+                print("No dashboards - creating defaults")
+                DashDashboards.create_defaults(test)
 
     def open(self, db_infos, echo=False):
         self.db_uri = 'postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s' % db_infos
@@ -46,7 +50,6 @@ class DBManager:
         # Create db engine
         self.db.init_app(self.app)
         self.db.app = self.app
-
         BaseModel.set_db(self.db)
 
         with self.app.app_context():

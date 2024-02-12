@@ -66,7 +66,6 @@ if __name__ == '__main__':
                          'correctly set in this service?')
         sys.exit(1)
 
-
     service_info = json.loads(service_info)
     if 'service_uuid' not in service_info:
         sys.stderr.write('OpenTera Server didn\'t return a valid service UUID - aborting.')
@@ -94,6 +93,7 @@ if __name__ == '__main__':
             Globals.db_man.open_local(None, echo=True)
         else:
             Globals.db_man.open(POSTGRES, Globals.config_man.service_config['debug_mode'])
+        Globals.db_man.create_defaults(True)
     except OperationalError as e:
         print("Unable to connect to database - please check settings in config file!", e)
         quit()
