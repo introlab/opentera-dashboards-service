@@ -8,11 +8,14 @@ import QtQuick.Layouts
 Item {
     anchors.fill: parent
     id: mainLayout
+    property alias column1: column1
+    property alias column2: column2
+    property alias column3: column3
 
     RowLayout {
         id: rowLayout
         anchors.fill: parent
-        spacing: 0
+        spacing: 10
 
         //The first column 1/3
         ColumnLayout {

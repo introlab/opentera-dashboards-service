@@ -5,6 +5,8 @@
 #include <QObject>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QBuffer>
+#include <QTextStream>
 
 class ConfigParser : public QObject
 {
@@ -17,6 +19,12 @@ public:
 
     Q_INVOKABLE QVariantList parseConfig(const QString &configPath);
 
+
+private:
+
+    void writeLayout(const QJsonObject &layout, QTextStream &stream);
+    void writeWidget(const QJsonObject &widget, QTextStream &stream);
+    void writeProperties(const QJsonObject &properties, QTextStream &stream);
 
 
 };

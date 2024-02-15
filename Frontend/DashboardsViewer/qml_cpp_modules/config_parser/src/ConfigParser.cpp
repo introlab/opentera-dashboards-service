@@ -24,12 +24,7 @@ ConfigParser::~ConfigParser()
 QVariantList ConfigParser::parseConfig(const QString &configPath)
 {
     qDebug() << "ConfigParser::parseConfig() called with configPath: " << configPath;
-/*
-    QDirIterator it(":/", QDirIterator::Subdirectories);
-    while (it.hasNext()) {
-        qDebug() << "File:" << it.next();
-    }
-*/
+
     //Load JSON file
     QFile file(configPath);
     if (!file.open(QIODevice::ReadOnly))
@@ -44,7 +39,6 @@ QVariantList ConfigParser::parseConfig(const QString &configPath)
     QJsonDocument doc = QJsonDocument::fromJson(data, &error);
 
     qDebug() << "loading document with error : " << error.errorString();
-
     if (error.error != QJsonParseError::NoError)
     {
         qDebug() << "Error: Unable to parse JSON file: " << configPath;
@@ -52,64 +46,126 @@ QVariantList ConfigParser::parseConfig(const QString &configPath)
     }
 
     QVariantList output;
-
-
     QJsonObject json = doc.object();
 
+    // Create a QTextStream to operate on the buffer
+    QBuffer buffer;
+    buffer.open(QIODevice::ReadWrite);
+    QTextStream textStream(&buffer);
+
+    // Write import statements
+    textStream << "import QtQuick;\n";
+    textStream << "import OpenTeraLibs.UserClient;\n";
+    textStream << "import DashboardsViewer;\n";
+    textStream << "import content;\n";
+
+
+    // Write Layout
+    QJsonObject layout = json["layout"].toObject();
+    //writeLayout(layout, textStream);
+
+    QString type = layout["type"].toString();
+
+    // Start layout
+    textStream << type << " {\n";
+
+    // Get Properties
+    QJsonObject layoutProperties = layout["properties"].toObject();
+    writeProperties(layoutProperties, textStream);
 
 
 
-
-    // iterate through "widgets" array
+    // Write widgets
     QJsonArray widgets = json["widgets"].toArray();
-
     qDebug() << "widgets array size: " << widgets.size();
-
-
     for (int i = 0; i < widgets.size(); i++)
     {
-
-        // Create a QTextStream to operate on the buffer
-        QBuffer buffer;
-        buffer.open(QIODevice::ReadWrite);
-        QTextStream textStream(&buffer);
-
-        // Write import statements
-        textStream << "import QtQuick;\nimport OpenTeraLibs.UserClient;\nimport DashboardsViewer;import content\n";
-
         QJsonObject widget = widgets[i].toObject();
-        QString type = widget["type"].toString();
-
-        textStream << type << " {\n";
-
-        // iterate through "properties" array
-        QJsonObject properties = widget["properties"].toObject();
-
-        for (auto it = properties.begin(); it != properties.end(); ++it)
-        {
-            QString key = it.key();
-            QJsonValue value = it.value();
-
-            //Output
-            if (value.isString() && key != "id")
-            {
-                textStream << "    " << key << ": \"" << value.toString() << "\";\n";
-            }
-            else
-            {
-                textStream << "    " << key << ": " << value.toVariant().toString() << ";\n";
-            }
-
-        } // End properties
-
-        // End widget
-        textStream << "}\n";
-        textStream.seek(0);
-
-        output.append(QVariant(textStream.readAll()));
+        writeWidget(widget, textStream);
     }
+
+    // End layout
+    textStream << "}\n";
+
+    textStream.flush();
+
+
+    // Reset the buffer position to the start of the buffer
+    buffer.seek(0);
+    // Read the buffer contents into a string
+    QString qmlString = buffer.readAll();
+
+    qDebug() << "qmlString: " << qmlString;
+
+    // Add the string to the output list
+    output.append(QVariant(qmlString));
 
     //Return all generated widgets in a string list
     return output;
 }
+
+void ConfigParser::writeLayout(const QJsonObject &layout, QTextStream &stream)
+{
+
+    QString type = layout["type"].toString();
+
+    // Start layout
+    stream << type << " {\n";
+
+    // Get Properties
+    QJsonObject layoutProperties = layout["properties"].toObject();
+    writeProperties(layoutProperties, stream);
+
+    // End layout
+    stream << "}\n";
+
+}
+
+void ConfigParser::writeWidget(const QJsonObject &widget, QTextStream &stream)
+{
+    QString type = widget["type"].toString();
+
+    // Start widget
+    stream << type << " {\n";
+
+    // Get Properties
+    QJsonObject properties = widget["properties"].toObject();
+    writeProperties(properties, stream);
+
+    // End widget
+    stream << "}\n";
+}
+
+void ConfigParser::writeProperties(const QJsonObject &properties, QTextStream &stream)
+{
+    //TODO Support more types
+    // Iterate through all properties
+    for (auto it = properties.begin(); it != properties.end(); ++it)
+    {
+        // Extract each property which is an object with type and value
+        QJsonObject property = it.value().toObject();
+
+        QString type = property["type"].toString();
+
+        if (type == "string")
+        {
+            stream << "    " << it.key() << ": \"" << property["value"].toString() << "\";\n";
+        }
+        else if (type == "raw")
+        {
+            stream << "    " << it.key() << ": " << property["value"].toString() << ";\n";
+        }
+        else if (type == "int")
+        {
+            stream << "    " << it.key() << ": " << property["value"].toInt() << ";\n";
+        }
+        else
+        {
+            qDebug() << "Error: Unknown property type: " << type;
+        }
+
+    } // End properties
+}
+
+
 

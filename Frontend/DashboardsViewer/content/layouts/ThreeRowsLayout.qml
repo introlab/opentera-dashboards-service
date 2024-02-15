@@ -9,11 +9,14 @@ import QtQuick.Layouts
 Item {
     anchors.fill: parent
     id: mainLayout
+    property alias row1: row1
+    property alias row2: row2
+    property alias row3: row3
 
     ColumnLayout {
         id: columnLayout
         anchors.fill: parent
-        spacing: 0
+        spacing: 10
 
         // Row 1
         RowLayout {
