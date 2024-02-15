@@ -17,7 +17,7 @@ Item {
 
     property alias button: button
     property alias loadButton: loadButton
-    property alias flowView: flowView
+    property alias mainView: mainView
 
     Text {
         id: dashboardText
@@ -47,25 +47,10 @@ Item {
         text: qsTr("Load")
     }
 
-    Rectangle {
-        id: flowView
-        //spacing: 10
+    Item {
+        id: mainView
         anchors.top: dashboardText.bottom
         anchors.bottom: parent.bottom
         width: parent.width
-        gradient: Gradient {
-            GradientStop {
-                position: 0.0
-                color: Constants.lightBackgroundColor
-            }
-            GradientStop {
-                position: 0.5
-                color: Constants.highlightColor
-            }
-            GradientStop {
-                position: 1.0
-                color: Constants.lightBackgroundColor
-            }
-        }
     }
 }

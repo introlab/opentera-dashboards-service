@@ -31,7 +31,7 @@ DashboardForm {
 
                try {
                    //Create object from dynamicQML
-                   var dynamicObject = Qt.createQmlObject(dynamicQML[i], flowView);
+                   var dynamicObject = Qt.createQmlObject(dynamicQML[i], mainView);
 
                    console.log("dynamicObject", dynamicObject)
                }
