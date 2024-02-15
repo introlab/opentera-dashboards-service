@@ -24,6 +24,7 @@ qt6_add_qml_module(content
 
         layouts/ThreeColumnsLayout.qml
         layouts/ThreeRowsLayout.qml
+        layouts/FlowLayout.qml
 
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf
