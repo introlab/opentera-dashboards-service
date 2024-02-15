@@ -197,7 +197,19 @@ void ConfigParser::writeConnections(const QJsonArray &connections, QTextStream &
 
         // Write connection
         stream << "    " << "target: " << sourceObject << ";\n";
-        stream << "    " << sourceSignal << ": {" << targetObject << "." << targetSlot << "();}\n";
+        stream << "    " << sourceSignal << ": {" << targetObject << "." << targetSlot << "(";
+
+        // Write arguments
+        QJsonArray arguments = target["args"].toArray();
+        for (auto j = 0; j < arguments.size(); j++)
+        {
+            stream << arguments[j].toString();
+            if (j < arguments.size() - 1)
+            {
+                stream << ", ";
+            }
+        }
+        stream <<");}\n";
         stream << "    " << "\n";
     }
 

@@ -63,7 +63,7 @@
    "connections": [
       {
          "source": {"object": "button", "signal": "onClicked"},
-         "target": {"object": "participantList", "slot": "refresh"}
+         "target": {"object": "participantList", "slot": "refresh", "args": ["x","y"]}
       }
    ]
 }
