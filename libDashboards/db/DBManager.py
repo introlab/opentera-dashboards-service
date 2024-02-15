@@ -34,9 +34,25 @@ class DBManager:
     def create_defaults(self, test=False):
         with self.app.app_context():
             from libDashboards.db.models.DashDashboards import DashDashboards
-            if DashDashboards.get_count() == 0:
+            from libDashboards.db.models.DashDashboardSites import DashDashboardSites
+            from libDashboards.db.models.DashDashboardProjects import DashDashboardProjects
+            from libDashboards.db.models.DashDashboardVersions import DashDashboardVersions
+
+            if DashDashboards.get_count() == 0 and test:
                 print("No dashboards - creating defaults")
                 DashDashboards.create_defaults(test)
+
+            if DashDashboardVersions.get_count() == 0 and test:
+                print("No dashboards versions - creating defaults")
+                DashDashboardVersions.create_defaults(test)
+
+            if DashDashboardSites.get_count() == 0 and test:
+                print("No dashboards for sites - creating defaults")
+                DashDashboardSites.create_defaults(test)
+
+            if DashDashboardProjects.get_count() == 0 and test:
+                print("No dashboards for projects - creating defaults")
+                DashDashboardProjects.create_defaults(test)
 
     def open(self, db_infos, echo=False):
         self.db_uri = 'postgresql://%(user)s:%(pw)s@%(host)s:%(port)s/%(db)s' % db_infos
