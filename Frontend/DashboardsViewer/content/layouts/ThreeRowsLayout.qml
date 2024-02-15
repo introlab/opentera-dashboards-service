@@ -16,27 +16,21 @@ Item {
     ColumnLayout {
         id: columnLayout
         anchors.fill: parent
-        spacing: 10
+        spacing: 3
 
         // Row 1
         RowLayout {
             id: row1
-            width: columnLayout.width
-            height: columnLayout.height / 3
         }
 
         // Row 2
         RowLayout {
             id: row2
-            width: columnLayout.width
-            height: columnLayout.height / 3
         }
 
         // Row 3
         RowLayout {
             id: row3
-            width: columnLayout.width
-            height: columnLayout.height / 3
         }
     }
 

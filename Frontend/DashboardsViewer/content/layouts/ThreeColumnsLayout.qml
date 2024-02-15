@@ -5,7 +5,7 @@ import QtQuick.Layouts
 /**
     Dashboard basic layout with 3 colums
 */
-Rectangle {
+Item {
     anchors.fill: parent
     id: mainLayout
     property alias column1: column1
@@ -15,30 +15,21 @@ Rectangle {
     RowLayout {
         id: rowLayout
         anchors.fill: parent
-        spacing: 5
+        spacing: 3
 
         //The first column 1/3
         ColumnLayout {
             id: column1
-            anchors.verticalCenter: mainLayout.verticalCenter
-            width: mainLayout.width / 3
-            height: mainLayout.height
         }
 
         //The second column 1/3
         ColumnLayout {
             id: column2
-            anchors.verticalCenter: mainLayout.verticalCenter
-            width: mainLayout.width / 3
-            height: mainLayout.height
         }
 
         //The third column 1/3
         ColumnLayout {
             id: column3
-            anchors.verticalCenter: mainLayout.verticalCenter
-            width: mainLayout.width / 3
-            height: mainLayout.height
         }
     }
 }

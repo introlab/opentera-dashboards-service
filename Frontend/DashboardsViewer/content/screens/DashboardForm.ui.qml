@@ -8,6 +8,7 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 */
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import DashboardsViewer
 
 Item {
     width: 1024
@@ -52,5 +53,19 @@ Item {
         anchors.top: dashboardText.bottom
         anchors.bottom: parent.bottom
         width: parent.width
+        gradient: Gradient {
+            GradientStop {
+                position: 0.0
+                color: Constants.lightBackgroundColor
+            }
+            GradientStop {
+                position: 0.5
+                color: Constants.highlightColor
+            }
+            GradientStop {
+                position: 1.0
+                color: Constants.lightBackgroundColor
+            }
+        }
     }
 }
