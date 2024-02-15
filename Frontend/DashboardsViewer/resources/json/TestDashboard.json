@@ -8,7 +8,8 @@
    "layout": {
         "type": "ThreeColumnsLayout",
          "properties": {
-            "id": {"type": "raw", "value": "layout1"}
+            "id": {"type": "raw", "value": "layout1"},
+            "anchors.fill": {"type": "raw", "value": "parent"}
         }
    },
    "widgets":[
@@ -20,18 +21,18 @@
             "color": {"type": "string", "value": "#ff0000"},
             "radius": {"type": "int", "value": 5},
             "width": {"type": "int", "value": 300},
-            "height": {"type": "int", "value": 300}
+            "height": {"type": "int", "value": 300},
+            "anchors.centerIn": {"type": "raw","value": "layout1.column1"}
          }
       },
       {
-         "type": "Rectangle",
+         "type": "Clock",
          "properties": {
-            "id": {"type": "raw", "value": "rect2"},
+            "id": {"type": "raw", "value": "clock"},
             "parent": {"type": "raw", "value": "layout1.column2"},
-            "color": {"type": "string", "value": "#00ff00"},
-            "radius": {"type": "int", "value": 5},
-            "width": {"type": "int", "value": 300},
-            "height": {"type": "int", "value": 300}
+            "width": {"type": "int", "value": 400},
+            "height": {"type": "int", "value": 400},
+            "anchors.centerIn": {"type": "raw","value": "layout1.column2"}
          }
       },
       {
@@ -40,7 +41,8 @@
              "id": {"type": "raw", "value": "participantList"},
              "parent": {"type": "raw", "value": "layout1.column3"},
              "url": {"type": "string", "value":"/api/user/participants"},
-             "width": {"type": "int", "value": 300}
+             "width": {"type": "int", "value": 300},
+             "anchors.centerIn": {"type": "raw","value": "layout1.column3"}
          }
       }
    ]
