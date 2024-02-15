@@ -21,8 +21,10 @@ qt6_add_qml_module(content
 
         widgets/ParticipantList.qml
 
+        layouts/3ColumnsLayout.qml
+        layouts/3RowsLayout.qml
+
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf
-
         images/logos/LogoOpenTera.png
 )
