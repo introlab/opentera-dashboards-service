@@ -18,6 +18,8 @@ get_parser.add_argument('id_project', type=int, help='ID of the project to query
 get_parser.add_argument('globals', type=inputs.boolean, help='Query globals dashboards')
 
 get_parser.add_argument('all_versions', type=inputs.boolean, help='Return all versions of the dashboard(s)')
+get_parser.add_argument('enabled', type=inputs.boolean, help='Return only enabled versions of the dashboard(s)',
+                        default=True)
 get_parser.add_argument('list', type=inputs.boolean, help='Return minimal information (to display in a list, for '
                                                           'example)')
 
@@ -142,7 +144,7 @@ class QueryDashboard(Resource):
 
                 if json_dashboard['dashboard_version'] != dashboard.dashboard_version:
                     # New version - must create a new dashboard id
-
+                    pass
 
 
 
