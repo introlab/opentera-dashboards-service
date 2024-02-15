@@ -12,6 +12,7 @@ import QtQuick.Controls 2.15
 Item {
     width: 1024
     height: 768
+    anchors.fill: parent
 
     property alias button: button
     property alias loadButton: loadButton
@@ -45,9 +46,9 @@ Item {
         text: qsTr("Load")
     }
 
-    Flow {
+    Rectangle {
         id: flowView
-        spacing: 10
+        //spacing: 10
         anchors.top: dashboardText.bottom
         anchors.bottom: parent.bottom
         width: parent.width

@@ -5,7 +5,7 @@ import QtQuick.Layouts
 /**
     Dashboard basic layout with 3 colums
 */
-Item {
+Rectangle {
     anchors.fill: parent
     id: mainLayout
     property alias column1: column1
