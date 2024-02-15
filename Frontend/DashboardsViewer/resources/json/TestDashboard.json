@@ -43,12 +43,11 @@
          }
       },
       {
-         "type": "Clock",
+         "type": "ButtonWidget",
          "properties": {
-            "id": {"type": "raw", "value": "clock3"},
+            "id": {"type": "raw", "value": "button"},
             "parent": {"type": "raw", "value": "layout1.row2"},
-            "width": {"type": "int", "value": 400},
-            "height": {"type": "int", "value": 100}
+            "text": {"type": "string", "value": "Click Me To Refresh!"}
          }
       },
       {
@@ -59,6 +58,12 @@
              "url": {"type": "string", "value":"/api/user/participants"},
              "width": {"type": "int", "value": 300}
          }
+      }
+   ],
+   "connections": [
+      {
+         "source": {"object": "button", "signal": "onClicked"},
+         "target": {"object": "participantList", "slot": "refresh"}
       }
    ]
 }

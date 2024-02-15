@@ -21,6 +21,7 @@ qt6_add_qml_module(content
 
         widgets/ParticipantList.qml
         widgets/Clock.qml
+        widgets/ButtonWidget.qml
 
         layouts/ThreeColumnsLayout.qml
         layouts/ThreeRowsLayout.qml

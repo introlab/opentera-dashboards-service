@@ -12,6 +12,8 @@ Rectangle {
     property string url: "/api/user/participants"
 
     function refresh() {
+
+        console.log("ParticipantList:refresh");
         var params = {
             "id_project": project_id,
         }

@@ -84,9 +84,14 @@ QVariantList ConfigParser::parseConfig(const QString &configPath)
         writeWidget(widget, textStream);
     }
 
+
+    // Write connections
+    QJsonArray connections = json["connections"].toArray();
+    writeConnections(connections, textStream);
+
+
     // End layout
     textStream << "}\n";
-
     textStream.flush();
 
 
@@ -169,6 +174,35 @@ void ConfigParser::writeProperties(const QJsonObject &properties, QTextStream &s
         }
 
     } // End properties
+}
+
+void ConfigParser::writeConnections(const QJsonArray &connections, QTextStream &stream)
+{
+    // Start connections
+    stream << "Connections {\n";
+
+    // Iterate through all connections
+    for (auto i = 0; i < connections.size(); i++)
+    {
+        // Extract each property which is an object with type and value
+        QJsonObject connection = connections[i].toObject();
+
+        QJsonObject source = connection["source"].toObject();
+        QJsonObject target = connection["target"].toObject();
+
+        QString sourceObject = source["object"].toString();
+        QString sourceSignal = source["signal"].toString();
+        QString targetObject = target["object"].toString();
+        QString targetSlot = target["slot"].toString();
+
+        // Write connection
+        stream << "    " << "target: " << sourceObject << ";\n";
+        stream << "    " << sourceSignal << ": {" << targetObject << "." << targetSlot << "();}\n";
+        stream << "    " << "\n";
+    }
+
+    // End connections
+    stream << "}\n";
 }
 
 
