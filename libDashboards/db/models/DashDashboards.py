@@ -1,5 +1,6 @@
 from libDashboards.db.models.BaseModel import BaseModel
-from sqlalchemy import Column, Integer, Sequence, String, Boolean
+from sqlalchemy import Column, Integer, Sequence, String, Boolean, func, select
+from sqlalchemy.orm import aliased
 import uuid
 
 
@@ -31,24 +32,44 @@ class DashDashboards(BaseModel):
     def get_dashboard_by_uuid(dashboard_uuid: str, latest=True):
         query = DashDashboards.query.filter_by(dashboard_uuid=dashboard_uuid)
         if latest:
-            query = query.order_by(DashDashboards.dashboard_version).desc()
+            subquery = select(func.max(DashDashboards.dashboard_version).label("latest_version"),
+                              DashDashboards.dashboard_uuid).group_by(DashDashboards.dashboard_uuid).subquery()
+            query = (query.filter(DashDashboards.dashboard_version == subquery.c.latest_version).
+                     filter(DashDashboards.dashboard_uuid == subquery.c.dashboard_uuid))
 
         return query.first()
 
     @staticmethod
     def get_dashboards_for_site(site_id: int, latest=True) -> []:
-        return DashDashboards.query.filter_by(id_site=site_id).all()
+        query = DashDashboards.query.filter_by(id_site=site_id)
+        if latest:
+            subquery = select(func.max(DashDashboards.dashboard_version).label("latest_version"),
+                              DashDashboards.dashboard_uuid).group_by(DashDashboards.dashboard_uuid).subquery()
+            query = (query.filter(DashDashboards.dashboard_version == subquery.c.latest_version).
+                     filter(DashDashboards.dashboard_uuid == subquery.c.dashboard_uuid))
+        return query.all()
 
     @staticmethod
     def get_dashboards_for_project(project_id: int, latest=True) -> []:
         query = DashDashboards.query.filter_by(id_project=project_id)
-        # if latest:
-        #     query = query.group_by(DashDashboards.dashboard_uuid)
+        if latest:
+            subquery = select(func.max(DashDashboards.dashboard_version).label("latest_version"),
+                              DashDashboards.dashboard_uuid).group_by(DashDashboards.dashboard_uuid).subquery()
+            query = (query.filter(DashDashboards.dashboard_version == subquery.c.latest_version).
+                     filter(DashDashboards.dashboard_uuid == subquery.c.dashboard_uuid))
         return query.all()
 
     @staticmethod
     def get_dashboards_globals(latest=True) -> []:
-        return DashDashboards.query.filter_by(id_project=None, id_site=None).all()
+        query = DashDashboards.query.filter_by(id_project=None, id_site=None)
+
+        if latest:
+            subquery = select(func.max(DashDashboards.dashboard_version).label("latest_version"),
+                              DashDashboards.dashboard_uuid).group_by(DashDashboards.dashboard_uuid).subquery()
+            query = (query.filter(DashDashboards.dashboard_version == subquery.c.latest_version).
+                     filter(DashDashboards.dashboard_uuid == subquery.c.dashboard_uuid))
+
+        return query.all()
 
     @classmethod
     def insert(cls, dashboard):
