@@ -7,6 +7,7 @@
 #include "app_environment.h"
 #include "import_qml_components_plugins.h"
 #include "import_qml_plugins.h"
+#include "ConfigParser.h"
 
 #ifdef WEBASSEMBLY
 #include <emscripten.h>
@@ -35,7 +36,7 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    QUrl app_url("https://127.0.0.1:40075");
+    QUrl app_url("https://127.0.0.1:40100");
 
 #ifdef WEBASSEMBLY
     char* urlCStr = (char*)EM_ASM_PTR({ return stringToNewUTF8(window.location.href); });

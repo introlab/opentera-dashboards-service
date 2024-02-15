@@ -6,35 +6,58 @@
       "project_id": "1"
    },
    "layout": {
-        "type": "flow"
+        "type": "ThreeRowsLayout",
+         "properties": {
+            "id": {"type": "raw", "value": "layout1"},
+            "anchors.fill": {"type": "raw", "value": "parent"}
+        }
    },
    "widgets":[
       {
          "type": "Rectangle",
          "properties": {
-            "color": "#f2f2f2",
-            "id": "rect1",
-            "radius": 5,
-            "width": 100,
-            "height": 300
+            "id": {"type": "raw", "value": "rect1"},
+            "parent": {"type": "raw", "value": "layout1.row1"},
+            "color": {"type": "string", "value": "#ff0000"},
+            "radius": {"type": "int", "value": 5},
+            "width": {"type": "int", "value": 300},
+            "height": {"type": "int", "value": 300}
          }
       },
       {
-         "type": "Rectangle",
+         "type": "Clock",
          "properties": {
-            "color": "#f2f2f2",
-            "id": "rect2",
-            "radius": 5,
-            "width": 100,
-            "height": 300
+            "id": {"type": "raw", "value": "clock1"},
+            "parent": {"type": "raw", "value": "layout1.row2"},
+            "width": {"type": "int", "value": 400},
+            "height": {"type": "int", "value": 100}
+         }
+      },
+      {
+         "type": "Clock",
+         "properties": {
+            "id": {"type": "raw", "value": "clock2"},
+            "parent": {"type": "raw", "value": "layout1.row2"},
+            "width": {"type": "int", "value": 400},
+            "height": {"type": "int", "value": 100}
+         }
+      },
+      {
+         "type": "Clock",
+         "properties": {
+            "id": {"type": "raw", "value": "clock3"},
+            "parent": {"type": "raw", "value": "layout1.row2"},
+            "width": {"type": "int", "value": 400},
+            "height": {"type": "int", "value": 100}
          }
       },
       {
          "type": "ParticipantList",
          "properties": {
-            "id": "participantList",
-            "url": "/api/user/participants"
-
+             "id": {"type": "raw", "value": "participantList"},
+             "parent": {"type": "raw", "value": "layout1.row3"},
+             "url": {"type": "string", "value":"/api/user/participants"},
+             "width": {"type": "int", "value": 300}
          }
       }
    ]

@@ -20,9 +20,13 @@ qt6_add_qml_module(content
         ui/FlickableScrollBar.qml
 
         widgets/ParticipantList.qml
+        widgets/Clock.qml
+
+        layouts/ThreeColumnsLayout.qml
+        layouts/ThreeRowsLayout.qml
+        layouts/FlowLayout.qml
 
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf
-
         images/logos/LogoOpenTera.png
 )

@@ -8,14 +8,16 @@ Check out https://doc.qt.io/qtcreator/creator-quick-ui-forms.html for details on
 */
 import QtQuick 2.15
 import QtQuick.Controls 2.15
+import DashboardsViewer
 
 Item {
     width: 1024
     height: 768
+    anchors.fill: parent
 
     property alias button: button
     property alias loadButton: loadButton
-    property alias flowView: flowView
+    property alias mainView: mainView
 
     Text {
         id: dashboardText
@@ -45,9 +47,8 @@ Item {
         text: qsTr("Load")
     }
 
-    Flow {
-        id: flowView
-        spacing: 10
+    Item {
+        id: mainView
         anchors.top: dashboardText.bottom
         anchors.bottom: parent.bottom
         width: parent.width
