@@ -25,7 +25,7 @@
          }
       },
       {
-         "type": "Clock",
+         "type": "ClockWidget",
          "properties": {
             "id": {"type": "raw", "value": "clock1"},
             "parent": {"type": "raw", "value": "layout1.row2"},
@@ -34,7 +34,7 @@
          }
       },
       {
-         "type": "Clock",
+         "type": "ClockWidget",
          "properties": {
             "id": {"type": "raw", "value": "clock2"},
             "parent": {"type": "raw", "value": "layout1.row2"},
@@ -51,7 +51,7 @@
          }
       },
       {
-         "type": "ParticipantList",
+         "type": "ParticipantListWidget",
          "properties": {
              "id": {"type": "raw", "value": "participantList"},
              "parent": {"type": "raw", "value": "layout1.row3"},
@@ -60,10 +60,17 @@
          }
       }
    ],
+   "data-sources": [
+        {
+         "type": "FetchDataSource",
+         "id": "participantListData",
+         "url": "/api/user/participants"
+        }
+   ],
    "connections": [
-      {
-         "source": {"object": "button", "signal": "onClicked"},
-         "target": {"object": "participantList", "slot": "refresh", "args": ["x","y"]}
-      }
-   ]
+        {
+        "source": {"object": "button", "signal": "onClicked"},
+        "target": {"object": "participantList", "slot": "refresh", "args": ["x","y"]}
+        }
+    ]
 }

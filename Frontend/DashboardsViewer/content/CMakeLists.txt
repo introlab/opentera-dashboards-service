@@ -19,13 +19,15 @@ qt6_add_qml_module(content
         ui/BasicDialog.qml
         ui/FlickableScrollBar.qml
 
-        widgets/ParticipantList.qml
-        widgets/Clock.qml
+        widgets/ParticipantListWidget.qml
+        widgets/ClockWidget.qml
         widgets/ButtonWidget.qml
 
         layouts/ThreeColumnsLayout.qml
         layouts/ThreeRowsLayout.qml
         layouts/FlowLayout.qml
+
+        data_sources/FetchDataSource.qml
 
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf
