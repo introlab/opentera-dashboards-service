@@ -2,8 +2,8 @@
    "version" : "1.0",
    "name": "Participant Overview Dashboard",
    "params": {
-      "site_id": "1",
-      "project_id": "1"
+      "id_project": "1",
+      "id_site": "1"
    },
    "layout": {
         "type": "ThreeRowsLayout",
@@ -60,17 +60,18 @@
          }
       }
    ],
-   "data-sources": [
+   "dataSources": [
         {
-         "type": "FetchDataSource",
-         "id": "participantListData",
-         "url": "/api/user/participants"
+            "type": "FetchDataSource",
+            "id": "participantListData",
+            "url": "/api/user/participants",
+            "params": {"id_project": {"type": "int", "value": 1}}
         }
    ],
    "connections": [
         {
-        "source": {"object": "button", "signal": "onClicked"},
-        "target": {"object": "participantList", "slot": "refresh", "args": ["x","y"]}
+            "source": {"object": "button", "signal": "onClicked"},
+            "target": {"object": "participantList", "slot": "refresh", "args": ["x","y"]}
         }
     ]
 }

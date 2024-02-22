@@ -85,6 +85,11 @@ QVariantList ConfigParser::parseConfig(const QString &configPath)
     }
 
 
+    // Write data-sources
+    QJsonArray dataSources = json["dataSources"].toArray();
+    qDebug() << "data-sources array size: " << dataSources.size();
+    writeDataSources(dataSources, textStream);
+
     // Write connections
     QJsonArray connections = json["connections"].toArray();
     writeConnections(connections, textStream);
@@ -176,6 +181,33 @@ void ConfigParser::writeProperties(const QJsonObject &properties, QTextStream &s
     } // End properties
 }
 
+void ConfigParser::writeParams(const QJsonObject &params, QTextStream &stream)
+{
+    //TODO Support more types
+    // Iterate through all params
+    for (auto it = params.begin(); it != params.end(); ++it)
+    {
+        // Extract each property which is an object with type and value
+        QJsonObject param = it.value().toObject();
+
+        QString type = param["type"].toString();
+
+        if (type == "string")
+        {
+            stream << "    " << " \"" << it.key() << "\": \"" << param["value"].toString() << "\"\n";
+        }
+        else if (type == "int")
+        {
+            stream << "    \"" << it.key() << "\": " << param["value"].toInt() << "\n";
+        }
+        else
+        {
+            qDebug() << "Error: Unknown property type: " << type;
+        }
+
+    } // End params
+}
+
 void ConfigParser::writeConnections(const QJsonArray &connections, QTextStream &stream)
 {
     // Start connections
@@ -184,7 +216,7 @@ void ConfigParser::writeConnections(const QJsonArray &connections, QTextStream &
     // Iterate through all connections
     for (auto i = 0; i < connections.size(); i++)
     {
-        // Extract each property which is an object with type and value
+        // Extract connection information
         QJsonObject connection = connections[i].toObject();
 
         QJsonObject source = connection["source"].toObject();
@@ -215,6 +247,40 @@ void ConfigParser::writeConnections(const QJsonArray &connections, QTextStream &
 
     // End connections
     stream << "}\n";
+}
+
+void ConfigParser::writeDataSources(const QJsonArray &dataSources, QTextStream &stream)
+{
+    // Iterate through all connections
+    for (auto i = 0; i < dataSources.size(); i++)
+    {
+        // Extract data-source information
+        QJsonObject source = dataSources[i].toObject();
+
+        /*
+        {
+            "type": "FetchDataSource",
+            "id": "participantListData",
+            "url": "/api/user/participants",
+            "params": {"id_project": {"type": "int", "value": 1}}
+        }
+        */
+        stream << source["type"].toString() <<" {\n";
+
+        stream << "    " << "id: " << source["id"].toString() << "\n";
+        stream << "    " << "url: \"" << source["url"].toString() << "\"\n";
+
+        // Handle params like properties
+#if 1
+        QJsonObject params = source["params"].toObject();
+        stream << "    " << "params: {"  << "\n";
+        //Insert all params
+        writeParams(params, stream);
+        stream << "    " << "}\n";
+#endif
+        stream << "}\n";
+
+    }
 }
 
 
