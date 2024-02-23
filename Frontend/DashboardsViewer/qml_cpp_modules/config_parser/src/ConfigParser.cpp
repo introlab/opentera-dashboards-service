@@ -256,30 +256,10 @@ void ConfigParser::writeDataSources(const QJsonArray &dataSources, QTextStream &
     {
         // Extract data-source information
         QJsonObject source = dataSources[i].toObject();
-
-        /*
-        {
-            "type": "FetchDataSource",
-            "id": "participantListData",
-            "url": "/api/user/participants",
-            "params": {"id_project": {"type": "int", "value": 1}}
-        }
-        */
         stream << source["type"].toString() <<" {\n";
-
-        stream << "    " << "id: " << source["id"].toString() << "\n";
-        stream << "    " << "url: \"" << source["url"].toString() << "\"\n";
-
-        // Handle params like properties
-#if 1
-        QJsonObject params = source["params"].toObject();
-        stream << "    " << "params: {"  << "\n";
-        //Insert all params
-        writeParams(params, stream);
-        stream << "    " << "}\n";
-#endif
+        QJsonObject properties = source["properties"].toObject();
+        writeProperties(properties, stream);
         stream << "}\n";
-
     }
 }
 

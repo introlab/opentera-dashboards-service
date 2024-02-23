@@ -22,14 +22,16 @@ qt6_add_qml_module(content
         widgets/ParticipantListWidget.qml
         widgets/ClockWidget.qml
         widgets/ButtonWidget.qml
+        widgets/ListViewWidget.qml
 
         layouts/ThreeColumnsLayout.qml
         layouts/ThreeRowsLayout.qml
         layouts/FlowLayout.qml
 
         dataSources/FetchDataSource.qml
+        dataSources/ParticipantListDataSource.qml
 
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf
-        images/logos/LogoOpenTera.png
+        images/logos/LogoOpenTera.png 
 )

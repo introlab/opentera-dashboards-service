@@ -51,21 +51,24 @@
          }
       },
       {
-         "type": "ParticipantListWidget",
+         "type": "ListViewWidget",
          "properties": {
              "id": {"type": "raw", "value": "participantList"},
              "parent": {"type": "raw", "value": "layout1.row3"},
-             "url": {"type": "string", "value":"/api/user/participants"},
-             "width": {"type": "int", "value": 300}
+             "width": {"type": "int", "value": 300},
+             "model": {"type": "raw", "value": "participantListData.model"},
+             "delegate": {"type": "raw", "value": "participantListData.delegate"}
          }
       }
    ],
    "dataSources": [
         {
-            "type": "FetchDataSource",
-            "id": "participantListData",
-            "url": "/api/user/participants",
-            "params": {"id_project": {"type": "int", "value": 1}}
+            "type": "ParticipantListDataSource",
+            "properties": {
+                "id": {"type": "raw", "value":"participantListData"},
+                "url": {"type": "string", "value": "/api/user/participants"},
+                "id_project": {"type": "int", "value": 1}
+            }
         }
    ],
    "connections": [
