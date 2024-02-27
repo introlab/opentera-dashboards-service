@@ -7,11 +7,22 @@ Item {
 
     property string url: "" // Empty URL
     property int id_project: 0 // Empty Project
-    property alias delegate: delegateItem
-    property alias model: myModel
+    property Component delegate:  Component {
+        id: myDelegate
+
+        // Customize delegate appearance as needed
+        Text {
+            width: 300
+            height: 40
+            text:  participant_name
+        }
+    }
+
+    property ListModel model: ListModel {
+        id: myModel
+    }
 
     id: fetch
-
     signal dataReady(var data);
     signal error(string message);
 
@@ -28,7 +39,13 @@ Item {
             //Add participants to model
             //TODO filter fields
             response.forEach(function(item) {
-                myModel.append(item);
+
+                var filteredItem = {};
+
+                //Filter fields
+                filteredItem.participant_name = item.participant_name;
+
+                myModel.append(filteredItem);
             });
 
         });
@@ -44,27 +61,10 @@ Item {
         getAll();
     }
 
-
     Component.onCompleted: function() {
         //Get data from user client
         getAll();
     }
-
-    Item {
-        id: delegateItem
-        width: parent.width
-        height: 40
-
-        // Customize delegate appearance as needed
-        Text {
-            anchors.centerIn: parent
-            text: model.participant_name
-        }
-    }
-
-    ListModel {
-            id: myModel
-     }
 
 }
 

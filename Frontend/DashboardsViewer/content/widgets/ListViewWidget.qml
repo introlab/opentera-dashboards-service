@@ -5,6 +5,7 @@ Item {
     width: 400
     height: 400
 
+    //Set model and delegate properties externally
     property alias model: myListView.model
     property alias delegate: myListView.delegate
 
@@ -14,5 +15,19 @@ Item {
         anchors.fill: parent
         model: myModel
         delegate: myDelegate
+    }
+
+    ListModel {
+        id: myModel
+        ListElement { name: "Apple" }
+        ListElement { name: "Banana" }
+        ListElement { name: "Cherry" }
+    }
+
+    Component {
+        id: myDelegate
+        Text {
+            text: name
+        }
     }
 }

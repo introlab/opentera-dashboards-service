@@ -56,6 +56,7 @@
              "id": {"type": "raw", "value": "participantList"},
              "parent": {"type": "raw", "value": "layout1.row3"},
              "width": {"type": "int", "value": 300},
+             "height": {"type": "int", "value": 200},
              "model": {"type": "raw", "value": "participantListData.model"},
              "delegate": {"type": "raw", "value": "participantListData.delegate"}
          }
@@ -74,7 +75,7 @@
    "connections": [
         {
             "source": {"object": "button", "signal": "onClicked"},
-            "target": {"object": "participantList", "slot": "refresh", "args": ["x","y"]}
+            "target": {"object": "participantListData", "slot": "update", "args": ["x","y"]}
         }
     ]
 }
