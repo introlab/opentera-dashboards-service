@@ -1,6 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-
+import QtQuick.Layouts
 import OpenTeraLibs.UserClient 1.0
 
 Item {
@@ -10,12 +10,41 @@ Item {
     property Component delegate:  Component {
         id: myDelegate
 
-        // Customize delegate appearance as needed
-        Text {
-            width: 300
-            height: 40
-            text:  participant_name
+        Rectangle {
+            id: myRectangle
+            width: 500
+            height: 80
+            color: "#cccccc"
+            border.color: "black"
+            border.width: 1
+            radius: 5
+
+            ColumnLayout {
+                id: columnLayout
+                anchors.fill: parent
+
+
+                // Customize delegate appearance as needed
+                Text {
+                    height: 20
+                    text:  "Name: " + participant_name
+                    color: "red"
+                }
+
+                Text {
+                    height: 20
+                    text:  "Enabled: " + participant_enabled
+                    color: "green"
+                }
+
+                Text {
+                    height: 20
+                    text:  "UUID: " + participant_uuid
+                    color: "blue"
+                }
+            }
         }
+
     }
 
     property ListModel model: ListModel {
@@ -44,6 +73,10 @@ Item {
 
                 //Filter fields
                 filteredItem.participant_name = item.participant_name;
+                filteredItem.id_participant = item.id_participant;
+                filteredItem.participant_uuid = item.participant_uuid;
+                filteredItem.participant_enabled = item.participant_enabled;
+                filteredItem.id_project = item.id_project;
 
                 myModel.append(filteredItem);
             });
