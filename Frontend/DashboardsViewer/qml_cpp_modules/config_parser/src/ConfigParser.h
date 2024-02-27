@@ -22,14 +22,10 @@ public:
 
 private:
 
-    void writeLayout(const QJsonObject &layout, QTextStream &stream);
     void writeWidget(const QJsonObject &widget, QTextStream &stream);
     void writeProperties(const QJsonObject &properties, QTextStream &stream);
-    void writeParams(const QJsonObject &properties, QTextStream &stream);
     void writeConnections(const QJsonArray &connections, QTextStream &stream);
     void writeDataSources(const QJsonArray &dataSources, QTextStream &stream);
-
-
 };
 
 #endif

@@ -60,6 +60,17 @@
              "model": {"type": "raw", "value": "participantListData.model"},
              "delegate": {"type": "raw", "value": "participantListData.delegate"}
          }
+      },
+      {
+         "type": "ListViewWidget",
+         "properties": {
+             "id": {"type": "raw", "value": "participantSessionList"},
+             "parent": {"type": "raw", "value": "layout1.row3"},
+             "width": {"type": "int", "value": 300},
+             "height": {"type": "int", "value": 200},
+             "model": {"type": "raw", "value": "participantSessionListData.model"},
+             "delegate": {"type": "raw", "value": "participantSessionListData.delegate"}
+         }
       }
    ],
    "dataSources": [
@@ -70,12 +81,24 @@
                 "url": {"type": "string", "value": "/api/user/participants"},
                 "id_project": {"type": "int", "value": 1}
             }
+        },
+        {
+            "type": "ParticipantSessionListDataSource",
+            "properties": {
+                "id": {"type": "raw", "value":"participantSessionListData"},
+                "url": {"type": "string", "value": "/api/user/sessions"},
+                "id_participant": {"type": "int", "value": 0}
+            }
         }
    ],
    "connections": [
         {
             "source": {"object": "button", "signal": "onClicked"},
-            "target": {"object": "participantListData", "slot": "update", "args": ["x","y"]}
+            "target": {"object": "participantListData", "slot": "update", "args": []}
+        },
+        {
+            "source": {"object": "participantListData", "signal": "onParticipantClicked"},
+            "target": {"object": "participantSessionListData", "slot": "setParticipant", "args": ["id_participant"]}
         }
     ]
 }

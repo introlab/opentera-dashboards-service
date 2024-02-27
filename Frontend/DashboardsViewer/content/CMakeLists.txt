@@ -30,8 +30,9 @@ qt6_add_qml_module(content
 
         dataSources/FetchDataSource.qml
         dataSources/ParticipantListDataSource.qml
+        dataSources/ParticipantSessionListDataSource.qml
 
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf
-        images/logos/LogoOpenTera.png 
+        images/logos/LogoOpenTera.png
 )

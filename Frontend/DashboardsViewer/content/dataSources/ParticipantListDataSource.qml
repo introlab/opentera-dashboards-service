@@ -8,7 +8,7 @@ Item {
     property string url: "" // Empty URL
     property int id_project: 0 // Empty Project
     property Component delegate:  Component {
-        id: myDelegate
+    id: myDelegate
 
         Rectangle {
             id: myRectangle
@@ -43,9 +43,19 @@ Item {
                     color: "blue"
                 }
             }
-        }
 
-    }
+            MouseArea {
+                id: mouseArea
+                anchors.fill: parent
+                onClicked: {
+                    console.log("Clicked on: " + participant_name);
+                    console.log("Id participant", id_participant);
+                    console.log("Id project", id_project)
+                    fetch.participantClicked(id_participant);
+                }
+            }
+        }
+    } // Component
 
     property ListModel model: ListModel {
         id: myModel
@@ -54,6 +64,7 @@ Item {
     id: fetch
     signal dataReady(var data);
     signal error(string message);
+    signal participantClicked(int id_participant);
 
     function getAll() {
         var params = {"id_project": id_project};
