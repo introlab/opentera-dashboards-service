@@ -5,7 +5,7 @@ import OpenTeraLibs.UserClient 1.0
 
 Item {
 
-    property string url: "/user/sessions" // Empty URL
+    property string url: "/api/user/sessions" // Empty URL
     property int id_participant: 0 // Empty Participant
     property Component delegate:  Component {
     id: myDelegate
