@@ -1,6 +1,6 @@
 import QtQuick 2.15
 
-Item {
+BaseWidget {
     width: 200
     height: 200
 

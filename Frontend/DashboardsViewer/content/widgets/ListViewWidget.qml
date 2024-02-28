@@ -1,13 +1,14 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 
-Item {
-    width: 400
-    height: 400
+
+
+BaseWidget {
 
     //Set model and delegate properties externally
     property alias model: myListView.model
     property alias delegate: myListView.delegate
+
 
     // Define a ListView to display the items
     ListView {
@@ -30,4 +31,6 @@ Item {
             text: name
         }
     }
+
+
 }

@@ -17,25 +17,26 @@ Item {
         id: columnLayout
         anchors.fill: parent
         spacing: 3
+        Layout.alignment: Qt.TopToBottom
 
         // Row 1
         RowLayout {
             // Set the horizontal alignment to align items to the right
-            Layout.alignment: Qt.AlignCenter
+            Layout.alignment: Qt.LeftToRight
             id: row1
         }
 
         // Row 2
         RowLayout {
             // Set the horizontal alignment to align items to the right
-            Layout.alignment: Qt.AlignCenter
+            Layout.alignment: Qt.LeftToRight
             id: row2
         }
 
         // Row 3
         RowLayout {
             // Set the horizontal alignment to align items to the right
-            Layout.alignment: Qt.AlignCenter
+            Layout.alignment: Qt.LeftToRight
             id: row3
         }
     }

@@ -16,20 +16,24 @@ Item {
         id: rowLayout
         anchors.fill: parent
         spacing: 3
+        Layout.alignment: Qt.LeftToRight
 
         //The first column 1/3
         ColumnLayout {
             id: column1
+            Layout.alignment: Qt.TopToBottom
         }
 
         //The second column 1/3
         ColumnLayout {
             id: column2
+            Layout.alignment: Qt.TopToBottom
         }
 
         //The third column 1/3
         ColumnLayout {
             id: column3
+            Layout.alignment: Qt.TopToBottom
         }
     }
 }

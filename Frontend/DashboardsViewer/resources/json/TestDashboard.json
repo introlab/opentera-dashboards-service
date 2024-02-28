@@ -54,7 +54,7 @@
          "type": "ListViewWidget",
          "properties": {
              "id": {"type": "raw", "value": "participantList"},
-             "parent": {"type": "raw", "value": "layout1.row3"},
+             "layout": {"type": "raw", "value": "layout1.row3"},
              "width": {"type": "int", "value": 300},
              "height": {"type": "int", "value": 200},
              "model": {"type": "raw", "value": "participantListData.model"},

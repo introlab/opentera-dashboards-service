@@ -18,21 +18,26 @@ qt6_add_qml_module(content
         ui/BasicButton.ui.qml
         ui/BasicDialog.qml
         ui/FlickableScrollBar.qml
-
-        widgets/ParticipantListWidget.qml
+        # Widgets
+        widgets/BaseWidget.qml
         widgets/ClockWidget.qml
         widgets/ButtonWidget.qml
         widgets/ListViewWidget.qml
-
+        # Layouts
+        layouts/BaseLayout.qml
         layouts/ThreeColumnsLayout.qml
         layouts/ThreeRowsLayout.qml
         layouts/FlowLayout.qml
-
+        # DataSources
+        dataSources/BaseDataSource.qml
         dataSources/FetchDataSource.qml
         dataSources/ParticipantListDataSource.qml
         dataSources/ParticipantSessionListDataSource.qml
+        # Delegates
+        delegates/ParticipantDelegate.qml
 
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf
         images/logos/LogoOpenTera.png
+
 )
