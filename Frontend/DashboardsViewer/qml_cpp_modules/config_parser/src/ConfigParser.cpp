@@ -61,8 +61,10 @@ QVariantList ConfigParser::parseConfig(const QString &configPath)
     textStream << "import DashboardsViewer;\n";
     textStream << "import content;\n";
 
-    // Write the root object
+    // Write the root object, make sure it will fill parent
     textStream << "Item { //Begin root object \n";
+    textStream << "    id: rootObject;\n";
+    textStream << "    anchors.fill: parent;\n";
 
     // Write Main Layout
     QJsonObject layout = json["layout"].toObject();

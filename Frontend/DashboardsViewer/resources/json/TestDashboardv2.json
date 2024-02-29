@@ -16,7 +16,8 @@
             {
                 "type": "RowLayout",
                 "properties": {
-                    "id": {"type": "raw", "value": "layout2"}
+                    "id": {"type": "raw", "value": "layout2"},
+                    "Layout.alignment": {"type": "raw", "value": "Qt.AlignCenter"}
                 },
                 "widgets": [
                     {
@@ -34,7 +35,8 @@
             {
                 "type": "RowLayout",
                 "properties": {
-                    "id": {"type": "raw", "value": "layout3"}
+                    "id": {"type": "raw", "value": "layout3"},
+                    "Layout.alignment": {"type": "raw", "value": "Qt.AlignCenter"}
                 },
                 "widgets": [
                     {
@@ -67,7 +69,8 @@
             {
                 "type": "RowLayout",
                 "properties": {
-                    "id": {"type": "raw", "value": "layout4"}
+                    "id": {"type": "raw", "value": "layout4"},
+                    "Layout.alignment": {"type": "raw", "value": "Qt.AlignCenter"}
                 },
                 "widgets": [
                     {
