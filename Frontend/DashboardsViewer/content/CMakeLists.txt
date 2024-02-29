@@ -24,8 +24,7 @@ qt6_add_qml_module(content
         widgets/ListViewWidget.qml
         # Layouts
         layouts/BaseLayout.qml
-        layouts/ThreeColumnsLayout.qml
-        layouts/ThreeRowsLayout.qml
+        layouts/CenteredRowLayout.qml
         layouts/FlowLayout.qml
         # DataSources
         dataSources/BaseDataSource.qml
