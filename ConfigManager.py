@@ -39,10 +39,10 @@ class ConfigManager(ServiceConfigManager, DashboardsServiceConfig, DBConfig):
 
         # Default backend configuration
         self.backend_config['hostname'] = '127.0.0.1'
-        self.backend_config['port'] = 40100
+        self.backend_config['port'] = 40075
 
         # Default redis configuration
-        self.redis_config['hostname'] = 'db'
+        self.redis_config['hostname'] = '127.0.0.1'
         self.redis_config['port'] = 6379
         self.redis_config['username'] = ''
         self.redis_config['password'] = ''
