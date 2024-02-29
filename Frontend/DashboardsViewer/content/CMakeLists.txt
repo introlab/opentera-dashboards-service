@@ -4,17 +4,16 @@ qt6_add_qml_module(content
     VERSION 1.0
     RESOURCE_PREFIX "/qt/qml"
     QML_FILES
+        # App
         App.qml
-        OnlineParticipant.qml
-        OnlineParticipantForm.ui.qml
-
+        # Screens
         screens/Dashboard.qml
         screens/DashboardForm.ui.qml
         screens/DashboardSelector.qml
         screens/DashboardSelectorForm.ui.qml
         screens/Login.qml
         screens/LoginForm.ui.qml
-
+        # Uis
         ui/BasicButton.ui.qml
         ui/BasicDialog.qml
         ui/FlickableScrollBar.qml

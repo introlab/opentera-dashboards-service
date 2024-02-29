@@ -9,10 +9,10 @@ import QtQuick.Layouts
 Item {
     anchors.fill: parent
     id: mainLayout
-    property alias flow: flow
+    property alias flow: myFlow
 
     Flow {
-        id: flow
+        id: myFlow
         anchors.fill: parent
         spacing: 3
     }

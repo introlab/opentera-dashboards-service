@@ -6,7 +6,7 @@ import QtQuick.Layouts
 /**
     Dashboard basic layout with 3 rows
 */
-Item {
+BaseLayout {
     anchors.fill: parent
     id: mainLayout
     property alias row1: row1
@@ -16,28 +16,27 @@ Item {
     ColumnLayout {
         id: columnLayout
         anchors.fill: parent
-        spacing: 3
-        Layout.alignment: Qt.TopToBottom
+        spacing: -1
 
         // Row 1
         RowLayout {
             // Set the horizontal alignment to align items to the right
-            Layout.alignment: Qt.LeftToRight
             id: row1
+            Layout.alignment: Qt.AlignCenter
         }
 
         // Row 2
         RowLayout {
             // Set the horizontal alignment to align items to the right
-            Layout.alignment: Qt.LeftToRight
             id: row2
+            Layout.alignment: Qt.AlignCenter
         }
 
         // Row 3
         RowLayout {
             // Set the horizontal alignment to align items to the right
-            Layout.alignment: Qt.LeftToRight
             id: row3
+            Layout.alignment: Qt.AlignCenter
         }
     }
 

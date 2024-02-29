@@ -69,7 +69,7 @@
              "id": {"type": "raw", "value": "participantSessionList"},
              "parent": {"type": "raw", "value": "layout1.row3"},
              "width": {"type": "int", "value": 300},
-             "height": {"type": "int", "value": 200},            
+             "height": {"type": "int", "value": 200},
              "model": {"type": "raw", "value": "participantSessionListData.model"},
              "delegate": {"type": "raw", "value": "participantSessionListData.delegate"}
          }

@@ -9,4 +9,5 @@ qt6_add_qml_module(dashboardsviewer_resources
     NO_PLUGIN
     RESOURCES
         json/TestDashboard.json
+        json/TestDashboardv2.json
 )
