@@ -3,18 +3,10 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts
 
 
-Component {
+Item {
     id: myDelegate
 
-    // Default property values
-    property string participant_name: ""
-    property string participant_enabled: ""
-    property string participant_uuid: ""
-    property int id_participant: 0
-    property int id_project: 0
-
     signal participantClicked(int id);
-
 
     Rectangle {
         id: myRectangle
@@ -50,6 +42,7 @@ Component {
             }
         }
 
+
         MouseArea {
             id: mouseArea
             anchors.fill: parent
@@ -60,5 +53,6 @@ Component {
                 participantClicked(id_participant);
             }
         }
+
     }
 } // Component

@@ -2,61 +2,12 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts
 import OpenTeraLibs.UserClient 1.0
+import "../delegates"
 
 Item {
 
     property string url: "" // Empty URL
     property int id_project: 0 // Empty Project
-    property Component delegate:  Component {
-    id: myDelegate
-
-        Rectangle {
-            id: myRectangle
-            width: parent.width
-            height: 80
-            color: "#cccccc"
-            border.color: "black"
-            border.width: 1
-            radius: 5
-
-            ColumnLayout {
-                id: columnLayout
-                anchors.fill: parent
-
-
-                // Customize delegate appearance as needed
-                Text {
-                    height: 20
-                    text:  "Name: " + participant_name
-                    color: "red"
-                }
-
-                Text {
-                    height: 20
-                    text:  "Enabled: " + participant_enabled
-                    color: "green"
-                }
-
-                Text {
-                    height: 20
-                    text:  "UUID: " + participant_uuid
-                    color: "blue"
-                }
-            }
-
-            MouseArea {
-                id: mouseArea
-                anchors.fill: parent
-                onClicked: {
-                    console.log("Clicked on: " + participant_name);
-                    console.log("Id participant", id_participant);
-                    console.log("Id project", id_project)
-                    fetch.participantClicked(id_participant);
-                }
-            }
-        }
-    } // Component
-
     property ListModel model: ListModel {
         id: myModel
     }

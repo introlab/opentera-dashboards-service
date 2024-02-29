@@ -189,19 +189,19 @@ void ConfigParser::writeProperties(const QJsonObject &properties, QTextStream &s
 
         if (type == "string")
         {
-            stream << "    " << it.key() << ": \"" << property["value"].toString() << "\";\n";
+            stream << "    " << it.key() << ": \"" << property["value"].toString() << "\"\n";
         }
         else if (type == "raw")
         {
-            stream << "    " << it.key() << ": " << property["value"].toString() << ";\n";
+            stream << "    " << it.key() << ": " << property["value"].toString() << "\n";
         }
         else if (type == "int")
         {
-            stream << "    " << it.key() << ": " << property["value"].toInt() << ";\n";
+            stream << "    " << it.key() << ": " << property["value"].toInt() << "\n";
         }
         else if (type == "bool")
         {
-            stream << "    " << it.key() << ": " << property["value"].toString() << ";\n";
+            stream << "    " << it.key() << ": " << property["value"].toString() << "\n";
         }
         else
         {
