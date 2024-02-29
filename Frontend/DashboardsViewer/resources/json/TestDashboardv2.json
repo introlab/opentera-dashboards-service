@@ -6,75 +6,69 @@
       "id_site": "1"
    },
    "layout": {
-        "type": "ThreeRowsLayout",
-         "properties": {
+        "type": "ColumnLayout",
+        "properties": {
             "id": {"type": "raw", "value": "layout1"},
             "anchors.fill": {"type": "raw", "value": "parent"}
-        }
+        },
+        "widgets":[
+           {
+              "type": "Rectangle",
+              "properties": {
+                 "id": {"type": "raw", "value": "rect1"},
+                 "color": {"type": "string", "value": "#ff0000"},
+                 "radius": {"type": "int", "value": 5},
+                 "width": {"type": "int", "value": 300},
+                 "height": {"type": "int", "value": 300}
+              }
+           },
+           {
+              "type": "ClockWidget",
+              "properties": {
+                 "id": {"type": "raw", "value": "clock1"},
+                 "width": {"type": "int", "value": 100},
+                 "height": {"type": "int", "value": 100}
+              }
+           },
+           {
+              "type": "ClockWidget",
+              "properties": {
+                 "id": {"type": "raw", "value": "clock2"},
+                 "width": {"type": "int", "value": 100},
+                 "height": {"type": "int", "value": 100}
+              }
+           },
+           {
+              "type": "ButtonWidget",
+              "properties": {
+                 "id": {"type": "raw", "value": "button"},
+                 "text": {"type": "string", "value": "Click Me To Refresh!"},
+                 "width": {"type": "int", "value": 100},
+                 "height": {"type": "int", "value": 100}
+              }
+           },
+           {
+              "type": "ListViewWidget",
+              "properties": {
+                  "id": {"type": "raw", "value": "participantList"},
+                  "width": {"type": "int", "value": 300},
+                  "height": {"type": "int", "value": 200},
+                  "model": {"type": "raw", "value": "participantListData.model"},
+                  "delegate": {"type": "raw", "value": "participantListData.delegate"}
+              }
+           },
+           {
+              "type": "ListViewWidget",
+              "properties": {
+                  "id": {"type": "raw", "value": "participantSessionList"},
+                  "width": {"type": "int", "value": 300},
+                  "height": {"type": "int", "value": 200},
+                  "model": {"type": "raw", "value": "participantSessionListData.model"},
+                  "delegate": {"type": "raw", "value": "participantSessionListData.delegate"}
+              }
+           }
+        ]
    },
-   "widgets":[
-      {
-         "type": "Rectangle",
-         "properties": {
-            "id": {"type": "raw", "value": "rect1"},
-            "parent": {"type": "raw", "value": "layout1.row1"},
-            "color": {"type": "string", "value": "#ff0000"},
-            "radius": {"type": "int", "value": 5},
-            "width": {"type": "int", "value": 300},
-            "height": {"type": "int", "value": 300}
-         }
-      },
-      {
-         "type": "ClockWidget",
-         "properties": {
-            "id": {"type": "raw", "value": "clock1"},
-            "parent": {"type": "raw", "value": "layout1.row2"},
-            "width": {"type": "int", "value": 100},
-            "height": {"type": "int", "value": 100}
-         }
-      },
-      {
-         "type": "ClockWidget",
-         "properties": {
-            "id": {"type": "raw", "value": "clock2"},
-            "parent": {"type": "raw", "value": "layout1.row2"},
-            "width": {"type": "int", "value": 100},
-            "height": {"type": "int", "value": 100}
-         }
-      },
-      {
-         "type": "ButtonWidget",
-         "properties": {
-            "id": {"type": "raw", "value": "button"},
-            "parent": {"type": "raw", "value": "layout1.row2"},
-            "text": {"type": "string", "value": "Click Me To Refresh!"},
-            "width": {"type": "int", "value": 100},
-            "height": {"type": "int", "value": 100}
-         }
-      },
-      {
-         "type": "ListViewWidget",
-         "properties": {
-             "id": {"type": "raw", "value": "participantList"},
-             "parent": {"type": "raw", "value": "layout1.row3"},
-             "width": {"type": "int", "value": 300},
-             "height": {"type": "int", "value": 200},
-             "model": {"type": "raw", "value": "participantListData.model"},
-             "delegate": {"type": "raw", "value": "participantListData.delegate"}
-         }
-      },
-      {
-         "type": "ListViewWidget",
-         "properties": {
-             "id": {"type": "raw", "value": "participantSessionList"},
-             "parent": {"type": "raw", "value": "layout1.row3"},
-             "width": {"type": "int", "value": 300},
-             "height": {"type": "int", "value": 200},
-             "model": {"type": "raw", "value": "participantSessionListData.model"},
-             "delegate": {"type": "raw", "value": "participantSessionListData.delegate"}
-         }
-      }
-   ],
    "dataSources": [
         {
             "type": "ParticipantListDataSource",

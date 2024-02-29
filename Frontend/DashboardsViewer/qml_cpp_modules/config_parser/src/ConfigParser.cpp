@@ -55,37 +55,20 @@ QVariantList ConfigParser::parseConfig(const QString &configPath)
 
     // Write import statements
     textStream << "import QtQuick;\n";
+    textStream << "import QtQuick.Controls;\n";
+    textStream << "import QtQuick.Layouts;\n";
     textStream << "import OpenTeraLibs.UserClient;\n";
     textStream << "import DashboardsViewer;\n";
     textStream << "import content;\n";
 
+    // Write the root object
+    textStream << "Item { //Begin root object \n";
 
-    // Write Layout
+    // Write Main Layout
     QJsonObject layout = json["layout"].toObject();
+    writeLayout(layout, textStream);
 
-
-    QString type = layout["type"].toString();
-
-    // Start layout
-    textStream << type << " {\n";
-
-    // Get Properties
-    QJsonObject layoutProperties = layout["properties"].toObject();
-    writeProperties(layoutProperties, textStream);
-
-
-
-    // Write widgets
-    QJsonArray widgets = json["widgets"].toArray();
-    qDebug() << "widgets array size: " << widgets.size();
-    for (int i = 0; i < widgets.size(); i++)
-    {
-        QJsonObject widget = widgets[i].toObject();
-        writeWidget(widget, textStream);
-    }
-
-
-    // Write data-sources
+    // Write dataSources
     QJsonArray dataSources = json["dataSources"].toArray();
     qDebug() << "data-sources array size: " << dataSources.size();
     writeDataSources(dataSources, textStream);
@@ -95,11 +78,11 @@ QVariantList ConfigParser::parseConfig(const QString &configPath)
     qDebug() << "connections array size: " << connections.size();
     writeConnections(connections, textStream);
 
+    // End root object
+    textStream << "} // End Root Object\n";
 
-    // End layout
-    textStream << "} //End Layout\n";
+
     textStream.flush();
-
 
     // Reset the buffer position to the start of the buffer
     buffer.seek(0);
@@ -115,6 +98,65 @@ QVariantList ConfigParser::parseConfig(const QString &configPath)
     return output;
 }
 
+void ConfigParser::writeLayout(const QJsonObject &layout, QTextStream &stream)
+{
+
+    QString type = layout["type"].toString();
+
+    // Start layout
+    stream << type << " {\n";
+
+    //Verify if we have properties
+    if (layout.contains("properties"))
+    {
+        // Write Properties
+        QJsonObject layoutProperties = layout["properties"].toObject();
+        writeProperties(layoutProperties, stream);
+    }
+    else
+    {
+        qDebug() << "No properties found in layout " << type;
+    }
+
+    //Verify if layout contain widgets
+    if (layout.contains("widgets"))
+    {
+        // Write widgets
+        QJsonArray layoutWidgets = layout["widgets"].toArray();
+        qDebug() << "widgets array size: " << layoutWidgets.size();
+        for (int i = 0; i < layoutWidgets.size(); i++)
+        {
+            QJsonObject myWidget = layoutWidgets[i].toObject();
+            writeWidget(myWidget, stream);
+        }
+    }
+    else
+    {
+        qDebug() << "No widgets found in layout " << type;
+    }
+
+    //Verify if layout contain layouts
+    if (layout.contains("layouts"))
+    {
+        // Write layouts
+        QJsonArray layoutLayouts = layout["layouts"].toArray();
+        qDebug() << "layouts array size: " << layoutLayouts.size();
+        for (int i = 0; i < layoutLayouts.size(); i++)
+        {
+            QJsonObject myLayout = layoutLayouts[i].toObject();
+            writeLayout(myLayout, stream);
+        }
+    }
+    else
+    {
+        qDebug() << "No layouts found in layout " << type;
+    }
+
+    // End layout
+    stream << "} //End Layout of type " << type << "\n";
+
+}
+
 
 void ConfigParser::writeWidget(const QJsonObject &widget, QTextStream &stream)
 {
@@ -125,6 +167,7 @@ void ConfigParser::writeWidget(const QJsonObject &widget, QTextStream &stream)
 
     // Get Properties
     QJsonObject properties = widget["properties"].toObject();
+    qDebug() << "properties size for widget: " << properties.size();
     writeProperties(properties, stream);
 
     // End widget
