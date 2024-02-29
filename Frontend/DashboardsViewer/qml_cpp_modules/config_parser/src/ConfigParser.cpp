@@ -9,6 +9,7 @@
 #include <QDirIterator>
 #include <QBuffer>
 #include <QTextStream>
+#include <QRegularExpression>
 
 ConfigParser::ConfigParser(QObject *parent)
 :   QObject(parent)
@@ -20,6 +21,14 @@ ConfigParser::~ConfigParser()
 {
 
 }
+
+
+
+bool ConfigParser::isValidString(const QString &input) {
+    QRegularExpression regex("^[a-zA-Z0-9. |]+$");
+    return regex.match(input).hasMatch();
+}
+
 
 QVariantList ConfigParser::parseConfig(const QString &configPath)
 {
@@ -193,7 +202,14 @@ void ConfigParser::writeProperties(const QJsonObject &properties, QTextStream &s
         }
         else if (type == "raw")
         {
-            stream << "    " << it.key() << ": " << property["value"].toString() << "\n";
+            QString value = property["value"].toString();
+            if (isValidString(value))
+            {
+                stream << "    " << it.key() << ": " << value << "\n";
+            }
+            else {
+                qDebug() << "Invalid value for raw type : " << value;
+            }
         }
         else if (type == "int")
         {
@@ -205,7 +221,15 @@ void ConfigParser::writeProperties(const QJsonObject &properties, QTextStream &s
         }
         else if (type == "delegate")
         {
-            stream << "    " << it.key() << ": " << property["value"].toString() << "{}\n";
+            QString value = property["value"].toString();
+            if (isValidString(value))
+            {
+                stream << "    " << it.key() << ": " << property["value"].toString() << "{}\n";
+            }
+            else
+            {
+                qDebug() << "Invalid value for delegate type : " << value;
+            }
         }
         else
         {
