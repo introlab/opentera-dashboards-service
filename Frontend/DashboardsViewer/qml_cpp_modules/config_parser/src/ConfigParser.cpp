@@ -203,6 +203,10 @@ void ConfigParser::writeProperties(const QJsonObject &properties, QTextStream &s
         {
             stream << "    " << it.key() << ": " << property["value"].toString() << "\n";
         }
+        else if (type == "delegate")
+        {
+            stream << "    " << it.key() << ": " << property["value"].toString() << "{}\n";
+        }
         else
         {
             qDebug() << "Error: Unknown property type: " << type;

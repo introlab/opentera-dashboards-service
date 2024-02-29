@@ -78,7 +78,7 @@
                            "id": {"type": "raw", "value": "participantList"},
                            "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
                            "model": {"type": "raw", "value": "participantListData.model"},
-                           "delegate": {"type": "raw", "value": "ParticipantDelegate {}"}
+                           "delegate": {"type": "delegate", "value": "ParticipantDelegate"}
                        }
                     },
                     {
@@ -87,7 +87,7 @@
                            "id": {"type": "raw", "value": "participantSessionList"},
                            "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
                            "model": {"type": "raw", "value": "participantSessionListData.model"},
-                           "delegate": {"type": "raw", "value": "SessionDelegate {}"}
+                           "delegate": {"type": "delegate", "value": "SessionDelegate"}
                        }
                     }
                 ]
