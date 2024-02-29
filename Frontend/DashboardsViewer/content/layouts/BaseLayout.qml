@@ -4,5 +4,6 @@ import QtQuick.Layouts
 ColumnLayout {
     id: myColumnLayout
     anchors.fill: parent
-    spacing: -1 // Equal spacing between components
+    anchors.margins: 10
+    spacing: 10
 }

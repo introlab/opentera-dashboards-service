@@ -58,7 +58,7 @@
                        "type": "ButtonWidget",
                        "properties": {
                           "id": {"type": "raw", "value": "button"},
-                           "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
+                          "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
                           "text": {"type": "string", "value": "Click Me To Refresh!"},
                           "width": {"type": "int", "value": 100},
                           "height": {"type": "int", "value": 100}
@@ -76,6 +76,7 @@
                        "type": "ListViewWidget",
                        "properties": {
                            "id": {"type": "raw", "value": "participantList"},
+                           "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
                            "model": {"type": "raw", "value": "participantListData.model"},
                            "delegate": {"type": "raw", "value": "participantListData.delegate"}
                        }
@@ -84,6 +85,7 @@
                        "type": "ListViewWidget",
                        "properties": {
                            "id": {"type": "raw", "value": "participantSessionList"},
+                           "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
                            "model": {"type": "raw", "value": "participantSessionListData.model"},
                            "delegate": {"type": "raw", "value": "participantSessionListData.delegate"}
                        }

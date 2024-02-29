@@ -12,7 +12,7 @@ Item {
 
         Rectangle {
             id: myRectangle
-            width: 500
+            width: parent.width
             height: 80
             color: "#cccccc"
             border.color: "black"
