@@ -256,7 +256,6 @@ class FlaskModule(BaseModule):
         flask_app.add_url_rule('/dashboards', view_func=DashboardsIndex.as_view('dashboards', *args, **kwargs))
 
 
-
 @flask_app.errorhandler(404)
 def page_not_found(e):
     print(e)

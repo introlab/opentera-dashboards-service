@@ -5,6 +5,7 @@ import os
 import time
 import sys
 
+
 class DockerTestSetupTest(unittest.TestCase):
 
     SERVER_URL = 'https://localhost:40100'
@@ -23,7 +24,6 @@ class DockerTestSetupTest(unittest.TestCase):
         print('Sleeping for 10 seconds to give the services time to start')
         time.sleep(10)
         print('Starting tests...')
-
 
     def tearDown(self):
         # Get directory of this file
@@ -44,6 +44,7 @@ class DockerTestSetupTest(unittest.TestCase):
         # Test that the reset_db endpoint is working
         response = requests.get(self.SERVER_URL + '/api/test/database/reset', verify=False)
         self.assertEqual(response.status_code, 200)
+
 
 if __name__ == '__main__':
     unittest.main()

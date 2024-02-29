@@ -69,13 +69,15 @@ class QueryDashboard(Resource):
             if not dashboard:
                 return gettext('Forbidden'), 403  # Explicitely vague for security purpose
 
-            dashboard_sites_ids = DashDashboardSites.get_sites_ids_for_dashboard(dashboard.id_dashboard)
+            dashboard_sites_ids = DashDashboardSites.get_sites_ids_for_dashboard(
+                dashboard.id_dashboard, enabled_only=request_args['enabled'])
             if dashboard_sites_ids:
                 # Check that we have a match for at least one site
                 if len(set(accessible_site_ids).intersection(dashboard_sites_ids)) == 0:
                     return gettext('Forbidden'), 403
 
-            dashboard_proj_ids = DashDashboardProjects.get_projects_ids_for_dashboard(dashboard.id_dashboard)
+            dashboard_proj_ids = DashDashboardProjects.get_projects_ids_for_dashboard(
+                dashboard.id_dashboard, enabled_only=request_args['enabled'])
             if dashboard_proj_ids:
                 # Check that we have a match for at least one project
                 if len(set(accessible_project_ids).intersection(dashboard_proj_ids)) == 0:
@@ -105,7 +107,7 @@ class QueryDashboard(Resource):
                 return gettext('Forbidden'), 403
             dashboards = DashDashboards.get_dashboards_globals()
         else:
-            return gettext('Must specify at least one id parameter or "globals"')
+            return gettext('Must specify at least one id parameter or "globals"'), 400
 
         # # Convert to json and return
         dashboards_json = [dash.to_json(minimal=request_args['list'], latest=not request_args['all_versions'])
