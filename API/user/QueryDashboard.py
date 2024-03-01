@@ -109,7 +109,7 @@ class QueryDashboard(Resource):
         else:
             return gettext('Must specify at least one id parameter or "globals"'), 400
 
-        # # Convert to json and return
+        # Convert to json and return
         dashboards_json = [dash.to_json(minimal=request_args['list'], latest=not request_args['all_versions'])
                            for dash in dashboards]
         return dashboards_json

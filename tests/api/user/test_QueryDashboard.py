@@ -73,6 +73,19 @@ class QueryDashboardTest(BaseDashboardsAPITest):
                     self._check_json(response.json[0])
                     self.assertEqual(self._dashboards["site"]["id"], response.json[0]['id_dashboard'])
 
+                # Test to get all versions
+                response = self._get_with_user_token_auth(self.test_client, token=self._users[user],
+                                                          params={'uuid': self._dashboards["site"]["uuid"],
+                                                                  'all_versions': True})
+                if user == "noaccess":
+                    self.assertEqual(403, response.status_code)
+                else:
+                    self.assertEqual(200, response.status_code)
+                    self.assertEqual(1, len(response.json))
+                    self._check_json(response.json[0])
+                    self.assertEqual(2, len(response.json[0]['versions']))
+                    self.assertEqual(self._dashboards["site"]["id"], response.json[0]['id_dashboard'])
+
     def test_get_project_dashboard_by_id(self):
         with self.app_context():
             for user in self._users:
@@ -98,6 +111,19 @@ class QueryDashboardTest(BaseDashboardsAPITest):
                     self.assertEqual(200, response.status_code)
                     self.assertEqual(1, len(response.json))
                     self._check_json(response.json[0])
+                    self.assertEqual(self._dashboards["project_global"]["id"], response.json[0]['id_dashboard'])
+
+                # Check with list = true
+                response = self._get_with_user_token_auth(self.test_client, token=self._users[user],
+                                                          params={'id_dashboard':
+                                                                  self._dashboards["project_global"]["id"],
+                                                                  'list': True})
+                if user == "noaccess" or user == "projectadmin":  # Project admin has access to projet 1, but not 2.
+                    self.assertEqual(403, response.status_code)
+                else:
+                    self.assertEqual(200, response.status_code)
+                    self.assertEqual(1, len(response.json))
+                    self._check_json(response.json[0], minimal=True)
                     self.assertEqual(self._dashboards["project_global"]["id"], response.json[0]['id_dashboard'])
 
     def test_get_project_dashboard_by_uuid(self):
