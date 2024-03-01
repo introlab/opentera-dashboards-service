@@ -21,7 +21,7 @@ public:
 
 
 private:
-
+    bool isValidString(const QString &input);
     void writeLayout(const QJsonObject &layout, QTextStream &stream);
     void writeWidget(const QJsonObject &widget, QTextStream &stream);
     void writeProperties(const QJsonObject &properties, QTextStream &stream);
