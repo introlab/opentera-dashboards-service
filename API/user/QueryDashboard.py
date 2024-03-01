@@ -131,102 +131,137 @@ class QueryDashboard(Resource):
 
         json_dashboard = request.json['dashboard']
 
-        pass
-
         # Check if we have an uuid or an id_dashboard and load infos
-        # updating = ('dashboard_uuid' in json_dashboard or
-        #             ('id_dashboard' in json_dashboard and json_dashboard['id_dashboard'] > 0))
-        #
-        # if updating:
-        #     # Load dashboard
-        #     dashboard = None
-        #     if 'id_dashboard' in json_dashboard and json_dashboard['id_dashboard'] > 0:
-        #         dashboard = DashDashboards.get_by_id(json_dashboard['id_dashboard'])
-        #         if 'dashboard_uuid' in json_dashboard and dashboard.dashboard_uuid != json_dashboard['dashboard_uuid']:
-        #             return gettext('Can\'t change uuid when updating with id'), 400
-        #         if ('dashboard_version' in json_dashboard and
-        #                 dashboard.dashboard_version != json_dashboard['dashboard_version']):
-        #             return gettext('Can\'t change version when updating with it'), 400
-        #
-        #     if 'dashboard_uuid' in json_dashboard:
-        #         dashboard = DashDashboards.get_dashboard_by_uuid(json_dashboard['dashboard_uuid'], latest=True)
-        #         # Check version - can't update an older version
-        #         if 'dashboard_version' in json_dashboard:
-        #             if dashboard.dashboard_version > int(json_dashboard['dashboard_version']):
-        #                 return gettext('Trying to update an older dashboard version - this is not allowed.'), 400
-        #         else:
-        #             # Auto increment version
-        #             json_dashboard['dashboard_version'] = dashboard.dashboard_version + 1
-        #
-        #         if json_dashboard['dashboard_version'] != dashboard.dashboard_version:
-        #             # New version - must create a new dashboard id
-        #             json_dashboard['id_dashboard'] = 0
-        #         else:
-        #             json_dashboard['id_dashboard'] = dashboard.id_dashboard
-        #
-        #     if not dashboard:
-        #         return gettext('Forbidden'), 403  # Explicitly vague
-        #
-        #     # Check access - only admins can change things...
-        #     if dashboard.id_site:
-        #         site_role = current_user_client.get_role_for_site(dashboard.id_site)
-        #         if site_role != 'admin':
-        #             return gettext('No access to dashboard to update'), 403
-        #
-        #     if dashboard.id_project:
-        #         project_role = current_user_client.get_role_for_project(dashboard.id_project)
-        #         if project_role != 'admin':
-        #             return gettext('No access to dashboard to update'), 403
-        #
-        #     if not dashboard.id_project and not dashboard.id_site:
-        #         if not current_user_client.user_superadmin:
-        #             return gettext('No access to dashboard to update'), 403
-        #
-        #     # Check access to updated data
-        #     if 'id_site' in json_dashboard and json_dashboard['id_site'] != dashboard.id_site:
-        #         site_role = current_user_client.get_role_for_site(json_dashboard['id_site'])
-        #         if site_role != 'admin':
-        #             return gettext('No access to dashboard site'), 403
-        #
-        #     if 'id_project' in json_dashboard and json_dashboard['id_project'] != dashboard.id_project:
-        #         project_role = current_user_client.get_role_for_project(json_dashboard['id_project'])
-        #         if project_role != 'admin':
-        #             return gettext('No access to dashboard project'), 403
-        #
-        #     if ('id_project' not in json_dashboard and 'id_site' not in json_dashboard and
-        #             (dashboard.id_site or dashboard.id_project)):
-        #         if not current_user_client.user_superadmin:
-        #             return gettext('No access to global dashboard'), 403
-        #
-        # if json_dashboard['id_dashboard'] > 0:
-        #     # Update the dashboard
-        #     try:
-        #         DashDashboards.update(json_dashboard['id_dashboard'], json_dashboard)
-        #     except exc.SQLAlchemyError as e:
-        #         import sys
-        #         print(sys.exc_info())
-        #         self.module.logger.log_error(self.module.module_name,
-        #                                      QueryDashboard.__name__,
-        #                                      'post', 500, 'Database error', str(e))
-        #         return gettext('Database error'), 500
-        # else:
-        #     # New dashboard
-        #     try:
-        #         new_dashboard = DashDashboards()
-        #         new_dashboard.from_json(json_dashboard)
-        #         DashDashboards.insert(new_dashboard)
-        #         # Update ID for further use
-        #         json_dashboard['id_dashboard'] = new_dashboard.id_dashboard
-        #
-        #     except exc.SQLAlchemyError as e:
-        #         import sys
-        #         print(sys.exc_info())
-        #         self.module.logger.log_error(self.module.module_name,
-        #                                      DashDashboards.__name__,
-        #                                      'post', 400, 'Database error', str(e))
-        #         return gettext('Database error'), 400
-        #
-        # return DashDashboards.get_by_id(json_dashboard['id_dashboard']).to_json()
+        updating = ('dashboard_uuid' in json_dashboard or
+                    ('id_dashboard' in json_dashboard and json_dashboard['id_dashboard'] > 0))
+
+        user_info = current_user_client.get_user_info()
+        accessible_project_ids = [role['id_project'] for role in user_info['projects']
+                                  if role['id_project'] == 'admin']
+        accessible_site_ids = [role['id_site'] for role in user_info['sites'] if role['id_site'] == 'admin']
+        dashboard = None
+        if updating:
+            # Load dashboard
+            if 'id_dashboard' in json_dashboard and json_dashboard['id_dashboard'] > 0:
+                dashboard = DashDashboards.get_by_id(json_dashboard['id_dashboard'])
+                if 'dashboard_uuid' in json_dashboard and dashboard.dashboard_uuid != json_dashboard['dashboard_uuid']:
+                    return gettext('Can\'t change uuid when updating with id'), 400
+
+            if 'dashboard_uuid' in json_dashboard:
+                dashboard = DashDashboards.get_by_uuid(json_dashboard['dashboard_uuid'])
+                if 'id_dashboard' in json_dashboard and dashboard.id_dashboard != json_dashboard['id_dashboard']:
+                    return gettext('Can\'t change id when updating with uuid'), 400
+
+            if not dashboard:
+                return gettext('Forbidden'), 403  # Explicitly vague
+
+            # Check access - only admins can change things...
+            dashboard_sites_ids = [dash_site.id_site for dash_site in dashboard.dashboard_sites]
+            dashboard_projects_ids = [dash_proj.id_project for dash_proj in dashboard.dashboard_projects]
+
+            if dashboard_sites_ids:
+                # Check that we have a match for at least one project
+                if len(set(accessible_site_ids).intersection(dashboard_sites_ids)) == 0:
+                    return gettext('No access to dashboard to update'), 403
+
+            if dashboard_projects_ids:
+                # Check that we have a match for at least one project
+                if len(set(accessible_project_ids).intersection(dashboard_projects_ids)) == 0:
+                    return gettext('No access to dashboard to update'), 403
+
+            if not dashboard_projects_ids and not dashboard_sites_ids:
+                if not current_user_client.user_superadmin:
+                    return gettext('No access to dashboard to update'), 403
+
+            # Check version - can't update an older version
+            if 'dashboard_version' in json_dashboard:
+                if dashboard.dashboard_versions[-1] > int(json_dashboard['dashboard_version']):
+                    return gettext('Trying to update an older dashboard version - this is not allowed.'), 400
+            else:
+                # Auto increment version if not present in the query field
+                json_dashboard['dashboard_version'] = len(dashboard.dashboard_versions) + 1
+        else:
+            # New dashboard
+            if 'dashboard_definition' not in json_dashboard:
+                return gettext('Missing definition for new dashboard'), 400
+            # Always version 1 on new dashboard
+            json_dashboard['dashboard_version'] = 1
+
+        # Check access to updated data
+        dashboard_sites = []
+        dashboard_sites_ids = []
+        dashboard_projects = []
+        dashboard_projects_ids = []
+        if 'dashboard_sites' in json_dashboard:
+            dashboard_sites = json_dashboard.pop('dashboard_sites')
+            dashboard_sites_ids = [site['id_site'] for site in dashboard_sites]
+            if len(set(accessible_site_ids).intersection(dashboard_sites_ids)) == 0:
+                return gettext('No admin access to all sites for that dashboard'), 403
+
+        if 'dashboard_projects' in json_dashboard:
+            dashboard_projects = json_dashboard.pop('dashboard_projects')
+            dashboard_projects_ids = [proj['id_project'] for proj in dashboard_projects]
+            if len(set(accessible_project_ids).intersection(dashboard_projects_ids)) == 0:
+                return gettext('No admin access to all projects for that dashboard'), 403
+
+        # Pop dashboard definition and version
+        dashboard_version = json_dashboard.pop('dashboard_version')
+        dashboard_definition = None
+        if 'dashboard_definition' in json_dashboard:
+            dashboard_definition = json_dashboard.pop('dashboard_definition')
+
+        if updating:
+            # Update the dashboard
+            try:
+                DashDashboards.update(json_dashboard['id_dashboard'], json_dashboard)
+            except exc.SQLAlchemyError as e:
+                import sys
+                print(sys.exc_info())
+                self.module.logger.log_error(self.module.module_name,
+                                             QueryDashboard.__name__,
+                                             'post', 500, 'Database error', str(e))
+                return gettext('Database error'), 500
+        else:
+            # New dashboard
+            try:
+                missing_fields = DashDashboards.validate_required_fields(json_dashboard)
+                if missing_fields:
+                    return gettext('Missing fields') + ': ' + str(missing_fields), 400
+
+                dashboard = DashDashboards()
+                dashboard.from_json(json_dashboard)
+                DashDashboards.insert(dashboard)
+                # Update ID for further use
+                json_dashboard['id_dashboard'] = dashboard.id_dashboard
+
+            except exc.SQLAlchemyError as e:
+                import sys
+                print(sys.exc_info())
+                self.module.logger.log_error(self.module.module_name,
+                                             DashDashboards.__name__,
+                                             'post', 400, 'Database error', str(e))
+                return gettext('Database error'), 400
+
+        if dashboard_sites:
+            # Add / update existing sites
+            current_sites_ids = [site.id_site for site in dashboard.dashboard_sites]
+            for site in dashboard_sites:
+                # Check if already there
+                if site['id_site'] in current_sites_ids:
+                    # Update
+                    dashboard.dashboard_sites[current_sites_ids.index(site['id_site'])].from_json(site)
+                else:
+                    # Add
+                    dds = DashDashboardSites
+                    dds.from_json(site)
+                    dashboard.dashboard_sites.append(dds)
+
+                # Remove sites not present in the list
+                # TODO
+                dashboard.commit()
+        # TODO Manage dashboard projects
+        # TODO Manage versions
+        return DashDashboards.get_by_id(json_dashboard['id_dashboard']).to_json()
 
     @api.expect(delete_parser, validate=True)
     @api.doc(description='Delete a dashboard',
