@@ -13,9 +13,11 @@ class DashDashboards(BaseModel):
     dashboard_description = Column(String, nullable=True)   # Dashboard user-visible description
 
     dashboard_versions = relationship("DashDashboardVersions", back_populates="dashboard_version_dashboard",
-                                      order_by="DashDashboardVersions.dashboard_version", viewonly=True)
-    dashboard_sites = relationship("DashDashboardSites", back_populates="dashboard_site_dashboard")
-    dashboard_projects = relationship("DashDashboardProjects", back_populates="dashboard_project_dashboard")
+                                      order_by="DashDashboardVersions.dashboard_version", cascade="all,delete")
+    dashboard_sites = relationship("DashDashboardSites", cascade="all,delete",
+                                   back_populates="dashboard_site_dashboard")
+    dashboard_projects = relationship("DashDashboardProjects", cascade="all,delete",
+                                      back_populates="dashboard_project_dashboard")
 
     def to_json(self, ignore_fields=None, minimal=False, latest=True):
         if ignore_fields is None:

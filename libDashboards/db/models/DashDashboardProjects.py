@@ -65,6 +65,10 @@ class DashDashboardProjects(BaseModel):
         return ddp
 
     @staticmethod
+    def get_for_project_and_dashboard(project_id: int, dashboard_id: int):
+        return DashDashboardProjects.query.filter_by(id_project=project_id, id_dashboard=dashboard_id).first()
+
+    @staticmethod
     def create_defaults(test=False):
         from libDashboards.db.models.DashDashboards import DashDashboards
         dashboards = DashDashboards.query.all()

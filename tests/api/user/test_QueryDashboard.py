@@ -1,6 +1,8 @@
 from tests.BaseDashboardsAPITest import BaseDashboardsAPITest
 from libDashboards.db.models import DashDashboards
 from libDashboards.db.models.DashDashboardVersions import DashDashboardVersions
+from libDashboards.db.models.DashDashboardSites import DashDashboardSites
+from libDashboards.db.models.DashDashboardProjects import DashDashboardProjects
 
 
 class QueryDashboardTest(BaseDashboardsAPITest):
@@ -230,7 +232,7 @@ class QueryDashboardTest(BaseDashboardsAPITest):
                                                          params=delete_params)
             self.assertEqual(200, response.status_code)
 
-    def test_post_and_update_new_global(self):
+    def test_post_and_delete_update_global(self):
         with self.app_context():
             global_dashs = DashDashboards.get_dashboards_globals()
             global_dash_id = global_dashs[0].id_dashboard
@@ -251,7 +253,7 @@ class QueryDashboardTest(BaseDashboardsAPITest):
                                                        json=dashboard)
             self.assertEqual(400, response.status_code)  # Can't change id if uuid
 
-            dashboard = {'dashboard': {'id_dashboard':global_dash_id}}
+            dashboard = {'dashboard': {'id_dashboard': global_dash_id}}
             response = self._post_with_user_token_auth(self.test_client, token=self._users['siteadmin'],
                                                        json=dashboard)
             self.assertEqual(403, response.status_code)  # Can't access global dashboard
@@ -279,6 +281,189 @@ class QueryDashboardTest(BaseDashboardsAPITest):
 
             # Manually remove latest version
             DashDashboardVersions.delete(updated.dashboard_versions[-1].id_dashboard_version)
+
+    def test_post_and_delete_new_site(self):
+        with self.app_context():
+            # Don't retest what was tested before...
+            dashboard = {'dashboard': {'dashboard_name': 'Test Site Dashboard',
+                                       'dashboard_definition': '{"bla": "bla"}',
+                                       'dashboard_sites': [{'id_site': 3}]}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['siteadmin'],
+                                                       json=dashboard)
+            self.assertEqual(403, response.status_code)  # Unavailable site for the user
+
+            dashboard['dashboard']['dashboard_sites'] = [{'id_site': 1}]
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['siteadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)
+            self._check_json(response.json)
+            updated = DashDashboards.get_by_id(response.json['id_dashboard'])
+            self.assertTrue(len(updated.dashboard_sites) == 1)
+            self.assertEqual(1, updated.dashboard_sites[-1].id_site)
+
+            # Remove currently added dashboard
+            id_to_del = response.json['id_dashboard']
+            delete_params = {'id': id_to_del}
+            response = self._delete_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                         params=delete_params)
+            self.assertEqual(200, response.status_code)
+
+    def test_post_and_delete_update_site(self):
+        with self.app_context():
+            # Note: Tests common for updating are done in the "global dashboard" tests
+            site_dashboards = [dash.dashboard_site_dashboard for dash in DashDashboardSites.get_dashboards_for_site(1)]
+            site_id_dashboard = site_dashboards[0].id_dashboard
+            dashboard = {'dashboard': {'id_dashboard': site_id_dashboard}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['projectadmin'],
+                                                       json=dashboard)
+            self.assertEqual(403, response.status_code)  # Can't access this site dashboard
+
+            dashboard = {'dashboard': {'id_dashboard': site_id_dashboard, 'dashboard_name': 'Site New Name'}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['siteadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)  # Was updated
+            updated = DashDashboards.get_by_id(site_id_dashboard)
+            self.assertEqual('Site New Name', updated.dashboard_name)
+
+            # Add new site to dashboard
+            dashboard = {'dashboard': {'id_dashboard': site_id_dashboard,
+                                       'dashboard_sites': [{'id_site': 1}, {'id_site': 2}]}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['siteadmin'],
+                                                       json=dashboard)
+            self.assertEqual(403, response.status_code)  # No access to site 2
+
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)
+            updated = DashDashboards.get_by_id(site_id_dashboard)
+            self.assertEqual(2, len(updated.dashboard_sites))
+            for dds in updated.dashboard_sites:
+                self.assertTrue(dds.id_site in [1, 2])
+
+            # Try to associate both site and projects
+            dashboard = {'dashboard': {'id_dashboard': site_id_dashboard,
+                                       'dashboard_sites': [{'id_site': 1}],
+                                       'dashboard_projects': [{'id_project': 1}]}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['siteadmin'],
+                                                       json=dashboard)
+            self.assertEqual(400, response.status_code)  # No can do
+
+            # Try to disable one site dashboard
+            dashboard = {'dashboard': {'id_dashboard': site_id_dashboard,
+                                       'dashboard_sites': [{'id_site': 1, 'dashboard_site_enabled': False}]}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['siteadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)
+            updated = DashDashboards.get_by_id(site_id_dashboard)
+            for dds in updated.dashboard_sites:
+                if dds.id_site == 1:
+                    self.assertFalse(dds.dashboard_site_enabled)
+
+            # Remove one site from dashboard
+            dashboard = {'dashboard': {'id_dashboard': site_id_dashboard,
+                                       'dashboard_sites': []}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['siteadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)
+            updated = DashDashboards.get_by_id(site_id_dashboard)
+            self.assertEqual(1, len(updated.dashboard_sites))    # Site #2 not removed
+            self.assertEqual(2, updated.dashboard_sites[0].id_site)
+            dashboard = {'dashboard': {'id_dashboard': site_id_dashboard,
+                                       'dashboard_sites': [{'id_site': 1, 'dashboard_site_enabled': True}]}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)
+            updated = DashDashboards.get_by_id(site_id_dashboard)
+            self.assertEqual(1, len(updated.dashboard_sites))  # Back to normal
+            self.assertEqual(1, updated.dashboard_sites[0].id_site)
+
+    def test_post_and_delete_new_project(self):
+        with self.app_context():
+            # Don't retest what was tested before...
+            dashboard = {'dashboard': {'dashboard_name': 'Test Project Dashboard',
+                                       'dashboard_definition': '{"bla": "bla"}',
+                                       'dashboard_projects': [{'id_project': 3}]}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['projectadmin'],
+                                                       json=dashboard)
+            self.assertEqual(403, response.status_code)  # Unavailable for the user
+
+            dashboard['dashboard']['dashboard_projects'] = [{'id_project': 1}]
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['projectadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)
+            self._check_json(response.json)
+            updated = DashDashboards.get_by_id(response.json['id_dashboard'])
+            self.assertTrue(len(updated.dashboard_projects) == 1)
+            self.assertEqual(1, updated.dashboard_projects[-1].id_project)
+
+            # Remove currently added dashboard
+            id_to_del = response.json['id_dashboard']
+            delete_params = {'id': id_to_del}
+            response = self._delete_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                         params=delete_params)
+            self.assertEqual(200, response.status_code)
+
+    def test_post_and_delete_update_project(self):
+        with self.app_context():
+            # Note: Tests common for updating are done in the "global dashboard" tests
+            proj_dashboards = [dash.dashboard_project_dashboard
+                               for dash in DashDashboardProjects.get_dashboards_for_project(1)]
+            proj_id_dashboard = proj_dashboards[0].id_dashboard
+            dashboard = {'dashboard': {'id_dashboard': proj_id_dashboard}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['user'],
+                                                       json=dashboard)
+            self.assertEqual(403, response.status_code)  # Can't access this dashboard
+
+            dashboard = {'dashboard': {'id_dashboard': proj_id_dashboard, 'dashboard_name': 'Project New Name'}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['projectadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)  # Was updated
+            updated = DashDashboards.get_by_id(proj_id_dashboard)
+            self.assertEqual('Project New Name', updated.dashboard_name)
+
+            # Add new project to dashboard
+            dashboard = {'dashboard': {'id_dashboard': proj_id_dashboard,
+                                       'dashboard_projects': [{'id_project': 1}, {'id_project': 2}]}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['projectadmin'],
+                                                       json=dashboard)
+            self.assertEqual(403, response.status_code)  # No access to site 2
+
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['siteadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)
+            updated = DashDashboards.get_by_id(proj_id_dashboard)
+            self.assertEqual(2, len(updated.dashboard_projects))
+            for ddp in updated.dashboard_projects:
+                self.assertTrue(ddp.id_project in [1, 2])
+
+            # Try to force a version dashboard
+            dashboard = {'dashboard': {'id_dashboard': proj_id_dashboard,
+                                       'dashboard_projects': [{'id_project': 1, 'dashboard_project_version': 3}]}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['projectadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)
+            updated = DashDashboards.get_by_id(proj_id_dashboard)
+            for ddp in updated.dashboard_projects:
+                if ddp.id_project == 1:
+                    self.assertEqual(3, ddp.dashboard_project_version)
+
+            # Remove one site from dashboard
+            dashboard = {'dashboard': {'id_dashboard': proj_id_dashboard,
+                                       'dashboard_projects': []}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['projectadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)
+            updated = DashDashboards.get_by_id(proj_id_dashboard)
+            self.assertEqual(1, len(updated.dashboard_projects))    # Project #2 not removed
+            self.assertEqual(2, updated.dashboard_projects[0].id_project)
+            dashboard = {'dashboard': {'id_dashboard': proj_id_dashboard,
+                                       'dashboard_projects': [{'id_project': 1, 'dashboard_project_version': None}]}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)
+            updated = DashDashboards.get_by_id(proj_id_dashboard)
+            self.assertEqual(1, len(updated.dashboard_projects))  # Back to normal
+            self.assertEqual(1, updated.dashboard_projects[0].id_project)
 
     def _check_json(self, json_data: str, minimal=False):
         self.assertTrue(json_data.__contains__('id_dashboard'))

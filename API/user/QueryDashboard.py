@@ -138,8 +138,8 @@ class QueryDashboard(Resource):
 
         user_info = current_user_client.get_user_info()
         accessible_project_ids = [role['id_project'] for role in user_info['projects']
-                                  if role['id_project'] == 'admin']
-        accessible_site_ids = [role['id_site'] for role in user_info['sites'] if role['id_site'] == 'admin']
+                                  if role['project_role'] == 'admin']
+        accessible_site_ids = [role['id_site'] for role in user_info['sites'] if role['site_role'] == 'admin']
         dashboard = None
         if updating:
             # Load dashboard
@@ -198,19 +198,28 @@ class QueryDashboard(Resource):
         if 'dashboard_sites' in json_dashboard:
             dashboard_sites = json_dashboard.pop('dashboard_sites')
             dashboard_sites_ids = [site['id_site'] for site in dashboard_sites]
-            if len(set(accessible_site_ids).intersection(dashboard_sites_ids)) == 0:
-                return gettext('No admin access to all sites for that dashboard'), 403
+            if len(set(accessible_site_ids).intersection(dashboard_sites_ids)) == 0 and dashboard_sites_ids:
+                return gettext('No admin access to that dashboard'), 403
+            for site in dashboard_sites:
+                if site['id_site'] not in accessible_site_ids:
+                    return gettext('At least one site isn\'t accessible'), 403
 
         if 'dashboard_projects' in json_dashboard:
             dashboard_projects = json_dashboard.pop('dashboard_projects')
             dashboard_projects_ids = [proj['id_project'] for proj in dashboard_projects]
-            if len(set(accessible_project_ids).intersection(dashboard_projects_ids)) == 0:
-                return gettext('No admin access to all projects for that dashboard'), 403
+            if len(set(accessible_project_ids).intersection(dashboard_projects_ids)) == 0 and dashboard_projects_ids:
+                return gettext('No admin access to that dashboard'), 403
+            for proj in dashboard_projects:
+                if proj['id_project'] not in accessible_project_ids:
+                    return gettext('At least one project isn\'t accessible'), 403
 
         if not updating and not dashboard_sites and not dashboard_projects:
             # Global new dashboard - only super admin can create
             if not current_user_client.user_superadmin:
                 return gettext('Forbidden'), 403
+
+        if dashboard_sites and dashboard_projects:
+            return gettext('A dashboard can\'t be associated to both sites and projects'), 400
 
         # Pop dashboard definition and version
         dashboard_version = json_dashboard.pop('dashboard_version')
@@ -251,28 +260,56 @@ class QueryDashboard(Resource):
                 return gettext('Database error'), 400
 
         # Manage sites
-        if dashboard_sites:
+        if dashboard_sites or dashboard_sites == []:
             # Add / update existing sites
             current_sites_ids = [site.id_site for site in dashboard.dashboard_sites]
+
             for site in dashboard_sites:
                 # Check if already there
                 if site['id_site'] in current_sites_ids:
                     # Update
-                    dashboard.dashboard_sites[current_sites_ids.index(site['id_site'])].from_json(site)
+                    dds = DashDashboardSites.get_for_site_and_dashboard(site['id_site'], dashboard.id_dashboard)
+                    DashDashboardSites.update(dds.id_dashboard_site, site)
+
                 else:
                     # Add
-                    dds = DashDashboardSites
+                    dds = DashDashboardSites()
                     dds.from_json(site)
-                    dashboard.dashboard_sites.append(dds)
+                    dds.id_dashboard = dashboard.id_dashboard
+                    DashDashboardSites.insert(dds)
 
-                # Remove sites not present in the list
-                to_remove_ids = set(accessible_site_ids).intersection(dashboard_sites_ids)
-                for remove_id in to_remove_ids:
-                    if remove_id in current_sites_ids:
-                        del dashboard.dashboard_sites[current_sites_ids.index(remove_id)]
-                dashboard.commit()
+            # Remove sites not present in the list
+            to_remove_ids = set(accessible_site_ids).difference(dashboard_sites_ids)
+            for remove_id in to_remove_ids:
+                if remove_id in current_sites_ids:
+                    dds = DashDashboardSites.get_for_site_and_dashboard(remove_id, dashboard.id_dashboard)
+                    DashDashboardSites.delete(dds.id_dashboard_site)
 
-        # TODO Manage dashboard projects
+        # Manage dashboard projects
+        if dashboard_projects or dashboard_projects == []:
+            # Add / update existing projects
+            current_proj_ids = [proj.id_project for proj in dashboard.dashboard_projects]
+
+            for proj in dashboard_projects:
+                # Check if already there
+                if proj['id_project'] in current_proj_ids:
+                    # Update
+                    ddp = DashDashboardProjects.get_for_project_and_dashboard(proj['id_project'],
+                                                                              dashboard.id_dashboard)
+                    DashDashboardProjects.update(ddp.id_dashboard_project, proj)
+                else:
+                    # Add
+                    ddp = DashDashboardProjects()
+                    ddp.from_json(proj)
+                    ddp.id_dashboard = dashboard.id_dashboard
+                    DashDashboardProjects.insert(ddp)
+
+            # Remove not present in the list
+            to_remove_ids = set(accessible_project_ids).difference(dashboard_projects_ids)
+            for remove_id in to_remove_ids:
+                if remove_id in current_proj_ids:
+                    ddp = DashDashboardProjects.get_for_project_and_dashboard(remove_id, dashboard.id_dashboard)
+                    DashDashboardProjects.delete(ddp.id_dashboard_project)
 
         # Manage versions
         if dashboard_version and dashboard_definition:
@@ -329,8 +366,8 @@ class QueryDashboard(Resource):
         # Check deletion access
         user_info = current_user_client.get_user_info()
         accessible_project_ids = [role['id_project'] for role in user_info['projects']
-                                  if role['id_project'] == 'admin']
-        accessible_site_ids = [role['id_site'] for role in user_info['sites'] if role['id_site'] == 'admin']
+                                  if role['project_role'] == 'admin']
+        accessible_site_ids = [role['id_site'] for role in user_info['sites'] if role['site_role'] == 'admin']
         dashboard_sites_ids = [dash_site.id_site for dash_site in dashboard.dashboard_sites]
         dashboard_projects_ids = [dash_proj.id_project for dash_proj in dashboard.dashboard_projects]
 

@@ -63,6 +63,10 @@ class DashDashboardSites(BaseModel):
         return dds
 
     @staticmethod
+    def get_for_site_and_dashboard(site_id: int, dashboard_id: int):
+        return DashDashboardSites.query.filter_by(id_site=site_id, id_dashboard=dashboard_id).first()
+
+    @staticmethod
     def create_defaults(test=False):
         if test:
             from libDashboards.db.models.DashDashboards import DashDashboards
