@@ -6,6 +6,7 @@ from FlaskModule import user_api_ns as api
 from libDashboards.db.models.DashDashboards import DashDashboards
 from libDashboards.db.models.DashDashboardSites import DashDashboardSites
 from libDashboards.db.models.DashDashboardProjects import DashDashboardProjects
+from libDashboards.db.models.DashDashboardVersions import DashDashboardVersions
 from opentera.services.ServiceAccessManager import ServiceAccessManager, current_login_type, LoginType, \
     current_user_client
 from flask_babel import gettext
@@ -144,12 +145,14 @@ class QueryDashboard(Resource):
             # Load dashboard
             if 'id_dashboard' in json_dashboard and json_dashboard['id_dashboard'] > 0:
                 dashboard = DashDashboards.get_by_id(json_dashboard['id_dashboard'])
-                if 'dashboard_uuid' in json_dashboard and dashboard.dashboard_uuid != json_dashboard['dashboard_uuid']:
+                if (dashboard and 'dashboard_uuid' in json_dashboard and
+                        dashboard.dashboard_uuid != json_dashboard['dashboard_uuid']):
                     return gettext('Can\'t change uuid when updating with id'), 400
 
             if 'dashboard_uuid' in json_dashboard:
                 dashboard = DashDashboards.get_by_uuid(json_dashboard['dashboard_uuid'])
-                if 'id_dashboard' in json_dashboard and dashboard.id_dashboard != json_dashboard['id_dashboard']:
+                if (dashboard and 'id_dashboard' in json_dashboard and
+                        dashboard.id_dashboard != json_dashboard['id_dashboard']):
                     return gettext('Can\'t change id when updating with uuid'), 400
 
             if not dashboard:
@@ -175,7 +178,7 @@ class QueryDashboard(Resource):
 
             # Check version - can't update an older version
             if 'dashboard_version' in json_dashboard:
-                if dashboard.dashboard_versions[-1] > int(json_dashboard['dashboard_version']):
+                if dashboard.dashboard_versions[-1].dashboard_version > int(json_dashboard['dashboard_version']):
                     return gettext('Trying to update an older dashboard version - this is not allowed.'), 400
             else:
                 # Auto increment version if not present in the query field
@@ -203,6 +206,11 @@ class QueryDashboard(Resource):
             dashboard_projects_ids = [proj['id_project'] for proj in dashboard_projects]
             if len(set(accessible_project_ids).intersection(dashboard_projects_ids)) == 0:
                 return gettext('No admin access to all projects for that dashboard'), 403
+
+        if not updating and not dashboard_sites and not dashboard_projects:
+            # Global new dashboard - only super admin can create
+            if not current_user_client.user_superadmin:
+                return gettext('Forbidden'), 403
 
         # Pop dashboard definition and version
         dashboard_version = json_dashboard.pop('dashboard_version')
@@ -242,6 +250,7 @@ class QueryDashboard(Resource):
                                              'post', 400, 'Database error', str(e))
                 return gettext('Database error'), 400
 
+        # Manage sites
         if dashboard_sites:
             # Add / update existing sites
             current_sites_ids = [site.id_site for site in dashboard.dashboard_sites]
@@ -257,10 +266,36 @@ class QueryDashboard(Resource):
                     dashboard.dashboard_sites.append(dds)
 
                 # Remove sites not present in the list
-                # TODO
+                to_remove_ids = set(accessible_site_ids).intersection(dashboard_sites_ids)
+                for remove_id in to_remove_ids:
+                    if remove_id in current_sites_ids:
+                        del dashboard.dashboard_sites[current_sites_ids.index(remove_id)]
                 dashboard.commit()
+
         # TODO Manage dashboard projects
-        # TODO Manage versions
+
+        # Manage versions
+        if dashboard_version and dashboard_definition:
+            # Check if exising version to update
+            ddv = DashDashboardVersions.get_for_dashboard_and_version(json_dashboard['id_dashboard'], dashboard_version)
+            try:
+                if ddv:
+                    # Update definition
+                    DashDashboardVersions.update(ddv.id_dashboard_version,
+                                                 {'dashboard_definition': dashboard_definition})
+                else:
+                    # Create new
+                    ddv = DashDashboardVersions()
+                    ddv.id_dashboard = json_dashboard['id_dashboard']
+                    ddv.dashboard_version = dashboard_version
+                    ddv.dashboard_definition = dashboard_definition
+                    DashDashboardVersions.insert(ddv)
+            except ValueError:
+                # Bad json
+                return gettext('Invalid version definition - json not valid'), 400
+            except exc.SQLAlchemyError:
+                return gettext('Unable to update dashboard version'), 400
+
         return DashDashboards.get_by_id(json_dashboard['id_dashboard']).to_json()
 
     @api.expect(delete_parser, validate=True)
@@ -276,5 +311,49 @@ class QueryDashboard(Resource):
 
         args = delete_parser.parse_args()
 
+        if not args['id'] and not args['uuid']:
+            return gettext('Missing parameter'), 400
+
+        if args['id'] and args['uuid']:
+            return gettext('Can\'t specify both id and uuid'), 400
+
+        dashboard = None
         if args['id']:
-            pass
+            dashboard = DashDashboards.get_by_id(args['id'])
+        elif args['uuid']:
+            dashboard = DashDashboards.get_by_uuid(args['uuid'])
+
+        if not dashboard:
+            return gettext('Forbidden'), 403  # Explicitely vague for security purpose
+
+        # Check deletion access
+        user_info = current_user_client.get_user_info()
+        accessible_project_ids = [role['id_project'] for role in user_info['projects']
+                                  if role['id_project'] == 'admin']
+        accessible_site_ids = [role['id_site'] for role in user_info['sites'] if role['id_site'] == 'admin']
+        dashboard_sites_ids = [dash_site.id_site for dash_site in dashboard.dashboard_sites]
+        dashboard_projects_ids = [dash_proj.id_project for dash_proj in dashboard.dashboard_projects]
+
+        if dashboard_sites_ids:
+            # Check that we have a match for at least one project
+            if len(set(accessible_site_ids).intersection(dashboard_sites_ids)) == 0:
+                return gettext('Forbidden'), 403
+
+        if dashboard_projects_ids:
+            # Check that we have a match for at least one project
+            if len(set(accessible_project_ids).intersection(dashboard_projects_ids)) == 0:
+                return gettext('Forbidden'), 403
+
+        if not dashboard_projects_ids and not dashboard_sites_ids:
+            if not current_user_client.user_superadmin:
+                return gettext('Forbidden'), 403
+
+        # Ok, we are here and we have access... so delete!
+        try:
+            DashDashboards.delete(id_todel=dashboard.id_dashboard)
+        except exc.SQLAlchemyError as e:
+            import sys
+            print(sys.exc_info())
+            return gettext('Database error'), 400
+
+        return '', 200

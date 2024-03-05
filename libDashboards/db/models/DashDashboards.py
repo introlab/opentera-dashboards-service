@@ -13,7 +13,7 @@ class DashDashboards(BaseModel):
     dashboard_description = Column(String, nullable=True)   # Dashboard user-visible description
 
     dashboard_versions = relationship("DashDashboardVersions", back_populates="dashboard_version_dashboard",
-                                      order_by="DashDashboardVersions.dashboard_version")
+                                      order_by="DashDashboardVersions.dashboard_version", viewonly=True)
     dashboard_sites = relationship("DashDashboardSites", back_populates="dashboard_site_dashboard")
     dashboard_projects = relationship("DashDashboardProjects", back_populates="dashboard_project_dashboard")
 

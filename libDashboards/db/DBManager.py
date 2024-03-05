@@ -82,7 +82,8 @@ class DBManager:
                 # Apply any database upgrade, if needed
                 self.upgrade_db()
 
-    def open_local(self, db_infos, echo=False):
+    def open_local(self, db_infos, echo=True):
+        # self.db_uri = 'sqlite:////temp/test.db'
         self.db_uri = 'sqlite://'
 
         self.app.config.update({

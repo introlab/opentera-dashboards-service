@@ -1,6 +1,7 @@
 from libDashboards.db.models.BaseModel import BaseModel
 from sqlalchemy import Column, Integer, Sequence, ForeignKey, JSON
 from sqlalchemy.orm import relationship
+import json
 
 
 class DashDashboardVersions(BaseModel):
@@ -24,6 +25,24 @@ class DashDashboardVersions(BaseModel):
         dashboard_json = super().to_json(ignore_fields=ignore_fields)
 
         return dashboard_json
+
+    @staticmethod
+    def get_for_dashboard_and_version(dashboard_id: int, version: int):
+        return DashDashboardVersions.query.filter_by(id_dashboard=dashboard_id, dashboard_version=version).first()
+
+    @classmethod
+    def update(cls, id_dashboard_version: int, values: dict):
+        # Test if json definition is valid
+        if 'dashboard_definition' in values:
+            json.loads(values['dashboard_definition'])  # Will raise a "ValueError" if not
+
+        super().update(id_dashboard_version, values)
+
+    @classmethod
+    def insert(cls, db_object):
+        # Test if json definition is valid
+        json.loads(db_object.dashboard_definition)  # Will raise a "ValueError" if not
+        super().insert(db_object)
 
     @staticmethod
     def create_defaults(test=False):

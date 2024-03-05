@@ -1,5 +1,6 @@
 from tests.BaseDashboardsAPITest import BaseDashboardsAPITest
 from libDashboards.db.models import DashDashboards
+from libDashboards.db.models.DashDashboardVersions import DashDashboardVersions
 
 
 class QueryDashboardTest(BaseDashboardsAPITest):
@@ -185,6 +186,99 @@ class QueryDashboardTest(BaseDashboardsAPITest):
                 else:
                     self.assertEqual(200, response.status_code)
                     self.assertEqual(2, len(response.json))
+
+    def test_post_and_delete_new_global(self):
+        with self.app_context():
+            dashboard = {}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(400, response.status_code)  # Missing "dashboard" definition
+
+            dashboard = {'dashboard': {}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(400, response.status_code)  # Missing "dashboard definition"
+
+            dashboard = {'dashboard': {'dashboard_definition': '{invalid=0}'}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['siteadmin'],
+                                                       json=dashboard)
+            self.assertEqual(403, response.status_code)  # Forbidden since not super admin
+
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(400, response.status_code)  # Missing dashboard name
+
+            dashboard['dashboard'] = {'dashboard_definition': '{invalid=0', 'dashboard_name': 'Test Dashboard'}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(400, response.status_code)
+
+            dashboard['dashboard']['dashboard_definition'] = '{"invalid": 0}'
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)
+            self._check_json(response.json)
+
+            # Try to delete
+            id_to_del = response.json['id_dashboard']
+            delete_params = {'id': id_to_del}
+            response = self._delete_with_user_token_auth(self.test_client, token=self._users['siteadmin'],
+                                                         params=delete_params)
+            self.assertEqual(403, response.status_code)  # Global dashboard = deletable only by superadmins
+
+            response = self._delete_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                         params=delete_params)
+            self.assertEqual(200, response.status_code)
+
+    def test_post_and_update_new_global(self):
+        with self.app_context():
+            global_dashs = DashDashboards.get_dashboards_globals()
+            global_dash_id = global_dashs[0].id_dashboard
+            global_dash_uuid = global_dashs[0].dashboard_uuid
+            global_latest_version = global_dashs[0].dashboard_versions[-1].dashboard_version
+            dashboard = {'dashboard': {'id_dashboard': 4567}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(403, response.status_code)  # Unknown dashboard
+
+            dashboard = {'dashboard': {'id_dashboard': global_dash_id, 'dashboard_uuid': '12345'}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(400, response.status_code)  # Can't change uuid if id
+
+            dashboard = {'dashboard': {'id_dashboard': 11, 'dashboard_uuid': global_dash_uuid}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(400, response.status_code)  # Can't change id if uuid
+
+            dashboard = {'dashboard': {'id_dashboard':global_dash_id}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['siteadmin'],
+                                                       json=dashboard)
+            self.assertEqual(403, response.status_code)  # Can't access global dashboard
+
+            dashboard = {'dashboard': {'id_dashboard': global_dash_id, 'dashboard_version': 0}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(400, response.status_code)  # Can't update older version
+
+            dashboard = {'dashboard': {'id_dashboard': global_dash_id, 'dashboard_version': global_latest_version,
+                                       'dashboard_name': 'Global New Name'}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)  # Was updated
+            updated = DashDashboards.get_by_id(global_dash_id)
+            self.assertEqual('Global New Name', updated.dashboard_name)
+
+            dashboard = {'dashboard': {'id_dashboard': global_dash_id, 'dashboard_definition': '{"definition": 33}'}}
+            response = self._post_with_user_token_auth(self.test_client, token=self._users['superadmin'],
+                                                       json=dashboard)
+            self.assertEqual(200, response.status_code)  # Was updated
+            updated = DashDashboards.get_by_id(global_dash_id)
+            self.assertEqual(global_latest_version+1, updated.dashboard_versions[-1].dashboard_version)
+            self.assertEqual('{"definition": 33}', updated.dashboard_versions[-1].dashboard_definition)
+
+            # Manually remove latest version
+            DashDashboardVersions.delete(updated.dashboard_versions[-1].id_dashboard_version)
 
     def _check_json(self, json_data: str, minimal=False):
         self.assertTrue(json_data.__contains__('id_dashboard'))
