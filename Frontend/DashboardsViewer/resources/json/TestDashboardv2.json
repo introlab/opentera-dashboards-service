@@ -66,7 +66,7 @@
                        "id": "participantList",
                        "properties": {                           
                            "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
-                           "model": {"type": "raw", "value": "participantListData.model"},
+                           "dataSource": {"type": "raw", "value": "participantListData"},
                            "delegate": {"type": "delegate", "value": "GenericItemDelegate"}
                        }
                     },
@@ -75,7 +75,7 @@
                        "id": "participantSessionList",
                        "properties": {                           
                            "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
-                           "model": {"type": "raw", "value": "participantSessionListData.model"},
+                           "dataSource": {"type": "raw", "value": "participantSessionListData"},
                            "delegate": {"type": "delegate", "value": "SessionDelegate"}
                        }
                     }

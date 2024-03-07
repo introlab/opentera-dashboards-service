@@ -8,6 +8,7 @@ BaseWidget {
     //Set model and delegate properties externally
     property alias model: myListView.model
     property alias delegate: myListView.delegate
+    property var dataSource: Object()
 
 
     // Define a ListView to display the items
@@ -19,11 +20,35 @@ BaseWidget {
 
         onModelChanged: function()
         {
-            console.log("ListViewWidget.onModelChanged");
-            delegate.fieldIdName = model.fieldIdName
-            delegate.fieldDisplayName = model.fieldDisplayName;
-            delegate.iconPath = model.iconPath;
+            //At this stage the model is empty
         }
+
+        onCountChanged: function()
+        {
+            //Something added to the model
+            //Update all delegate to model items
+            for (var i = 0; i < myListView.count; ++i) {
+                var element = model.get(i); // Access the ListElement at index i
+                var item = myListView.itemAtIndex(i);
+
+                // Data Source will determine field names
+                var fieldIdName = dataSource.fieldIdName;
+                var fieldDisplayName = dataSource.fieldDisplayName;
+                var iconPath = dataSource.iconPath;
+
+
+                //TODO not working yet.
+                /*
+                item[fieldIdName] = element[fieldIdName];
+                item[fieldDisplayName] = element[fieldDisplayName];
+                item[iconPath] = element[iconPath];
+                */
+
+                console.log("Item at index", i, ":", item, element);
+            }
+
+        }
+
     }
 
 
