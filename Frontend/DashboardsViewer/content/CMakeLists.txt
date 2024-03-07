@@ -34,6 +34,7 @@ qt6_add_qml_module(content
         # Delegates
         delegates/ParticipantDelegate.qml
         delegates/SessionDelegate.qml
+        delegates/GenericItemDelegate.qml
 
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf

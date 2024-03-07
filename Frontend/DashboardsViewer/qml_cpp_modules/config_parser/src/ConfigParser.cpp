@@ -116,6 +116,7 @@ void ConfigParser::writeLayout(const QJsonObject &layout, QTextStream &stream)
 
     // Start layout
     stream << type << " {\n";
+    stream << "    " << "id: " << layout["id"].toString() << "\n";
 
     //Verify if we have properties
     if (layout.contains("properties"))
@@ -175,6 +176,7 @@ void ConfigParser::writeWidget(const QJsonObject &widget, QTextStream &stream)
 
     // Start widget
     stream << type << " {\n";
+    stream << "    " << "id: " << widget["id"].toString() << "\n";
 
     // Get Properties
     QJsonObject properties = widget["properties"].toObject();
@@ -306,6 +308,7 @@ void ConfigParser::writeDataSources(const QJsonArray &dataSources, QTextStream &
         // Extract data-source information
         QJsonObject source = dataSources[i].toObject();
         stream << source["type"].toString() <<" {\n";
+        stream << "    " << "id: " << source["id"].toString() << "\n";
         QJsonObject properties = source["properties"].toObject();
         writeProperties(properties, stream);
         stream << "}\n";

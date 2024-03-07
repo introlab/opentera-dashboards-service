@@ -1,27 +1,20 @@
 {
    "version" : "1.0",
+   "parserVersion": "1.0",
    "name": "Participant Overview Dashboard",
-   "params": {
-      "id_project": "1",
-      "id_site": "1"
-   },
    "layout": {
         "type": "BaseLayout",
-        "properties": {
-            "id": {"type": "raw", "value": "layout1"}
-        },
+        "id": "layout1",
         "widgets": [],
         "layouts":[
             {
                 "type": "CenteredRowLayout",
-                "properties": {
-                    "id": {"type": "raw", "value": "layout2"}
-                },
+                "id": "layout2",
                 "widgets": [
                     {
                        "type": "Rectangle",
-                       "properties": {
-                          "id": {"type": "raw", "value": "rect1"},
+                       "id": "rect1",
+                       "properties": {                          
                           "color": {"type": "string", "value": "#ff0000"},
                           "radius": {"type": "int", "value": 5},
                           "width": {"type": "int", "value": 200},
@@ -32,14 +25,12 @@
             },
             {
                 "type": "CenteredRowLayout",
-                "properties": {
-                    "id": {"type": "raw", "value": "layout3"}
-                },
+                "id": "layout3",
                 "widgets": [
                     {
                        "type": "ClockWidget",
-                       "properties": {
-                          "id": {"type": "raw", "value": "clock1"},
+                       "id": "clock1",
+                       "properties": {                          
                           "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
                           "width": {"type": "int", "value": 100},
                           "height": {"type": "int", "value": 100}
@@ -47,8 +38,8 @@
                     },
                     {
                        "type": "ClockWidget",
-                       "properties": {
-                          "id": {"type": "raw", "value": "clock2"},
+                       "id": "clock2",
+                       "properties": {                          
                           "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
                           "width": {"type": "int", "value": 100},
                           "height": {"type": "int", "value": 100}
@@ -56,8 +47,8 @@
                     },
                     {
                        "type": "ButtonWidget",
-                       "properties": {
-                          "id": {"type": "raw", "value": "button"},
+                       "id": "button",
+                       "properties": {                          
                           "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
                           "text": {"type": "string", "value": "Click Me To Refresh!"},
                           "width": {"type": "int", "value": 100},
@@ -68,23 +59,21 @@
             },
             {
                 "type": "CenteredRowLayout",
-                "properties": {
-                    "id": {"type": "raw", "value": "layout4"}
-                },
+                "id": "layout4",
                 "widgets": [
                     {
                        "type": "ListViewWidget",
-                       "properties": {
-                           "id": {"type": "raw", "value": "participantList"},
+                       "id": "participantList",
+                       "properties": {                           
                            "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
                            "model": {"type": "raw", "value": "participantListData.model"},
-                           "delegate": {"type": "delegate", "value": "ParticipantDelegate"}
+                           "delegate": {"type": "delegate", "value": "GenericItemDelegate"}
                        }
                     },
                     {
                        "type": "ListViewWidget",
-                       "properties": {
-                           "id": {"type": "raw", "value": "participantSessionList"},
+                       "id": "participantSessionList",
+                       "properties": {                           
                            "Layout.alignment": {"type": "raw", "value": "Qt.AlignVCenter | Qt.AlignHCenter"},
                            "model": {"type": "raw", "value": "participantSessionListData.model"},
                            "delegate": {"type": "delegate", "value": "SessionDelegate"}
@@ -97,18 +86,17 @@
    "dataSources": [
         {
             "type": "ParticipantListDataSource",
+            "id": "participantListData",
             "properties": {
-                "id": {"type": "raw", "value":"participantListData"},
-                "url": {"type": "string", "value": "/api/user/participants"},
-                "id_project": {"type": "int", "value": 1}
+                "id_project": {"type": "int", "value": 1},
+                "autoFetch": {"type": "bool", "value": "true"}
             }
         },
         {
             "type": "ParticipantSessionListDataSource",
-            "properties": {
-                "id": {"type": "raw", "value":"participantSessionListData"},
-                "url": {"type": "string", "value": "/api/user/sessions"},
-                "id_participant": {"type": "int", "value": 0}
+            "id": "participantSessionListData",
+            "properties": {                
+                "id_participant": {"type": "int", "value": -1}
             }
         }
    ],

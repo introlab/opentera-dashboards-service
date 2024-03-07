@@ -16,7 +16,18 @@ BaseWidget {
         anchors.fill: parent
         model: myModel
         delegate: myDelegate
+
+        onModelChanged: function()
+        {
+            console.log("ListViewWidget.onModelChanged");
+            delegate.fieldIdName = model.fieldIdName
+            delegate.fieldDisplayName = model.fieldDisplayName;
+            delegate.iconPath = model.iconPath;
+        }
     }
+
+
+
 
     ListModel {
         id: myModel
