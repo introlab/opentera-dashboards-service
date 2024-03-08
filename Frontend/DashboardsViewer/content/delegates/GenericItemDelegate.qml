@@ -3,10 +3,6 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts
 
 Item {
-    property string fieldIdName: "id_"
-    property string fieldDisplayName: "disp_"
-    property string iconPath: "qrc:/genericIcon"
-
     id: myDelegate
 
     signal itemClicked(int id);
@@ -28,7 +24,7 @@ Item {
             // Customize delegate appearance as needed
             Text {
                 height: 20
-                text:  "Name: " + model[fieldDisplayName]
+                text:  "Name: " + model[myDelegate.ListView.view.fieldDisplayName]
                 color: "red"
             }
 /*
@@ -46,7 +42,7 @@ Item {
 */
         }
         Component.onCompleted: function() {
-            console.log("GenericItemDelegate");
+            //console.log("GenericItemDelegate - " + myDelegate.ListView.view.fieldDisplayName);
         }
 
 
@@ -54,7 +50,7 @@ Item {
             id: mouseArea
             anchors.fill: parent
             onClicked: {
-                itemClicked(model[fieldIdName]);
+                itemClicked(model[myDelegate.ListView.view.fieldIdName]);
             }
         }
     }
