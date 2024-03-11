@@ -173,7 +173,7 @@ def get_session_type_for_service(service_info: dict) -> dict | None:
                 'id_session_type': 0,
                 'id_service': service_info['id_service'],
                 'session_type_category': 1, # 1 = Service
-                'session_type_color': '#000000',
+                'session_type_color': '#AABBCC',
                 'session_type_config': '',
                 'session_type_name': 'Dashboards',
                 'session_type_online': False
