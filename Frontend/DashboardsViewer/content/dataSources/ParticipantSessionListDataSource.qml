@@ -12,4 +12,9 @@ BaseDataSource {
     fieldDisplayName: "session_name"
     iconPath: "qrc:/genericIcon"
 
+    function setParticipant(id_participant) {
+        fetch.id_participant = id_participant;
+        getAll();
+    }
+
 }

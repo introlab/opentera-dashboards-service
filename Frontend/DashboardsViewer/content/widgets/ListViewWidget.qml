@@ -19,6 +19,9 @@ BaseWidget {
         property string fieldIdName: dataSource.fieldIdName
         property string iconPath: dataSource.iconPath
 
+
+
+
     }
 /*
     ListModel {

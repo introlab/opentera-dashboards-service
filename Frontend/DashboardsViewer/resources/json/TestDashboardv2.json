@@ -106,7 +106,7 @@
             "target": {"object": "participantListData", "slot": "update", "args": []}
         },
         {
-            "source": {"object": "participantList.delegate", "signal": "onItemClicked"},
+            "source": {"object": "participantListData", "signal": "onItemClicked"},
             "target": {"object": "participantSessionListData", "slot": "setParticipant", "args": ["id_participant"]}
         }
     ]

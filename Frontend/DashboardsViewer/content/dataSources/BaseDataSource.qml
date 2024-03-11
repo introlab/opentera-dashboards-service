@@ -14,6 +14,7 @@ Item {
     property bool autoFetch: false
 
     signal error(var errorMessage);
+    signal itemClicked(var item);
 
     function getAll() {
         var reply = UserClient.get(url, params);
@@ -26,7 +27,8 @@ Item {
 
             //Add session
             response.forEach(function(item) {
-               myModel.append(item)
+               item.dataSource = baseDataSource;
+               myModel.append(item);
             });
         });
 

@@ -24,7 +24,7 @@ Item {
             // Customize delegate appearance as needed
             Text {
                 height: 20
-                text:  "Name: " + model[myDelegate.ListView.view.fieldDisplayName]
+                text:  "Name: " + model[model.dataSource.fieldDisplayName]
                 color: "red"
             }
 /*
@@ -50,7 +50,8 @@ Item {
             id: mouseArea
             anchors.fill: parent
             onClicked: {
-                itemClicked(model[myDelegate.ListView.view.fieldIdName]);
+                console.log("GenericItemDelegate clicked.")
+                model.dataSource.itemClicked(model[model.dataSource.fieldIdName])
             }
         }
     }
