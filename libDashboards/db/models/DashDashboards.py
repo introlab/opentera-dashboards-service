@@ -1,5 +1,5 @@
 from libDashboards.db.models.BaseModel import BaseModel
-from sqlalchemy import Column, Integer, Sequence, String, func, select
+from sqlalchemy import Column, Integer, Sequence, String, or_
 from sqlalchemy.orm import relationship
 import uuid
 
@@ -46,15 +46,16 @@ class DashDashboards(BaseModel):
                  join(DashDashboards.dashboard_projects, isouter=True).
                  filter(DashDashboardProjects.id_project == None).
                  filter(DashDashboardSites.id_site == None))
+        return query.all()
 
-        # query = DashDashboards.query.filter_by(id_project=None, id_site=None)
-        #
-        # if latest:
-        #     subquery = select(func.max(DashDashboards.dashboard_version).label("latest_version"),
-        #                       DashDashboards.dashboard_uuid).group_by(DashDashboards.dashboard_uuid).subquery()
-        #     query = (query.filter(DashDashboards.dashboard_version == subquery.c.latest_version).
-        #              filter(DashDashboards.dashboard_uuid == subquery.c.dashboard_uuid))
-        #
+    @staticmethod
+    def get_dashboards(selected_sites: list, selected_projects: list) -> []:
+        from libDashboards.db.models.DashDashboardProjects import DashDashboardProjects
+        from libDashboards.db.models.DashDashboardSites import DashDashboardSites
+        query = (DashDashboards.query.join(DashDashboards.dashboard_sites, isouter=True).
+                 join(DashDashboards.dashboard_projects, isouter=True).
+                 filter(or_(DashDashboardProjects.id_project.in_(selected_projects),
+                            DashDashboardSites.id_site.in_(selected_sites))))
         return query.all()
 
     @classmethod
