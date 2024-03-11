@@ -1,2 +1,2 @@
-opentera==1.2.4
+opentera==1.2.5
 requests

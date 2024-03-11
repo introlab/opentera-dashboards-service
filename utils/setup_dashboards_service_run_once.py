@@ -12,8 +12,8 @@ service_key = 'DashboardsService'
 
 # TODO Change Authorization user and server_url
 headers = {'Authorization': _basic_auth_str('admin', 'admin')}
-server_url = 'https://127.0.0.1:40100'
-
+#server_url = 'https://127.0.0.1:40100'
+server_url = 'https://proxy:40100'
 
 required_roles = ['dashboards_admin']
 

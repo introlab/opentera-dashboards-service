@@ -42,8 +42,8 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y nodejs
 # Add directory from host
 # TODO Use main branch in the future, but need to use dev for now because of bug fixes...
 WORKDIR /root
-RUN ["/bin/bash", "-c", "touch TEMP_FILE_TO_FORCE_REBUILD_JAN_31_2024"]
-RUN ["/bin/bash", "-c", "git clone -b dev https://github.com/introlab/opentera.git --recurse-submodules"]
+RUN ["/bin/bash", "-c", "touch TEMP_FILE_TO_FORCE_REBUILD_MARCH_11_2024"]
+RUN ["/bin/bash", "-c", "git clone -b main https://github.com/introlab/opentera.git --recurse-submodules"]
 
 
 # Install node-js signaling server

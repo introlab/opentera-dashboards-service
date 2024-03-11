@@ -20,7 +20,7 @@
     },
     "Database": {
       "db_type": "QPSQL",
-      "name": "dashboards_service",
+      "name": "opentera_dashboards",
       "url": "db",
       "port": 5432,
       "username": "teraagent",

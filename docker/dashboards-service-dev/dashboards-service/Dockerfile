@@ -52,8 +52,8 @@ ENV PYTHONPATH /dashboards-service
 ENV PYTHON3_EXEC /root/miniconda3/envs/myenv/bin/python3
 
 # Will keep the container running and update translations.
-CMD ["/bin/sh", "-c", "trap exit 1 INT; while true; do sleep 1; done"]
-#CMD ["/bin/sh", "-c", "./docker_dev_setup.sh; $PYTHON3_EXEC ./setup/setup_dashboards_service_run_once.py; trap exit 1 INT; while true; do sleep 1; done"]
+#CMD ["/bin/sh", "-c", "trap exit 1 INT; while true; do sleep 1; done"]
+# CMD ["/bin/sh", "-c", "./docker_dev_setup.sh; $PYTHON3_EXEC ./setup/setup_dashboards_service_run_once.py; trap exit 1 INT; while true; do sleep 1; done"]
 
 # This will update the translation and run the service in debug mode
-#CMD ["/bin/bash", "-c", "./docker_dev_setup.sh; $PYTHON3_EXEC ./setup_omr_service_run_once.py; $PYTHON3_EXEC -m debugpy --listen 0.0.0.0:5689 OMRService.py"]
+CMD ["/bin/bash", "-c", "$PYTHON3_EXEC ./utils/setup_dashboards_service_run_once.py; $PYTHON3_EXEC -m debugpy --listen 0.0.0.0:5689 DashboardsService.py"]
