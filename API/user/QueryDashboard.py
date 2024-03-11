@@ -44,7 +44,8 @@ class QueryDashboard(Resource):
         self.module = kwargs.get('flaskModule', None)
         self.test = kwargs.get('test', False)
 
-    @api.doc(description='Get dashboard information. Should specify only one id or the "globals" parameter',
+    @api.doc(description='Get dashboard information. Should specify only one id or the "globals" parameter, or else '
+                         'will return all accessible dashboards.',
              responses={200: 'Success - returns list of dashboards',
                         400: 'Required parameter is missing',
                         403: 'Logged user doesn\'t have permission to access the requested data'},
@@ -108,7 +109,11 @@ class QueryDashboard(Resource):
                 return gettext('Forbidden'), 403
             dashboards = DashDashboards.get_dashboards_globals()
         else:
-            return gettext('Must specify at least one id parameter or "globals"'), 400
+            # return gettext('Must specify at least one id parameter or "globals"'), 400
+            if current_user_client.user_superadmin:
+                dashboards = DashDashboards.query.all()
+            else:
+                dashboards = DashDashboards.get_dashboards(accessible_site_ids, accessible_project_ids)
 
         # Convert to json and return
         dashboards_json = [dash.to_json(minimal=request_args['list'], latest=not request_args['all_versions'])

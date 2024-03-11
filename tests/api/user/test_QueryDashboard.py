@@ -34,7 +34,13 @@ class QueryDashboardTest(BaseDashboardsAPITest):
         with self.app_context():
             for user in self._users:
                 response = self._get_with_user_token_auth(self.test_client, token=self._users[user])
-                self.assertEqual(400, response.status_code)
+                self.assertEqual(200, response.status_code)
+                if user == 'superadmin':
+                    self.assertEqual(DashDashboards.get_count(), len(response.json))
+                elif user == 'noaccess':
+                    self.assertEqual(0, len(response.json))
+                else:
+                    self.assertEqual(DashDashboards.get_count()-1, len(response.json)) # Only one global dashboard
 
     def test_get_with_bad_id(self):
         with self.app_context():
