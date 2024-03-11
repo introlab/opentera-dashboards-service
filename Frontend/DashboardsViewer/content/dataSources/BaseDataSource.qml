@@ -14,7 +14,7 @@ Item {
     property bool autoFetch: false
 
     signal error(var errorMessage);
-    signal itemClicked(var item);
+    signal itemSelected(var item);
 
     function getAll() {
         var reply = UserClient.get(url, params);

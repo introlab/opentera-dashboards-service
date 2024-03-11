@@ -51,7 +51,7 @@ Item {
             anchors.fill: parent
             onClicked: {
                 console.log("GenericItemDelegate clicked.")
-                model.dataSource.itemClicked(model[model.dataSource.fieldIdName])
+                model.dataSource.itemSelected(model[model.dataSource.fieldIdName])
             }
         }
     }
