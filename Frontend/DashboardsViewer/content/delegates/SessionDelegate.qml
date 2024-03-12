@@ -4,13 +4,12 @@ import QtQuick.Layouts 2.15
 
 Item {
     id: myDelegate
-    width: parent.width
-    height: 80
+    height: parent ? 80 : 0
+    width: parent ? parent.width : 0
 
     Rectangle {
         id: myRectangle
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
         color: "#cccccc"
         border.color: "black"
         border.width: 1
@@ -27,7 +26,7 @@ Item {
                 font.pixelSize: 20
                 color: "black"
                 height: parent.height
-                width: parent.width
+                Layout.fillWidth: true
             }
 
         }

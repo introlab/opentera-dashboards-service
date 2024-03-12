@@ -7,13 +7,12 @@ Item {
 
     signal itemClicked(int id);
 
-    width: parent.width
-    height: 80
+    height: parent ? 80 : 0
+    width: parent ? parent.width : 0
 
     Rectangle {
         id: myRectangle
-        width: parent.width
-        height: parent.height
+        anchors.fill: parent
         color: "#cccccc"
         border.color: "black"
         border.width: 1
@@ -27,7 +26,7 @@ Item {
             // Customize delegate appearance as needed
             Text {
                 height: 20
-                width: parent.width
+                Layout.fillWidth: true
                 text:  "Name: " + model[model.dataSource.fieldDisplayName]
                 color: "red"
             }
