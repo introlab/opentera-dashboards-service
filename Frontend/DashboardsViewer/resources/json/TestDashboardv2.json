@@ -15,18 +15,26 @@
                        "type": "ClockWidget",
                        "id": "clock1",
                        "properties": {                          
-                          "width": {"type": "int", "value": 100},
-                          "height": {"type": "int", "value": 100}
+                          "implicitWidth": {"type": "int", "value": 100},
+                          "implicitHeight": {"type": "int", "value": 50}
                        }
                     },
-
+                    {
+                       "type": "Rectangle",
+                       "id": "rect",
+                       "properties": {
+                          "implicitHeight": {"type": "int", "value": 50},
+                          "Layout.fillWidth": {"type": "bool", "value": "true"},
+                          "opacity": {"type": "real", "value": "0.0"}
+                       }
+                    },
                     {
                        "type": "ButtonWidget",
                        "id": "button",
                        "properties": {                          
                           "text": {"type": "string", "value": "Click Me To Refresh!"},
-                          "width": {"type": "int", "value": 100},
-                          "height": {"type": "int", "value": 100}
+                          "implicitWidth": {"type": "int", "value": 200},
+                          "implicitHeight": {"type": "int", "value": 50}
                        }
                     }
                 ]
@@ -40,7 +48,9 @@
                        "id": "participantList",
                        "properties": {                           
                            "dataSource": {"type": "raw", "value": "participantListData"},
-                           "delegate": {"type": "delegate", "value": "GenericItemDelegate"}
+                           "delegate": {"type": "delegate", "value": "GenericItemDelegate"},
+                           "Layout.fillWidth": {"type": "bool", "value": "true"},
+                           "Layout.fillHeight": {"type": "bool", "value": "true"}
                        }
                     },
                     {
@@ -48,7 +58,9 @@
                        "id": "participantSessionList",
                        "properties": {                           
                            "dataSource": {"type": "raw", "value": "participantSessionListData"},
-                           "delegate": {"type": "delegate", "value": "SessionDelegate"}
+                           "delegate": {"type": "delegate", "value": "SessionDelegate"},
+                           "Layout.fillWidth": {"type": "bool", "value": "true"},
+                           "Layout.fillHeight": {"type": "bool", "value": "true"}
                        }
                     }
                 ]

@@ -5,11 +5,10 @@ import QtQuick.Controls 2.15
 
 BaseWidget {
 
+    id: myListViewWidget
     //Set model and delegate properties externally
     property alias delegate: myListView.delegate
     property var dataSource: null
-    width: 500
-    height: 1000
 
     // Define a ListView to display the items
     ListView {
@@ -21,24 +20,6 @@ BaseWidget {
         property string fieldIdName: dataSource.fieldIdName
         property string iconPath: dataSource.iconPath
 
-
-
-
     }
-/*
-    ListModel {
-        id: myModel
-        ListElement { name: "Apple" }
-        ListElement { name: "Banana" }
-        ListElement { name: "Cherry" }
-    }
-
-    Component {
-        id: myDelegate
-        Text {
-            text: name
-        }
-    }*/
-
 
 }

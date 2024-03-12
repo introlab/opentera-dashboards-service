@@ -5,5 +5,5 @@ ColumnLayout {
     id: myColumnLayout
     anchors.fill: parent
     anchors.margins: 10
-    spacing: 10
+    spacing: 0
 }

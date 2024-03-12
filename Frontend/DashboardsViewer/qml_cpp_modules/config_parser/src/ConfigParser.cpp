@@ -213,6 +213,10 @@ void ConfigParser::writeProperties(const QJsonObject &properties, QTextStream &s
                 qDebug() << "Invalid value for raw type : " << value;
             }
         }
+        else if (type == "real")
+        {
+            stream << "    " << it.key() << ": " << property["value"].toDouble() << "\n";
+        }
         else if (type == "int")
         {
             stream << "    " << it.key() << ": " << property["value"].toInt() << "\n";

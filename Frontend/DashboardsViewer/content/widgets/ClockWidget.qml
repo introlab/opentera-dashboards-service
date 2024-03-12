@@ -1,9 +1,7 @@
 import QtQuick 2.15
 
 BaseWidget {
-    width: 200
-    height: 200
-
+    id: clock
     property string currentTime: ""
 
     Timer {
