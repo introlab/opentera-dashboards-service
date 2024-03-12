@@ -45,6 +45,16 @@ LoginForm {
         target: UserClient
         onLoginSucceeded: function() {
             state = "loginSuccess";
+
+            //Query user information
+            var reply = UserClient.get("/api/user/users", {"self": true});
+
+            reply.requestSucceeded.connect(function(response, statusCode) {
+                console.log("Success", response, statusCode);
+                var userInfo = response[0];
+                menu.displayUsername = userInfo.user_firstname + " " + userInfo.user_lastname;
+            });
+
             menu.visible = true;
             stackview.push("DashboardSelector.qml");
         }

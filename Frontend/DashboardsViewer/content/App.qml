@@ -32,6 +32,7 @@ Window {
     }
 
     Rectangle {
+        property alias displayUsername: username.text
         id: menu
         anchors.right: parent.right
         anchors.top: parent.top
@@ -44,6 +45,18 @@ Window {
                 GradientStop { position: 0.5; color: Constants.lightBackgroundColor }
                 GradientStop { position: 1.0; color: Constants.backgroundColor }
         }
+
+        //Login username
+        Text {
+            id: username
+            text: "username"
+            anchors.centerIn: parent
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            color: "white"
+        }
+
+
 
         //Logout button
         Button {
