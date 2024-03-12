@@ -29,6 +29,16 @@ Item {
                 Layout.fillWidth: true
             }
 
+            Text {
+                id: text2
+                text: session_start_datetime + " Duration: " + session_duration
+                font.bold: true
+                font.pixelSize: 20
+                color: "black"
+                height: parent.height
+                Layout.fillWidth: true
+            }
+
         }
 
         MouseArea {
@@ -39,4 +49,38 @@ Item {
             }
         }
     }
-    } // Component
+
+    Component.onCompleted: function() {
+        // Look for last_session
+        if (model.session_start_datetime) {
+            var lastSession = new Date(model.session_start_datetime)
+            if (lastSession) {
+                var now = new Date()
+                var diff = now - lastSession
+
+                // Difference less than a day ?
+                if (diff < 1000 * 60 * 60 * 24) {
+                    console.log("Less than a day")
+                    myRectangle.color = "green"
+                }
+                else {
+                    console.log("More than a day")
+                    // Less than a week ?
+                    if (diff < 1000 * 60 * 60 * 24 * 7) {
+                        console.log("Less than a week")
+                        myRectangle.color = "orange"
+                    }
+                    else {
+                        console.log("More than a week")
+                        myRectangle.color = "red"
+                    }
+                }
+            }
+            else {
+                console.log("Invalid date")
+                myRectangle.color = "red"
+            }
+        }
+    }
+
+} // Item

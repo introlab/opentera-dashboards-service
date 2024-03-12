@@ -48,7 +48,7 @@
                        "id": "participantList",
                        "properties": {                           
                            "dataSource": {"type": "raw", "value": "participantListData"},
-                           "delegate": {"type": "delegate", "value": "GenericItemDelegate"},
+                           "delegate": {"type": "delegate", "value": "ParticipantDelegate"},
                            "Layout.fillWidth": {"type": "bool", "value": "true"},
                            "Layout.fillHeight": {"type": "bool", "value": "true"}
                        }
