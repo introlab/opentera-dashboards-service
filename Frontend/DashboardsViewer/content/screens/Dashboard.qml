@@ -6,7 +6,7 @@ import DashboardsViewer.ConfigParser 1.0
 DashboardForm {
 
     id: dashboard
-    property string json_file_name : "dashboard.json"
+    property string jsonFileName : "dashboard.json"
 
     signal buttonClicked()
 
@@ -15,13 +15,13 @@ DashboardForm {
     }
 
 
-    button.onClicked: function() {
+    logoutButton.onClicked: function() {
         UserClient.disconnect();
     }
 
     loadButton.onClicked: function() {
-        console.log("should load document", json_file_name)
-        var dynamicQML = parser.parseConfig(json_file_name);
+        console.log("should load document", jsonFileName)
+        var dynamicQML = parser.parseConfig(jsonFileName);
         console.log("dynamicQML", dynamicQML)
 
         if (dynamicQML.length > 0)
@@ -47,26 +47,9 @@ DashboardForm {
                }
            }
         }
-
     }
 
-    function addOnlineParticipant(participant)
-    {
-        console.log("addOnlineParticipant", participant);
-
-        var component = Qt.createComponent("OnlineParticipant.qml");
-
-        if (component.status === Component.Ready)
-        {
-            // Create dynamic object, can add dict wit data sources...
-            var participantObject = component.createObject(flow_view);
-            // Update from dict
-            participantObject.update(participant)
-        }
-
-    }
-
-    function removeOnlineParticipant(item) {
-        console.log("removeOnlineParticipant", item)
+    closeButton.onClicked: function() {
+        stackview.pop();
     }
 }

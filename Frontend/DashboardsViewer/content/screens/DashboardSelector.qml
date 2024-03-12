@@ -11,7 +11,7 @@ DashboardSelectorForm {
         var currentElement = stackview.currentItem;
 
         // Set the element property
-        currentElement.json_file_name = file_name;
+        currentElement.jsonFileName = fileName;
     }
 
 }

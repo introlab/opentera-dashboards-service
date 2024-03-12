@@ -46,7 +46,9 @@ BaseDelegate {
             anchors.fill: parent
             onDoubleClicked: {
                 console.log("SessionDelegate clicked");
-                dialog.open()
+                if (stackView) {
+                    stackView.push("../widgets/SessionViewerWidget.qml", {"session": model})
+                }
             }
             onPressAndHold: {
                 console.log("SessionDelegate long pressed");
@@ -57,26 +59,6 @@ BaseDelegate {
 
             }
         }
-    }
-
-    Dialog {
-       id: dialog
-       title: "Sample Dialog"
-       parent: rootObject
-       width: parent.width
-       height: parent.height
-       opacity: 0.75
-
-       Text {
-           text: "This is a dialog."
-       }
-
-       Button {
-           text: "Close"
-           onClicked: {
-               dialog.close()
-           }
-       }
     }
 
     Component.onCompleted: function() {

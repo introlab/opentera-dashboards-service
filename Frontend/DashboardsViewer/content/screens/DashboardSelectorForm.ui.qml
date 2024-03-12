@@ -8,7 +8,7 @@ import DashboardsViewer 1.0
 
 Item {
     property alias btnOK: btnStart
-    property alias file_name: inputJSON.text
+    property alias fileName: inputJSON.text
 
     Item {
         anchors.centerIn: parent

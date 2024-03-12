@@ -15,8 +15,9 @@ Item {
     height: 768
     anchors.fill: parent
 
-    property alias button: button
+    property alias logoutButton: logoutButton
     property alias loadButton: loadButton
+    property alias closeButton: closeButton
     property alias mainView: dashboardStackView
     property alias dashboardStackView: dashboardStackView
 
@@ -31,7 +32,7 @@ Item {
     }
 
     Button {
-        id: button
+        id: logoutButton
         anchors.left: parent.left
         anchors.top: parent.top
         width: 150
@@ -41,11 +42,20 @@ Item {
 
     Button {
         id: loadButton
-        anchors.left: button.right
+        anchors.left: logoutButton.right
         anchors.top: parent.top
         width: 150
         height: 60
         text: qsTr("Load")
+    }
+
+    Button {
+        id: closeButton
+        anchors.left: loadButton.right
+        anchors.top: parent.top
+        width: 150
+        height: 60
+        text: qsTr("Close")
     }
 
     StackView {
