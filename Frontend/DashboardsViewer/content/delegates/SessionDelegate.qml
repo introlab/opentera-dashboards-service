@@ -44,10 +44,35 @@ Item {
         MouseArea {
             id: mouseArea
             anchors.fill: parent
-            onClicked: {
+            onDoubleClicked: {
                 console.log("SessionDelegate clicked");
+                dialog.open()
+            }
+            onPressAndHold: {
+                console.log("SessionDelegate long pressed");
+                dialog.open()
             }
         }
+    }
+
+    Dialog {
+       id: dialog
+       title: "Sample Dialog"
+       parent: rootObject
+       width: parent.width
+       height: parent.height
+       opacity: 0.75
+
+       Text {
+           text: "This is a dialog."
+       }
+
+       Button {
+           text: "Close"
+           onClicked: {
+               dialog.close()
+           }
+       }
     }
 
     Component.onCompleted: function() {

@@ -34,6 +34,10 @@ DashboardForm {
                    var dynamicObject = Qt.createQmlObject(dynamicQML[i], mainView);
 
                    console.log("dynamicObject", dynamicObject)
+
+                   if (dynamicObject) {
+                       dynamicObject.stackView = stackview;
+                   }
                }
                catch(e) {
                    console.log("Error", e)

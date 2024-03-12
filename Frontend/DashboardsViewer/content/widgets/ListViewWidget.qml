@@ -1,7 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-
-
+import QtQuick.Layouts
+import QtQuick.Effects
+import "../ui"
 
 BaseWidget {
 
@@ -20,6 +21,7 @@ BaseWidget {
         property string fieldIdName: dataSource.fieldIdName
         property string iconPath: dataSource.iconPath
 
+        ScrollBar.vertical: FlickableScrollBar {}
     }
 
 }

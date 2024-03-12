@@ -71,7 +71,7 @@ QVariantList ConfigParser::parseConfig(const QString &configPath)
     textStream << "import content;\n";
 
     // Write the root object, make sure it will fill parent
-    textStream << "Item { //Begin root object \n";
+    textStream << "BaseWidget { //Begin root object \n";
     textStream << "    id: rootObject;\n";
     textStream << "    anchors.fill: parent;\n";
 
