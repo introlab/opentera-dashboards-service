@@ -1,12 +1,15 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Effects
+import QtQuick.Layouts 1.15
 
 BaseWidget {
 
     signal clicked() // This signal is emitted when the button is clicked
 
     property alias text: control.text
+
+
 
     Button {
         id: control

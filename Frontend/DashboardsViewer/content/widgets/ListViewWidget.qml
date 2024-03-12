@@ -8,6 +8,8 @@ BaseWidget {
     //Set model and delegate properties externally
     property alias delegate: myListView.delegate
     property var dataSource: null
+    width: 500
+    height: 1000
 
     // Define a ListView to display the items
     ListView {

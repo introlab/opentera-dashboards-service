@@ -25,6 +25,9 @@ Item {
             //Make sure model is empty
             myModel.clear();
 
+            //Print number of elements
+            console.log("Number of elements: ", response.length);
+
             //Add session
             response.forEach(function(item) {
                item.dataSource = baseDataSource;

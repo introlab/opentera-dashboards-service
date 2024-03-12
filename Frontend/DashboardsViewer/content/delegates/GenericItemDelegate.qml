@@ -1,16 +1,19 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Layouts
+import QtQuick.Layouts 2.15
 
 Item {
     id: myDelegate
 
     signal itemClicked(int id);
 
+    width: parent.width
+    height: 80
+
     Rectangle {
         id: myRectangle
-        width: 500
-        height: 80
+        width: parent.width
+        height: parent.height
         color: "#cccccc"
         border.color: "black"
         border.width: 1
@@ -24,6 +27,7 @@ Item {
             // Customize delegate appearance as needed
             Text {
                 height: 20
+                width: parent.width
                 text:  "Name: " + model[model.dataSource.fieldDisplayName]
                 color: "red"
             }
