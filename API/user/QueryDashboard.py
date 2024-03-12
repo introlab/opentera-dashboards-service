@@ -111,7 +111,7 @@ class QueryDashboard(Resource):
         else:
             # return gettext('Must specify at least one id parameter or "globals"'), 400
             if current_user_client.user_superadmin:
-                dashboards = DashDashboards.query.all()
+                dashboards = DashDashboards.get_all_non_globals_dashboards()
             else:
                 dashboards = DashDashboards.get_dashboards(accessible_site_ids, accessible_project_ids)
 

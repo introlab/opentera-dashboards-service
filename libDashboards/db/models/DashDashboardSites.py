@@ -18,18 +18,19 @@ class DashDashboardSites(BaseModel):
         if ignore_fields is None:
             ignore_fields = []
 
-        ignore_fields.extend(['id_dashboard_site', 'id_site'])
+        ignore_fields.extend(['id_dashboard_site', 'id_dashboard'])
 
         dashboard_json = super().to_json(ignore_fields=ignore_fields)
 
-        dashboard_json |= self.dashboard_site_dashboard.to_json(minimal=latest, latest=latest)
+        if not minimal:
+            dashboard_json |= self.dashboard_site_dashboard.to_json(minimal=latest, latest=latest)
 
         # Rename keys to standardize them
         dashboard_json['dashboard_enabled'] = dashboard_json.pop('dashboard_site_enabled')
         dashboard_json['dashboard_required_version'] = dashboard_json.pop('dashboard_site_version')
 
         # Get the appropriate dashboard to jsonize
-        if latest:
+        if latest and not minimal:
             dashboard_json['versions'] = []
             if self.dashboard_site_version:
                 for version in self.dashboard_site_dashboard.dashboard_versions:

@@ -36,7 +36,7 @@ class QueryDashboardTest(BaseDashboardsAPITest):
                 response = self._get_with_user_token_auth(self.test_client, token=self._users[user])
                 self.assertEqual(200, response.status_code)
                 if user == 'superadmin':
-                    self.assertEqual(DashDashboards.get_count(), len(response.json))
+                    self.assertEqual(len(DashDashboards.get_all_non_globals_dashboards()), len(response.json))
                 elif user == 'noaccess':
                     self.assertEqual(0, len(response.json))
                 else:
@@ -476,6 +476,8 @@ class QueryDashboardTest(BaseDashboardsAPITest):
         self.assertTrue(json_data.__contains__('dashboard_uuid'))
         self.assertTrue(json_data.__contains__('dashboard_name'))
         self.assertTrue(json_data.__contains__('dashboard_description'))
+        self.assertTrue(json_data.__contains__('dashboard_projects'))
+        self.assertTrue(json_data.__contains__('dashboard_sites'))
         if not minimal:
             self.assertTrue(json_data.__contains__('versions'))
         else:
