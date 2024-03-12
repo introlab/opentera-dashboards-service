@@ -22,6 +22,8 @@ qt6_add_qml_module(content
         widgets/ClockWidget.qml
         widgets/ButtonWidget.qml
         widgets/ListViewWidget.qml
+        widgets/SessionViewerWidget.qml
+
         # Layouts
         layouts/BaseLayout.qml
         layouts/CenteredRowLayout.qml
@@ -32,6 +34,7 @@ qt6_add_qml_module(content
         dataSources/ParticipantListDataSource.qml
         dataSources/ParticipantSessionListDataSource.qml
         # Delegates
+        delegates/BaseDelegate.qml
         delegates/ParticipantDelegate.qml
         delegates/SessionDelegate.qml
         delegates/GenericItemDelegate.qml
@@ -39,4 +42,4 @@ qt6_add_qml_module(content
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf
         images/logos/LogoOpenTera.png
-)
+    )

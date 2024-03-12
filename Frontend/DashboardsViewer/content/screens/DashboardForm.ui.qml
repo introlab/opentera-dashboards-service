@@ -17,7 +17,8 @@ Item {
 
     property alias button: button
     property alias loadButton: loadButton
-    property alias mainView: mainView
+    property alias mainView: dashboardStackView
+    property alias dashboardStackView: dashboardStackView
 
     Text {
         id: dashboardText
@@ -47,8 +48,8 @@ Item {
         text: qsTr("Load")
     }
 
-    Item {
-        id: mainView
+    StackView {
+        id: dashboardStackView
         anchors.top: dashboardText.bottom
         anchors.bottom: parent.bottom
         width: parent.width

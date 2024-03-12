@@ -7,7 +7,7 @@ Item {
     id: widgetRoot
     implicitHeight: 400
     implicitWidth: 400
-    property Item stackView: null
+    property Item stackView: dashboardStackView ? dashboardStackView : null
 
     Component.onCompleted: {
         console.log("Using StackView: ", stackView)

@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 2.15
 
-Item {
+BaseDelegate {
     id: myDelegate
     height: parent ? 80 : 0
     width: parent ? parent.width : 0
