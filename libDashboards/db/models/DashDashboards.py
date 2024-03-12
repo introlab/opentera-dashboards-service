@@ -1,5 +1,5 @@
 from libDashboards.db.models.BaseModel import BaseModel
-from sqlalchemy import Column, Integer, Sequence, String, or_
+from sqlalchemy import Column, Integer, Sequence, String, or_, and_
 from sqlalchemy.orm import relationship
 import uuid
 
@@ -25,6 +25,10 @@ class DashDashboards(BaseModel):
 
         dashboard_json = super().to_json(ignore_fields=ignore_fields)
 
+        # Append related projects and sites
+        dashboard_json['dashboard_projects'] = [ddp.to_json(minimal=True) for ddp in self.dashboard_projects]
+        dashboard_json['dashboard_sites'] = [dds.to_json(minimal=True) for dds in self.dashboard_sites]
+
         if not minimal:
             if latest:  # Only get latest version
                 dashboard_json['versions'] = [self.dashboard_versions[-1].to_json(minimal=True)]
@@ -46,6 +50,16 @@ class DashDashboards(BaseModel):
                  join(DashDashboards.dashboard_projects, isouter=True).
                  filter(DashDashboardProjects.id_project == None).
                  filter(DashDashboardSites.id_site == None))
+        return query.all()
+
+    @staticmethod
+    def get_all_non_globals_dashboards() -> []:
+        from libDashboards.db.models.DashDashboardProjects import DashDashboardProjects
+        from libDashboards.db.models.DashDashboardSites import DashDashboardSites
+        query = (DashDashboards.query.join(DashDashboards.dashboard_sites, isouter=True).
+                 join(DashDashboards.dashboard_projects, isouter=True).
+                 filter(or_(and_(DashDashboardProjects.id_project != None, DashDashboardSites.id_site == None).self_group(),
+                 and_(DashDashboardSites.id_site != None, DashDashboardProjects.id_project == None).self_group())))
         return query.all()
 
     @staticmethod
