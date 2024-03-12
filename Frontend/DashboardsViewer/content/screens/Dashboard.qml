@@ -14,11 +14,6 @@ DashboardForm {
         id: parser
     }
 
-
-    logoutButton.onClicked: function() {
-        UserClient.disconnect();
-    }
-
     loadButton.onClicked: function() {
         console.log("should load document", jsonFileName)
         var dynamicQML = parser.parseConfig(jsonFileName);

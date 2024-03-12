@@ -19,7 +19,10 @@ Window {
     title: "DashboardsViewer"
     id: mainWindow
 
+
+
     Rectangle{
+        id: background
         anchors.fill: parent
         gradient: Gradient {
                 GradientStop { position: 0.0; color: Constants.backgroundColor }
@@ -28,132 +31,50 @@ Window {
             }
     }
 
+    Rectangle {
+        id: menu
+        anchors.right: parent.right
+        anchors.top: parent.top
+        anchors.left: parent.left
+        height: 50
+        visible: false
+
+        gradient: Gradient {
+                GradientStop { position: 0.0; color: Constants.backgroundColor }
+                GradientStop { position: 0.5; color: Constants.lightBackgroundColor }
+                GradientStop { position: 1.0; color: Constants.backgroundColor }
+        }
+
+        //Logout button
+        Button {
+            id: logoutButton
+            text: "Logout"
+            anchors.right: parent.right
+            anchors.top: parent.top
+            width: 100
+            height: parent.height
+            onClicked: {
+                UserClient.disconnect();
+            }
+        }
+    }
+
+
     StackView {
         id: stackview
         initialItem: Login {}
-        anchors.fill: parent
+        anchors.top: menu.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
     }
 
     Connections {
         target: UserClient
         onLogoutSucceeded: function() {
             stackview.pop(null)
+            menu.visible = false;
         }
     }
-
-/*
-    Item {
-        id: dashboardView
-        visible: false
-
-        function addOnlineParticipant(participant)
-        {
-            console.log("dashboardView adding participant.")
-            dashboardForm.addOnlineParticipant(participant)
-        }
-
-        Dashboard {
-            id: dashboardForm
-            anchors.fill: parent
-
-            onButtonClicked: function() {
-                // Hide dashboard
-                UserClient.disconnect();
-            }
-        }
-    }
-
-    Item {
-        id: signalReceiver
-        function onOnlineParticipantsAnswer(participantList) {
-            console.log("QML onOnlineParticipantsAnswer", participantList, participantList.length)
-            for (var i = 0; i < participantList.length; i++)
-            {
-                var myObject = participantList[i]
-                console.log("QML participant info", myObject)
-                dashboardView.addOnlineParticipant(myObject)
-            }
-         }
-    }
-
-
-    Timer {
-        id: getParticipantsTimer
-        interval: 5000
-        running: false
-        repeat: true
-
-        onTriggered: function() {
-            if (UserClient.isConnected())
-            {
-                console.log("getParticipantsTimer");
-
-            }
-        }
-    }
-
-    Timer {
-        id: getUsersTimer
-        interval: 5000
-        running: false
-        repeat: true
-
-        onTriggered: function() {
-            if (UserClient.isConnected())
-            {
-                console.log("getUsersTimer");
-
-            }
-        }
-    }
-
-    Timer {
-        id: getDevicesTimer
-        interval: 5000
-        running: false
-        repeat: true
-
-        onTriggered: function() {
-            if (UserClient.isConnected())
-            {
-                console.log("getDevicesTimer");
-            }
-        }          
-    }*/
-
-    /*
-    function onOnlineParticipantsAnswer(participantList) {
-        console.log("QML onOnlineParticipantsAnswer", participantList, participantList.length)
-        for (var i = 0; i < participantList.length; i++)
-        {
-            var myObject = participantList[i]
-            console.log("QML participant info", myObject)
-            //dashboardView.addOnlineParticipant(myObject)
-        }
-     }
-     */
-
-
-
-
-
-/*
-    InputPanel {
-        id: inputPanel
-        property bool showKeyboard :  active
-        y: showKeyboard ? parent.height - height : parent.height
-        Behavior on y {
-            NumberAnimation {
-                duration: 200
-                easing.type: Easing.InOutQuad
-            }
-        }
-        anchors.leftMargin: parent.width/10
-        anchors.rightMargin: parent.width/10
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-    }
- */
 }
 
