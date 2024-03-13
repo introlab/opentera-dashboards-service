@@ -36,7 +36,7 @@ class QueryDashboardTest(BaseDashboardsAPITest):
                 response = self._get_with_user_token_auth(self.test_client, token=self._users[user])
                 self.assertEqual(200, response.status_code)
                 if user == 'superadmin':
-                    self.assertEqual(len(DashDashboards.get_all_non_globals_dashboards()), len(response.json))
+                    self.assertEqual(DashDashboards.get_count(), len(response.json))
                 elif user == 'noaccess':
                     self.assertEqual(0, len(response.json))
                 else:
@@ -100,7 +100,8 @@ class QueryDashboardTest(BaseDashboardsAPITest):
             for user in self._users:
                 response = self._get_with_user_token_auth(self.test_client, token=self._users[user],
                                                           params={'id_dashboard':
-                                                                  self._dashboards["project_global"]["id"]})
+                                                                  self._dashboards["project_global"]["id"],
+                                                                  'enabled': True})
                 if user == "noaccess" or user == "projectadmin":  # Project admin has access to projet 1, but not 2.
                     self.assertEqual(403, response.status_code)
                 else:
@@ -126,7 +127,7 @@ class QueryDashboardTest(BaseDashboardsAPITest):
                 response = self._get_with_user_token_auth(self.test_client, token=self._users[user],
                                                           params={'id_dashboard':
                                                                   self._dashboards["project_global"]["id"],
-                                                                  'list': True})
+                                                                  'list': True, 'enabled': True})
                 if user == "noaccess" or user == "projectadmin":  # Project admin has access to projet 1, but not 2.
                     self.assertEqual(403, response.status_code)
                 else:
@@ -177,7 +178,7 @@ class QueryDashboardTest(BaseDashboardsAPITest):
     def test_get_by_project_id(self):
         for user in self._users:
             response = self._get_with_user_token_auth(self.test_client, token=self._users[user],
-                                                      params={'id_project': 1})
+                                                      params={'id_project': 1, 'enabled': 1})
             if user == "noaccess":
                 self.assertEqual(403, response.status_code)
             else:

@@ -58,8 +58,14 @@ class DashDashboards(BaseModel):
         from libDashboards.db.models.DashDashboardSites import DashDashboardSites
         query = (DashDashboards.query.join(DashDashboards.dashboard_sites, isouter=True).
                  join(DashDashboards.dashboard_projects, isouter=True).
-                 filter(or_(and_(DashDashboardProjects.id_project != None, DashDashboardSites.id_site == None).self_group(),
-                 and_(DashDashboardSites.id_site != None, DashDashboardProjects.id_project == None).self_group())))
+                 filter(or_(and_(
+                                 DashDashboardProjects.id_project != None, DashDashboardSites.id_site == None)
+                            .self_group(),
+                        and_(DashDashboardSites.id_site != None, DashDashboardProjects.id_project == None)
+                            .self_group()
+                            )
+                        )
+                 )
         return query.all()
 
     @staticmethod

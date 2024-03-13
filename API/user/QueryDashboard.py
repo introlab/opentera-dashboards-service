@@ -22,8 +22,7 @@ get_parser.add_argument('id_project', type=int, help='ID of the project to query
 get_parser.add_argument('globals', type=inputs.boolean, help='Query globals dashboards')
 
 get_parser.add_argument('all_versions', type=inputs.boolean, help='Return all versions of the dashboard(s)')
-get_parser.add_argument('enabled', type=inputs.boolean, help='Return only enabled versions of the dashboard(s)',
-                        default=True)
+get_parser.add_argument('enabled', type=inputs.boolean, help='Return only enabled versions of the dashboard(s)')
 get_parser.add_argument('list', type=inputs.boolean, help='Return minimal information (to display in a list, for '
                                                           'example)')
 
@@ -111,13 +110,15 @@ class QueryDashboard(Resource):
         else:
             # return gettext('Must specify at least one id parameter or "globals"'), 400
             if current_user_client.user_superadmin:
-                dashboards = DashDashboards.get_all_non_globals_dashboards()
+                # dashboards = DashDashboards.get_all_non_globals_dashboards()
+                dashboards = DashDashboards.query.order_by(DashDashboards.dashboard_name.asc()).all()
             else:
                 dashboards = DashDashboards.get_dashboards(accessible_site_ids, accessible_project_ids)
 
         # Convert to json and return
         dashboards_json = [dash.to_json(minimal=request_args['list'], latest=not request_args['all_versions'])
                            for dash in dashboards]
+
         return dashboards_json
 
     @api.expect(post_schema)
@@ -183,7 +184,8 @@ class QueryDashboard(Resource):
 
             # Check version - can't update an older version
             if 'dashboard_version' in json_dashboard:
-                if dashboard.dashboard_versions[-1].dashboard_version > int(json_dashboard['dashboard_version']):
+                latest_version = dashboard.dashboard_versions[-1].dashboard_version
+                if latest_version > int(json_dashboard['dashboard_version']):
                     return gettext('Trying to update an older dashboard version - this is not allowed.'), 400
             else:
                 # Auto increment version if not present in the query field
@@ -196,9 +198,9 @@ class QueryDashboard(Resource):
             json_dashboard['dashboard_version'] = 1
 
         # Check access to updated data
-        dashboard_sites = []
+        dashboard_sites = None
         dashboard_sites_ids = []
-        dashboard_projects = []
+        dashboard_projects = None
         dashboard_projects_ids = []
         if 'dashboard_sites' in json_dashboard:
             dashboard_sites = json_dashboard.pop('dashboard_sites')
