@@ -9,6 +9,8 @@ import DashboardsViewer 1.0
 Item {
     property alias btnOK: btnStart
     property alias fileName: inputJSON.text
+    property alias cmbSites: cmbSites
+    property alias cmbProjects: cmbProjects
 
     Item {
         anchors.centerIn: parent
@@ -70,19 +72,10 @@ Item {
                             }
 
                             ComboBox {
+                                id: cmbSites
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
-                                model: ListModel {
-                                    ListElement {
-                                        text: "Banana"
-                                    }
-                                    ListElement {
-                                        text: "Apple"
-                                    }
-                                    ListElement {
-                                        text: "Coconut"
-                                    }
-                                }
+                                model: ListModel {}
                             }
                             Text {
                                 text: qsTr("Project")
@@ -96,17 +89,7 @@ Item {
                                 id: cmbProjects
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
-                                model: ListModel {
-                                    ListElement {
-                                        text: "Banana"
-                                    }
-                                    ListElement {
-                                        text: "Apple"
-                                    }
-                                    ListElement {
-                                        text: "Coconut"
-                                    }
-                                }
+                                model: ListModel {}
                             }
                         }
                     }
