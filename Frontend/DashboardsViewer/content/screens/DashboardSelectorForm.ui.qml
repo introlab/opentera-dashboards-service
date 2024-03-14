@@ -7,10 +7,12 @@ import "../ui"
 import DashboardsViewer 1.0
 
 Item {
-    property alias btnOK: btnStart
-    property alias fileName: inputJSON.text
+    //property alias btnOK: btnStart
+    //property alias fileName: inputJSON.text
     property alias cmbSites: cmbSites
     property alias cmbProjects: cmbProjects
+    property alias siteGridView: siteGridView
+    property alias projetGridView: projectGridView
 
     Item {
         anchors.centerIn: parent
@@ -20,6 +22,7 @@ Item {
         BasicDialog {
             id: dlgMain
             title: qsTr("Select dashboard to display")
+            anchors.fill: parent
 
             Flickable {
                 id: flickMain
@@ -42,8 +45,10 @@ Item {
                         Layout.fillWidth: true
                         implicitHeight: rowFilters.implicitHeight + lblFilters.implicitHeight
                                         + rowFilters.anchors.margins * 2
+
                         radius: 10
-                        color: "#77000000"
+                        //color: "#77000000"
+                        color: "Red"
                         Text {
                             id: lblFilters
                             anchors.left: parent.left
@@ -59,9 +64,10 @@ Item {
                             id: rowFilters
                             anchors.top: lblFilters.bottom
                             anchors.left: parent.left
-                            anchors.right: parent.right
-                            anchors.bottom: parent.bottom
+                            anchors.right: parent.right                            
                             anchors.margins: 5
+                            implicitHeight: 200
+
                             Text {
                                 text: qsTr("Site")
                                 Layout.leftMargin: 20
@@ -91,163 +97,84 @@ Item {
                                 Layout.fillHeight: true
                                 model: ListModel {}
                             }
-                        }
-                    }
-                    Text {
-                        text: qsTr("Projects")
-                        font.pixelSize: Constants.baseFontSize
-                        font.bold: true
-                        style: Text.Outline
-                        color: "lightyellow"
-                    }
-                    GridView {
+                        }//RowLayout
+                    } // First Rect
+
+                    Rectangle {
+                        id: siteProjectGrids
+                        color: "White"
+                        Layout.fillWidth: true
                         Layout.fillHeight: true
-                        Layout.fillWidth: true
-                        model: ListModel {
-                            ListElement {
-                                name: "Banana"
-                            }
-                            ListElement {
-                                name: "Apple"
-                            }
-                            ListElement {
-                                name: "Coconut"
-                            }
-                        }
-                        delegate: Column {
-                            Text {
-                                text: name
-                                anchors.horizontalCenter: parent.horizontalCenter
-                            }
-                        }
-                    }
-
-                    Text {
-                        text: qsTr("Sites")
-                        font.pixelSize: Constants.baseFontSize
-                        font.bold: true
-                        style: Text.Outline
-                        color: "lightyellow"
-                    }
-                    GridView {
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-                    }
-                    Text {
-                        text: qsTr("Globals")
-                        font.pixelSize: Constants.baseFontSize
-                        font.bold: true
-                        style: Text.Outline
-                        color: "lightyellow"
-                    }
-                    GridView {
-                        Layout.fillHeight: true
-                        Layout.fillWidth: true
-                    }
+                        radius: 10
+                        implicitHeight: 200
 
 
-                    /*Text {
-                        text: "ID Site"
-                    }
-
-                    Rectangle {
-                        id: recSite
-                        border.color: "#3a1212"
-                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                        Layout.fillWidth: true
-                        Layout.leftMargin: 10
-                        Layout.rightMargin: 10
-                        Layout.topMargin: -parent.spacing
-                        height: inputSite.implicitHeight + 20
-
-                        TextInput {
-                            id: inputSite
+                        RowLayout {
+                            //Fill the rest
+                            //Where dashboards should be presented
+                            id: siteProjectRowLayout
                             anchors.fill: parent
-                            font.pixelSize: Constants.baseFontSize
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            text: "1"
-                        }
-                    }
 
-                    Text {
-                        text: "ID Project"
-                    }
+                            GridView {
+                                id: siteGridView
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                cellWidth: 100
+                                cellHeight: 100
+                                model: ListModel {}
+                                delegate: Rectangle {
+                                    color: Green
+                                    width: siteGridView.cellWidth
+                                    height: siteGridView.cellHeight
 
-                    Rectangle {
-                        id: recProject
-                        border.color: "#3a1212"
-                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                        Layout.fillWidth: true
-                        Layout.leftMargin: 10
-                        Layout.rightMargin: 10
-                        Layout.topMargin: -parent.spacing
-                        height: inputProject.implicitHeight + 20
+                                    Text {
+                                        anchors.fill: parent
+                                        text: model.name
+                                        color: Constants.textColor
+                                        font.pixelSize: Constants.smallFontSize
+                                        style: Text.Outline
+                                        font.bold: true
+                                    }
 
-                        TextInput {
-                            id: inputProject
-                            anchors.fill: parent
-                            font.pixelSize: Constants.baseFontSize
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            text: "1"
-                        }
-                    }
+                                    MouseArea {
+                                        anchors.fill: parent
 
-                    Text {
-                        text: "ID Dashboard"
-                    }
+                                    }
+                                }
+                            } // GridView 1
 
-                    Rectangle {
-                        id: recDashBoard
-                        border.color: "#3a1212"
-                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                        Layout.fillWidth: true
-                        Layout.leftMargin: 10
-                        Layout.rightMargin: 10
-                        Layout.topMargin: -parent.spacing
-                        height: inputDashboard.implicitHeight + 20
+                            GridView {
+                                id: projectGridView
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                model: ListModel {}
+                                cellWidth: 100
+                                cellHeight: 100
+                                delegate: Rectangle {
+                                    color: "Red"
+                                    width: projectGridView.cellWidth
+                                    height: projectGridView.cellHeight
 
-                        TextInput {
-                            id: inputDashboard
-                            anchors.fill: parent
-                            font.pixelSize: Constants.baseFontSize
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            text: "1"
-                        }
-                    }*/
-                    Text {
-                        text: "JSON Path"
-                    }
+                                    Text {
+                                        anchors.fill: parent
+                                        text: model.name
+                                        color: Constants.textColor
+                                        font.pixelSize: Constants.smallFontSize
+                                        style: Text.Outline
+                                        font.bold: true
+                                    }
 
-                    Rectangle {
-                        id: recJSON
-                        border.color: "#3a1212"
-                        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                        Layout.fillWidth: true
-                        Layout.leftMargin: 10
-                        Layout.rightMargin: 10
-                        Layout.topMargin: -parent.spacing
-                        height: inputJSON.implicitHeight + 20
+                                    MouseArea {
+                                        anchors.fill: parent
 
-                        TextInput {
-                            id: inputJSON
-                            anchors.fill: parent
-                            font.pixelSize: Constants.baseFontSize
-                            horizontalAlignment: Text.AlignHCenter
-                            verticalAlignment: Text.AlignVCenter
-                            text: ":/dashboards/DashboardsViewer/resources/json/TestDashboardv2.json"
-                        }
-                    }
+                                    }
+                                }
+                            } // GridView 2
 
-                    BasicButton {
-                        id: btnStart
-                        text: qsTr("Go!")
-                        Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                    }
-                }
-            }
-        }
-    }
-}
+                        }//RowLayout (2)
+                    } // Rectangle 2
+                } // ColumnLayout
+            } // Flickable
+        } // BasicDialog
+    } // Item
+} // Item
