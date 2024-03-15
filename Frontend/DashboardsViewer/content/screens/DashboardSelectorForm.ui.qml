@@ -9,8 +9,6 @@ import DashboardsViewer 1.0
 
 Item {
     id: rootItem
-    //property alias btnOK: btnStart
-    //property alias fileName: inputJSON.text
     property alias cmbSites: cmbSites
     property alias cmbProjects: cmbProjects
     property alias siteGridView: siteGridView
@@ -100,16 +98,12 @@ Item {
                     Layout.fillHeight: true
                     radius: 10
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                    //implicitHeight: 600
 
-                    //implicitHeight: siteProjectRowLayout.implicitHeight
                     RowLayout {
                         //Fill the rest
-                        //Where dashboards should be presented
                         id: siteProjectRowLayout
                         anchors.fill: parent
 
-                        //implicitHeight: siteGridView.implicitHeight
                         GridView {
                             id: siteGridView
                             Layout.fillWidth: true
