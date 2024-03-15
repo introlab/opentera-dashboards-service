@@ -50,7 +50,7 @@ DashboardSelectorForm {
         }
     }
 
-    projectGridView.delegate.onItemClicked: function(id, definition){
+    onItemClicked: function(id, definition){
         stackview.push("Dashboard.qml")
 
         // get current pushed element
@@ -131,9 +131,23 @@ DashboardSelectorForm {
 
         model.onCountChanged: function() {
 
+            selectorForm.siteGridView.model.clear();
             for (var i = 0; i < model.count; ++i) {
                 var dashboard = model.get(i);
                 console.log(dashboard);
+
+                var description = dashboard.dashboard_description;
+                var enabled = dashboard.dashboard_enabled;
+                var name = dashboard.dashboard_name;
+                var definition = dashboard.versions.dashboard_definition;
+
+                console.log(description, enabled, name, definition);
+
+
+                selectorForm.siteGridView.model.append({"id": dashboard.id_dashboard,
+                                                          "name": name,
+                                                          "definition": definition,
+                                                          "color": "Blue"})
             }
         }
     } // projectsDashboardDataSource
@@ -154,7 +168,7 @@ DashboardSelectorForm {
 
         model.onCountChanged: function() {
 
-            selectorForm.projetGridView.model.clear();
+            selectorForm.projectGridView.model.clear();
 
 
             for (var i = 0; i < model.count; ++i) {
@@ -166,10 +180,7 @@ DashboardSelectorForm {
                 var name = dashboard.dashboard_name;
                 var definition = dashboard.versions.dashboard_definition;
 
-                console.log(description, enabled, name, definition);
-
-
-                selectorForm.projetGridView.model.append({"id": dashboard.id_dashboard,
+                selectorForm.projectGridView.model.append({"id": dashboard.id_dashboard,
                                                           "name": name,
                                                           "definition": definition,
                                                           "color": "Blue"})

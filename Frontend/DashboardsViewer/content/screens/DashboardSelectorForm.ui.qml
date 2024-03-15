@@ -8,12 +8,16 @@ import "../delegates"
 import DashboardsViewer 1.0
 
 Item {
+    id: rootItem
     //property alias btnOK: btnStart
     //property alias fileName: inputJSON.text
     property alias cmbSites: cmbSites
     property alias cmbProjects: cmbProjects
     property alias siteGridView: siteGridView
     property alias projectGridView: projectGridView
+
+    signal itemClicked(var id, var definition)
+
 
     Item {
         anchors.centerIn: parent
@@ -115,7 +119,15 @@ Item {
                             clip: true
                             ScrollBar.vertical: FlickableScrollBar {}
                             model: ListModel {}
-                            delegate: SiteProjectDelegate {}
+                            delegate: SiteProjectDelegate {
+                                id: siteProjectDelegateSite
+
+                                Connections {
+                                    target: siteProjectDelegateSite
+                                    onItemClicked: rootItem.itemClicked
+                                }
+
+                            }
                         } // GridView 1
 
                         GridView {
@@ -128,7 +140,15 @@ Item {
                             clip: true
 
                             ScrollBar.vertical: FlickableScrollBar {}
-                            delegate: SiteProjectDelegate {}
+                            delegate: SiteProjectDelegate {
+                                id: siteProjectdelegateProject
+
+                                Connections {
+                                    target: siteProjectdelegateProject
+                                    onItemClicked: rootItem.itemClicked
+                                }
+
+                            }
                         } // GridView 2
                     } //RowLayout (2)
                 } // Rectangle 2
