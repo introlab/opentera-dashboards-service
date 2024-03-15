@@ -37,6 +37,7 @@ qt6_add_qml_module(content
         delegates/BaseDelegate.qml
         delegates/ParticipantDelegate.qml
         delegates/SessionDelegate.qml
+        delegates/SiteProjectDelegate.qml
         delegates/GenericItemDelegate.qml
 
     RESOURCES

@@ -4,6 +4,7 @@ import QtQuick.Layouts
 import QtQuick.Effects
 
 import "../ui"
+import "../delegates"
 import DashboardsViewer 1.0
 
 Item {
@@ -12,7 +13,7 @@ Item {
     property alias cmbSites: cmbSites
     property alias cmbProjects: cmbProjects
     property alias siteGridView: siteGridView
-    property alias projetGridView: projectGridView
+    property alias projectGridView: projectGridView
 
     Item {
         anchors.centerIn: parent
@@ -23,158 +24,115 @@ Item {
             id: dlgMain
             title: qsTr("Select dashboard to display")
             anchors.fill: parent
-
-            Flickable {
-                id: flickMain
+            ColumnLayout {
+                id: layoutMain
                 anchors.fill: parent
-                anchors.topMargin: 10
-                anchors.bottomMargin: 10
-                clip: true
-                contentHeight: layoutMain.implicitHeight
-                interactive: height < contentHeight
+                anchors.margins: 10
 
-                ScrollBar.vertical: FlickableScrollBar {}
+                Rectangle {
+                    Layout.fillWidth: true
 
-                ColumnLayout {
-                    id: layoutMain
-                    anchors.fill: parent
-                    anchors.leftMargin: 10
-                    anchors.rightMargin: flickMain.interactive ? 15 : 10
+                    implicitHeight: rowFilters.implicitHeight + lblFilters.implicitHeight
+                                    + rowFilters.anchors.margins * 2
 
-                    Rectangle {
-                        Layout.fillWidth: true
-                        implicitHeight: rowFilters.implicitHeight + lblFilters.implicitHeight
-                                        + rowFilters.anchors.margins * 2
+                    radius: 10
+                    Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                    //color: "#77000000"
+                    color: "Red"
+                    Text {
+                        id: lblFilters
+                        anchors.left: parent.left
+                        anchors.top: parent.top
+                        anchors.leftMargin: 10
+                        text: qsTr("Filters")
+                        color: "lightyellow"
+                        font.pixelSize: Constants.smallFontSize
+                        font.italic: true
+                    }
 
-                        radius: 10
-                        //color: "#77000000"
-                        color: "Red"
-                        Text {
-                            id: lblFilters
-                            anchors.left: parent.left
-                            anchors.top: parent.top
-                            anchors.leftMargin: 10
-                            text: qsTr("Filters")
-                            color: "lightyellow"
-                            font.pixelSize: Constants.smallFontSize
-                            font.italic: true
-                        }
-
-                        RowLayout {
-                            id: rowFilters
-                            anchors.top: lblFilters.bottom
-                            anchors.left: parent.left
-                            anchors.right: parent.right                            
-                            anchors.margins: 5
-                            implicitHeight: 200
-
-                            Text {
-                                text: qsTr("Site")
-                                Layout.leftMargin: 20
-                                color: Constants.textColor
-                                font.pixelSize: Constants.smallFontSize
-                                font.bold: true
-                                style: Text.Outline
-                            }
-
-                            ComboBox {
-                                id: cmbSites
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
-                                model: ListModel {}
-                            }
-                            Text {
-                                text: qsTr("Project")
-                                color: Constants.textColor
-                                font.pixelSize: Constants.smallFontSize
-                                style: Text.Outline
-                                font.bold: true
-                            }
-
-                            ComboBox {
-                                id: cmbProjects
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
-                                model: ListModel {}
-                            }
-                        }//RowLayout
-                    } // First Rect
-
-                    Rectangle {
-                        id: siteProjectGrids
-                        color: "White"
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-                        radius: 10
+                    RowLayout {
+                        id: rowFilters
+                        anchors.top: lblFilters.bottom
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.margins: 5
                         implicitHeight: 200
 
+                        Text {
+                            text: qsTr("Site")
+                            Layout.leftMargin: 20
+                            color: Constants.textColor
+                            font.pixelSize: Constants.smallFontSize
+                            font.bold: true
+                            style: Text.Outline
+                        }
 
-                        RowLayout {
-                            //Fill the rest
-                            //Where dashboards should be presented
-                            id: siteProjectRowLayout
-                            anchors.fill: parent
+                        ComboBox {
+                            id: cmbSites
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            model: ListModel {}
+                        }
+                        Text {
+                            text: qsTr("Project")
+                            color: Constants.textColor
+                            font.pixelSize: Constants.smallFontSize
+                            style: Text.Outline
+                            font.bold: true
+                        }
 
-                            GridView {
-                                id: siteGridView
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
-                                cellWidth: 100
-                                cellHeight: 100
-                                model: ListModel {}
-                                delegate: Rectangle {
-                                    color: Green
-                                    width: siteGridView.cellWidth
-                                    height: siteGridView.cellHeight
+                        ComboBox {
+                            id: cmbProjects
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            model: ListModel {}
+                        }
+                    } //RowLayout
+                } // First Rect
+                Rectangle {
+                    id: siteProjectGrids
+                    color: "white"
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                    radius: 10
+                    Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                    //implicitHeight: 600
 
-                                    Text {
-                                        anchors.fill: parent
-                                        text: model.name
-                                        color: Constants.textColor
-                                        font.pixelSize: Constants.smallFontSize
-                                        style: Text.Outline
-                                        font.bold: true
-                                    }
+                    //implicitHeight: siteProjectRowLayout.implicitHeight
+                    RowLayout {
+                        //Fill the rest
+                        //Where dashboards should be presented
+                        id: siteProjectRowLayout
+                        anchors.fill: parent
 
-                                    MouseArea {
-                                        anchors.fill: parent
+                        //implicitHeight: siteGridView.implicitHeight
+                        GridView {
+                            id: siteGridView
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            cellWidth: 100
+                            cellHeight: 100
+                            clip: true
+                            ScrollBar.vertical: FlickableScrollBar {}
+                            model: ListModel {}
+                            delegate: SiteProjectDelegate {}
+                        } // GridView 1
 
-                                    }
-                                }
-                            } // GridView 1
+                        GridView {
+                            id: projectGridView
+                            Layout.fillWidth: true
+                            Layout.fillHeight: true
+                            model: ListModel {}
+                            cellWidth: 100
+                            cellHeight: 100
+                            clip: true
 
-                            GridView {
-                                id: projectGridView
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
-                                model: ListModel {}
-                                cellWidth: 100
-                                cellHeight: 100
-                                delegate: Rectangle {
-                                    color: "Red"
-                                    width: projectGridView.cellWidth
-                                    height: projectGridView.cellHeight
-
-                                    Text {
-                                        anchors.fill: parent
-                                        text: model.name
-                                        color: Constants.textColor
-                                        font.pixelSize: Constants.smallFontSize
-                                        style: Text.Outline
-                                        font.bold: true
-                                    }
-
-                                    MouseArea {
-                                        anchors.fill: parent
-
-                                    }
-                                }
-                            } // GridView 2
-
-                        }//RowLayout (2)
-                    } // Rectangle 2
-                } // ColumnLayout
-            } // Flickable
+                            ScrollBar.vertical: FlickableScrollBar {}
+                            delegate: SiteProjectDelegate {}
+                        } // GridView 2
+                    } //RowLayout (2)
+                } // Rectangle 2
+            } // ColumnLayout
         } // BasicDialog
     } // Item
 } // Item

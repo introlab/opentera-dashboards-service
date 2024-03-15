@@ -337,7 +337,7 @@ class QueryDashboard(Resource):
             except ValueError:
                 # Bad json
                 return gettext('Invalid version definition - json not valid'), 400
-            except exc.SQLAlchemyError:
+            except exc.SQLAlchemyError as e:
                 return gettext('Unable to update dashboard version'), 400
 
         return DashDashboards.get_by_id(json_dashboard['id_dashboard']).to_json()

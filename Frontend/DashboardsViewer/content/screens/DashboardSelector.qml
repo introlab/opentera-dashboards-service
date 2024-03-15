@@ -50,6 +50,17 @@ DashboardSelectorForm {
         }
     }
 
+    projectGridView.delegate.onItemClicked: function(id, definition){
+        stackview.push("Dashboard.qml")
+
+        // get current pushed element
+        var currentElement = stackview.currentItem;
+
+        // Set the element property
+        // TODO: Handle string definition direction
+        //currentElement.jsonFileName = definition;
+    }
+
 
     BaseDataSource {
         id: sitesDataSource
@@ -158,7 +169,10 @@ DashboardSelectorForm {
                 console.log(description, enabled, name, definition);
 
 
-                selectorForm.projetGridView.model.append({"name": name, "color": "Blue"})
+                selectorForm.projetGridView.model.append({"id": dashboard.id_dashboard,
+                                                          "name": name,
+                                                          "definition": definition,
+                                                          "color": "Blue"})
 
             }
         }
