@@ -21,6 +21,10 @@ DashboardSelectorForm {
                 sitesDashboardDataSource.setSiteID(selectedSite.id_site);
             }
         }
+        else
+        {
+            siteGridView.model.clear();
+        }
     }
 
     cmbProjects.onCurrentIndexChanged: function() {
@@ -35,6 +39,10 @@ DashboardSelectorForm {
             {
                 projectsDashboardDataSource.setProjectID(selectedProject.id_project);
             }
+        }
+        else
+        {
+            projectGridView.model.clear();
         }
     }
 
