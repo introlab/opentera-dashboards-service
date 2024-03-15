@@ -88,7 +88,7 @@ Project {
     qt6Project: true
 
     /* List of plugin directories passed to QML runtime */
-    importPaths: [ "imports", "asset_imports" ]
+    importPaths: [ "imports", "asset_imports", "imports/generated" ]
 
     /* Required for deployment */
     targetDirectory: "/opt/DashboardsViewer"

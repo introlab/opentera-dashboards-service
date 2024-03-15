@@ -80,4 +80,8 @@ if(EMSCRIPTEN)
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.worker.js ${PROJECT_SOURCE_DIR}/../../static
 
     )
-endif(EMSCRIPTEN)
+else()
+    add_custom_command(TARGET DashboardsViewerApp POST_BUILD
+                       COMMAND ${CMAKE_COMMAND} -E copy_directory
+                           ${CMAKE_CURRENT_BINARY_DIR}/qml/OpenTeraLibs ${CMAKE_CURRENT_SOURCE_DIR}/imports/generated/OpenTeraLibs)
+endif()
