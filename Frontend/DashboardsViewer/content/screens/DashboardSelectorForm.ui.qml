@@ -124,7 +124,7 @@ Item {
 
                                 Connections {
                                     target: siteProjectDelegateSite
-                                    onItemClicked: rootItem.itemClicked
+                                    onItemClicked: function (id, definition){rootItem.itemClicked(id, definition);}
                                 }
 
                             }
@@ -141,11 +141,11 @@ Item {
 
                             ScrollBar.vertical: FlickableScrollBar {}
                             delegate: SiteProjectDelegate {
-                                id: siteProjectdelegateProject
+                                id: siteProjectDelegateProject
 
                                 Connections {
-                                    target: siteProjectdelegateProject
-                                    onItemClicked: rootItem.itemClicked
+                                    target: siteProjectDelegateProject
+                                    onItemClicked: function (id, definition){rootItem.itemClicked(id, definition);}
                                 }
 
                             }
