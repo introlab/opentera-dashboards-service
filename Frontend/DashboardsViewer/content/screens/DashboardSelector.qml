@@ -171,7 +171,7 @@ DashboardSelectorForm {
                 selectorForm.projectGridView.model.append({"id": dashboard.id_dashboard,
                                                           "name": name,
                                                           "definition": definition,
-                                                          "color": "Blue"})
+                                                          "color": "Red"})
 
             }
         }

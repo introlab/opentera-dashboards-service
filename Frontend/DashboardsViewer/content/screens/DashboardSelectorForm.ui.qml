@@ -39,8 +39,8 @@ Item {
 
                     radius: 10
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                    //color: "#77000000"
-                    color: "Red"
+                    color: "#77000000"
+
                     Text {
                         id: lblFilters
                         anchors.left: parent.left
@@ -93,7 +93,7 @@ Item {
                 } // First Rect
                 Rectangle {
                     id: siteProjectGrids
-                    color: "white"
+                    color: "#77000000"
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     radius: 10

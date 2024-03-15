@@ -9,7 +9,7 @@ Item {
     signal itemClicked(var id, var definition)
 
     Rectangle {
-        color: "Red"
+        color: model.color
         anchors.fill: parent
 
         Text {
