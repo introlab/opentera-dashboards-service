@@ -8,9 +8,7 @@ qt6_add_qml_module(content
         App.qml
         # Screens
         screens/Dashboard.qml
-        screens/DashboardForm.ui.qml
         screens/DashboardSelector.qml
-        screens/DashboardSelectorForm.ui.qml
         screens/Login.qml
         # Uis
         ui/BasicButton.ui.qml

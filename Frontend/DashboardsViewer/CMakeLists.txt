@@ -84,4 +84,7 @@ else()
     add_custom_command(TARGET DashboardsViewerApp POST_BUILD
                        COMMAND ${CMAKE_COMMAND} -E copy_directory
                            ${CMAKE_CURRENT_BINARY_DIR}/qml/OpenTeraLibs ${CMAKE_CURRENT_SOURCE_DIR}/imports/generated/OpenTeraLibs)
+    add_custom_command(TARGET DashboardsViewerApp POST_BUILD
+                       COMMAND ${CMAKE_COMMAND} -E copy_directory
+                           ${CMAKE_CURRENT_BINARY_DIR}/qml/DashboardsViewer ${CMAKE_CURRENT_SOURCE_DIR}/imports/generated/DashboardsViewer)
 endif()
