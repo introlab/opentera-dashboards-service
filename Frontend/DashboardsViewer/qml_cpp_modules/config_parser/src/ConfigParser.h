@@ -17,7 +17,8 @@ public:
     explicit ConfigParser(QObject *parent = nullptr);
     ~ConfigParser() override;
 
-    Q_INVOKABLE QVariantList parseConfig(const QString &configPath);
+    Q_INVOKABLE QVariantList parseConfigFile(const QString &configPath);
+    Q_INVOKABLE QVariantList parseConfigString(const QString &configString);
 
 
 private:
@@ -27,6 +28,8 @@ private:
     void writeProperties(const QJsonObject &properties, QTextStream &stream);
     void writeConnections(const QJsonArray &connections, QTextStream &stream);
     void writeDataSources(const QJsonArray &dataSources, QTextStream &stream);
+
+    QVariantList processConfigByteArray(const QByteArray &data);
 };
 
 #endif

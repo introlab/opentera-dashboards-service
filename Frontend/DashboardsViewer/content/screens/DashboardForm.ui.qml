@@ -15,7 +15,6 @@ Item {
     height: 768
     anchors.fill: parent
 
-    property alias loadButton: loadButton
     property alias closeButton: closeButton
     property alias mainView: dashboardStackView
     property alias dashboardStackView: dashboardStackView
@@ -28,15 +27,6 @@ Item {
         font.pixelSize: 60
         height: 60
         horizontalAlignment: Text.AlignHCenter
-    }
-
-    Button {
-        id: loadButton
-        anchors.left: parent.left
-        anchors.top: parent.top
-        width: 150
-        height: 60
-        text: qsTr("Load")
     }
 
     Button {

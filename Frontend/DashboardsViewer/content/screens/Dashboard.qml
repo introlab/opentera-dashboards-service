@@ -6,7 +6,7 @@ import DashboardsViewer.ConfigParser 1.0
 DashboardForm {
 
     id: dashboard
-    property string jsonFileName : "dashboard.json"
+    property string definition : ""
 
     signal buttonClicked()
 
@@ -14,9 +14,10 @@ DashboardForm {
         id: parser
     }
 
-    loadButton.onClicked: function() {
-        console.log("should load document", jsonFileName)
-        var dynamicQML = parser.parseConfig(jsonFileName);
+    function loadDocument() {
+        console.log("should load document", definition)
+
+        var dynamicQML = parser.parseConfigString(definition);
         console.log("dynamicQML", dynamicQML)
 
         if (dynamicQML.length > 0)

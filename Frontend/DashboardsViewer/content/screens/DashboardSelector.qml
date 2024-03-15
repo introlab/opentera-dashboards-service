@@ -5,18 +5,6 @@ import "../dataSources"
 DashboardSelectorForm {
     id:selectorForm
 
-    /*
-    btnOK.onClicked:{
-        stackview.push("Dashboard.qml")
-
-        // get current pushed element
-        var currentElement = stackview.currentItem;
-
-        // Set the element property
-        currentElement.jsonFileName = fileName;
-    }
-    */
-
     cmbSites.onCurrentIndexChanged: function() {
 
         console.log("cmbSites.onCurrentIndexChanged", cmbSites.currentIndex);
@@ -53,12 +41,12 @@ DashboardSelectorForm {
     onItemClicked: function(id, definition){
         stackview.push("Dashboard.qml")
 
-        // get current pushed element
+        // Get the current pushed element (the Dashboard)
         var currentElement = stackview.currentItem;
 
-        // Set the element property
-        // TODO: Handle string definition direction
-        //currentElement.jsonFileName = definition;
+        // Set the Actual definition
+        currentElement.definition = definition;
+        currentElement.loadDocument();
     }
 
 

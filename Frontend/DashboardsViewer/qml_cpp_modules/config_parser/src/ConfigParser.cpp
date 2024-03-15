@@ -29,8 +29,14 @@ bool ConfigParser::isValidString(const QString &input) {
     return regex.match(input).hasMatch();
 }
 
+QVariantList ConfigParser::parseConfigString(const QString &configString)
+{
+    //Convert input string to byte array
+    return processConfigByteArray(configString.toUtf8());
+}
 
-QVariantList ConfigParser::parseConfig(const QString &configPath)
+
+QVariantList ConfigParser::parseConfigFile(const QString &configPath)
 {
     qDebug() << "ConfigParser::parseConfig() called with configPath: " << configPath;
 
@@ -44,69 +50,8 @@ QVariantList ConfigParser::parseConfig(const QString &configPath)
 
     //Read JSON file
     QByteArray data = file.readAll();
-    QJsonParseError error;
-    QJsonDocument doc = QJsonDocument::fromJson(data, &error);
+    return processConfigByteArray(data);
 
-    qDebug() << "loading document with error : " << error.errorString();
-    if (error.error != QJsonParseError::NoError)
-    {
-        qDebug() << "Error: Unable to parse JSON file: " << configPath;
-        return QVariantList();
-    }
-
-    QVariantList output;
-    QJsonObject json = doc.object();
-
-    // Create a QTextStream to operate on the buffer
-    QBuffer buffer;
-    buffer.open(QIODevice::ReadWrite);
-    QTextStream textStream(&buffer);
-
-    // Write import statements
-    textStream << "import QtQuick;\n";
-    textStream << "import QtQuick.Controls;\n";
-    textStream << "import QtQuick.Layouts;\n";
-    textStream << "import OpenTeraLibs.UserClient;\n";
-    textStream << "import DashboardsViewer;\n";
-    textStream << "import content;\n";
-
-    // Write the root object, make sure it will fill parent
-    textStream << "BaseWidget { //Begin root object \n";
-    textStream << "    id: rootObject;\n";
-    textStream << "    anchors.fill: parent;\n";
-
-    // Write Main Layout
-    QJsonObject layout = json["layout"].toObject();
-    writeLayout(layout, textStream);
-
-    // Write dataSources
-    QJsonArray dataSources = json["dataSources"].toArray();
-    qDebug() << "data-sources array size: " << dataSources.size();
-    writeDataSources(dataSources, textStream);
-
-    // Write connections
-    QJsonArray connections = json["connections"].toArray();
-    qDebug() << "connections array size: " << connections.size();
-    writeConnections(connections, textStream);
-
-    // End root object
-    textStream << "} // End Root Object\n";
-
-
-    textStream.flush();
-
-    // Reset the buffer position to the start of the buffer
-    buffer.seek(0);
-    // Read the buffer contents into a string
-    QString qmlString = buffer.readAll();
-
-    qDebug() << "qmlString: " << qmlString;
-
-    // Add the string to the output list
-    output.append(QVariant(qmlString));
-
-    //Return all generated widgets in a string list
-    return output;
 }
 
 void ConfigParser::writeLayout(const QJsonObject &layout, QTextStream &stream)
@@ -317,6 +262,73 @@ void ConfigParser::writeDataSources(const QJsonArray &dataSources, QTextStream &
         writeProperties(properties, stream);
         stream << "}\n";
     }
+}
+
+QVariantList ConfigParser::processConfigByteArray(const QByteArray &data)
+{
+    QJsonParseError error;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &error);
+
+    qDebug() << "loading document with error : " << error.errorString();
+    if (error.error != QJsonParseError::NoError)
+    {
+        qDebug() << "Error: Unable to parse json data" << data;
+        return QVariantList();
+    }
+
+    QVariantList output;
+    QJsonObject json = doc.object();
+
+    // Create a QTextStream to operate on the buffer
+    QBuffer buffer;
+    buffer.open(QIODevice::ReadWrite);
+    QTextStream textStream(&buffer);
+
+    // Write import statements
+    textStream << "import QtQuick;\n";
+    textStream << "import QtQuick.Controls;\n";
+    textStream << "import QtQuick.Layouts;\n";
+    textStream << "import OpenTeraLibs.UserClient;\n";
+    textStream << "import DashboardsViewer;\n";
+    textStream << "import content;\n";
+
+    // Write the root object, make sure it will fill parent
+    textStream << "BaseWidget { //Begin root object \n";
+    textStream << "    id: rootObject;\n";
+    textStream << "    anchors.fill: parent;\n";
+
+    // Write Main Layout
+    QJsonObject layout = json["layout"].toObject();
+    writeLayout(layout, textStream);
+
+    // Write dataSources
+    QJsonArray dataSources = json["dataSources"].toArray();
+    qDebug() << "data-sources array size: " << dataSources.size();
+    writeDataSources(dataSources, textStream);
+
+    // Write connections
+    QJsonArray connections = json["connections"].toArray();
+    qDebug() << "connections array size: " << connections.size();
+    writeConnections(connections, textStream);
+
+    // End root object
+    textStream << "} // End Root Object\n";
+
+
+    textStream.flush();
+
+    // Reset the buffer position to the start of the buffer
+    buffer.seek(0);
+    // Read the buffer contents into a string
+    QString qmlString = buffer.readAll();
+
+    qDebug() << "qmlString: " << qmlString;
+
+    // Add the string to the output list
+    output.append(QVariant(qmlString));
+
+    //Return all generated widgets in a string list
+    return output;
 }
 
 
