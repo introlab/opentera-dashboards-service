@@ -17,6 +17,10 @@ Button {
     text: ""
 
     background: buttonBackground
+
+    property alias color: buttonBackground.color
+    property color hoverColor: "#047eff"
+
     Rectangle {
         id: buttonBackground
         color: "#0258b2"
@@ -66,7 +70,7 @@ Button {
 
             PropertyChanges {
                 target: buttonBackground
-                color: "#047eff"
+                color: hoverColor
                 border.color: "#88000000"
             }
         }

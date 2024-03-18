@@ -57,7 +57,7 @@ Item {
 
     Button {
         id: closeButton
-        anchors.left: loadButton.right
+        anchors.left: parent.left
         anchors.top: parent.top
         width: 150
         height: 60

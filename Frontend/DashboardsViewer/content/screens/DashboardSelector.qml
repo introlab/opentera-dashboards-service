@@ -11,7 +11,6 @@ import OpenTeraLibs.UserClient
 
 Item {
     id: rootItem
-
     BaseDataSource {
         id: sitesDataSource
         url: "/api/user/sites"
@@ -23,7 +22,7 @@ Item {
         // Look for change in the model
         model.onCountChanged: function () {
 
-            console.log("Sites model updated.")
+            //console.log("Sites model updated.")
             cmbSites.model.clear()
 
             for (var i = 0; i < model.count; ++i) {
@@ -92,21 +91,21 @@ Item {
             siteGridView.model.clear()
             for (var i = 0; i < model.count; ++i) {
                 var dashboard = model.get(i)
-                console.log(dashboard)
+                //console.log(dashboard)
 
                 var description = dashboard.dashboard_description
                 var enabled = dashboard.dashboard_enabled
                 var name = dashboard.dashboard_name
                 var definition = dashboard.versions.dashboard_definition
 
-                console.log(description, enabled, name, definition)
+                //console.log(description, enabled, name, definition)
 
                 siteGridView.model.append({
-                                                           "id": dashboard.id_dashboard,
-                                                           "name": name,
-                                                           "definition": definition,
-                                                           "color": "Blue"
-                                                       })
+                                            "id": dashboard.id_dashboard,
+                                            "name": name,
+                                            "definition": definition,
+                                            "color": "#7e57c2"
+                                           })
             }
         }
     } // projectsDashboardDataSource
@@ -132,31 +131,32 @@ Item {
 
             for (var i = 0; i < model.count; ++i) {
                 var dashboard = model.get(i)
-                console.log(dashboard)
+                //console.log(dashboard)
 
                 var description = dashboard.dashboard_description
                 var enabled = dashboard.dashboard_enabled
                 var name = dashboard.dashboard_name
-                var definition = dashboard.versions.dashboard_definition
+                var definition = "";
+                if (dashboard.versions)
+                    definition = dashboard.versions.dashboard_definition
 
                 projectGridView.model.append({
-                                                              "id": dashboard.id_dashboard,
-                                                              "name": name,
-                                                              "definition": definition,
-                                                              "color": "Red"
-                                                          })
+                                                "id": dashboard.id_dashboard,
+                                                "name": name,
+                                                "definition": definition,
+                                                "color": "#4eadf0"
+                                             })
             }
         }
     } // projectsDashboardDataSource
 
-    anchors.centerIn: parent
-    width: parent? 0.8 * parent.width : 400
-    height: parent ? 0.9 * parent.height : 200
-
     BasicDialog {
         id: dlgMain
         title: qsTr("Select dashboard to display")
-        anchors.fill: parent
+        anchors.centerIn: parent
+        width: 0.8 * parent.width
+        height: 0.9 * parent.height
+
         ColumnLayout {
             id: layoutMain
             anchors.fill: parent
@@ -165,14 +165,14 @@ Item {
             Rectangle {
                 Layout.fillWidth: true
 
-                implicitHeight: rowFilters.implicitHeight + lblFilters.implicitHeight
-                                + rowFilters.anchors.margins * 2
+                implicitHeight: rowFilters.implicitHeight /*+ lblFilters.implicitHeight*/
+                                + rowFilters.anchors.margins * 2 + 20
 
                 radius: 10
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                color: "#77000000"
+                color: Constants.backgroundColor
 
-                Text {
+                /*Text {
                     id: lblFilters
                     anchors.left: parent.left
                     anchors.top: parent.top
@@ -181,19 +181,29 @@ Item {
                     color: "lightyellow"
                     font.pixelSize: Constants.smallFontSize
                     font.italic: true
-                }
+                }*/
 
                 RowLayout {
                     id: rowFilters
-                    anchors.top: lblFilters.bottom
+                    //anchors.top: parent.top //lblFilters.bottom
                     anchors.left: parent.left
                     anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
                     anchors.margins: 5
                     implicitHeight: 200
 
+                    Image{
+                        source: "../images/icons/site.png"
+                        fillMode: Image.PreserveAspectFit
+                        height: 32
+                        sourceSize.height: height
+                        sourceSize.width: height
+
+                    }
+
                     Text {
                         text: qsTr("Site")
-                        Layout.leftMargin: 20
+                        //Layout.leftMargin: 20
                         color: Constants.textColor
                         font.pixelSize: Constants.smallFontSize
                         font.bold: true
@@ -224,6 +234,15 @@ Item {
                                 siteGridView.model.clear()
                             }
                         }
+                    }
+                    Image{
+                        Layout.leftMargin: 20
+                        source: "../images/icons/project.png"
+                        fillMode: Image.PreserveAspectFit
+                        height: 32
+                        sourceSize.height: height
+                        sourceSize.width: height
+
                     }
                     Text {
                         text: qsTr("Project")
@@ -274,12 +293,15 @@ Item {
                         id: siteGridView
                         Layout.fillWidth: true
                         Layout.fillHeight: true
+                        Layout.margins: 10
                         cellWidth: 100
                         cellHeight: 100
                         clip: true
                         ScrollBar.vertical: FlickableScrollBar {}
+                        interactive: contentHeight > height
+
                         model: ListModel {}
-                        delegate: SiteProjectDelegate {
+                        delegate: DashboardDelegate {
                             id: siteProjectDelegateSite
 
                             onItemClicked: function (id, definition) {
@@ -294,18 +316,25 @@ Item {
                             }
                         }
                     } // GridView 1
+                    Rectangle{
+                        width: 2
+                        Layout.fillHeight: true
+                        color: "grey"
+                    }
 
                     GridView {
                         id: projectGridView
                         Layout.fillWidth: true
                         Layout.fillHeight: true
+                        Layout.margins: 10
                         model: ListModel {}
                         cellWidth: 100
                         cellHeight: 100
                         clip: true
+                        interactive: contentHeight > height
 
                         ScrollBar.vertical: FlickableScrollBar {}
-                        delegate: SiteProjectDelegate {
+                        delegate: DashboardDelegate {
                             id: siteProjectDelegateProject
 
                             onItemClicked: function (id, definition) {

@@ -32,12 +32,18 @@ qt6_add_qml_module(content
         dataSources/ParticipantSessionListDataSource.qml
         # Delegates
         delegates/BaseDelegate.qml
-        delegates/ParticipantDelegate.qml
-        delegates/SessionDelegate.qml
-        delegates/SiteProjectDelegate.qml
+        delegates/DashboardDelegate.qml
         delegates/GenericItemDelegate.qml
+        delegates/ParticipantDelegate.qml
+        delegates/SessionDelegate.qml        
 
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf
+
         images/logos/LogoOpenTera.png
+
+        images/icons/dashboard.png
+        images/icons/project.png
+        images/icons/site.png
+
     )

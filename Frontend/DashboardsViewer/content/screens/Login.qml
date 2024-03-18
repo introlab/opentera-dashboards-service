@@ -9,6 +9,7 @@ import DashboardsViewer
 import "../ui"
 
 Item {
+    property string infoText: ""
     states: [
         State {
             name: "logging"

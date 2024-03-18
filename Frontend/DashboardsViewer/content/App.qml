@@ -1,12 +1,10 @@
-// Copyright (C) 2021 The Qt Company Ltd.
-// SPDX-License-Identifier: LicenseRef-Qt-Commercial OR GPL-3.0-only
-
 import QtQuick 6.2
 import QtQuick.VirtualKeyboard 6.2
 import QtQuick.Controls 6.2
 
 import DashboardsViewer
 import "screens"
+import "ui"
 
 import DashboardsViewer.ConfigParser 1.0
 import OpenTeraLibs.UserClient 1.0
@@ -56,16 +54,16 @@ Window {
             color: "white"
         }
 
-
-
         //Logout button
-        Button {
+        BasicButton {
             id: logoutButton
             text: "Logout"
             anchors.right: parent.right
-            anchors.top: parent.top
+            anchors.verticalCenter: parent.verticalCenter
+            color: "darkred"
+            hoverColor: "red"
             width: 100
-            height: parent.height
+            //height: parent.height
             onClicked: {
                 UserClient.disconnect();
             }

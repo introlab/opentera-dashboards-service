@@ -30,7 +30,6 @@ Item {
         fadeOut.start();
     }
 
-    anchors.fill: parent
     Keys.onReleased: (event) =>{
         if (event.key === Qt.Key_Back) {
             event.accepted = true;
@@ -83,7 +82,7 @@ Item {
                 color: Constants.lightBackgroundColor
             }
         }
-        width: 400
+        //width: 400
         height: headerBar.height + mainItem.implicitHeight
         visible: true
         border.color: "grey"
