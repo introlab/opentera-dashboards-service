@@ -8,6 +8,8 @@ import requests
 from requests.auth import _basic_auth_str
 from opentera.db.models.TeraSessionType import TeraSessionType
 from typing import List
+from io import BytesIO
+import json
 
 service_key = 'DashboardsService'
 
@@ -21,6 +23,70 @@ NB_PARTICIPANTS = 10
 
 # Number of sessions to create per participant
 NB_SESSIONS_PER_PARTICIPANT = 5
+
+# Number of assets to create per session
+NB_ASSETS_PER_SESSION = 5
+
+
+def login():
+        # Login
+        params = {'with_websocket': False}
+        response = requests.get(url=server_url + '/api/user/login', headers=headers, params=params, verify=False, timeout=5)
+        if response.status_code == 200:
+            return response.json()
+        return None
+
+
+def create_assets(service_info: dict, sessions: List[dict]) -> list:
+
+    assets = []
+
+    for session_info in sessions:
+
+        #Get all assets for session
+        params = {
+            'id_session': session_info['id_session']
+        }
+
+
+        response = requests.get(url=server_url + '/api/user/assets', headers=headers, params=params, verify=False, timeout=5)
+        if response.status_code == 200:
+            existing_assets = response.json()
+            for asset in existing_assets:
+                assets.append(asset)
+
+            if len(existing_assets) < NB_ASSETS_PER_SESSION:
+                # Add assets if needed
+                for i in range(len(existing_assets), NB_ASSETS_PER_SESSION):
+                    # Call the FileTransferService API to create the asset
+                    payload={'file_asset': json.dumps({"id_session": session_info['id_session'], 'asset_name': f'filename_{i}.dat'})}
+
+                    # Generate random 1Mb of data in ram
+                    data = os.urandom(1024*1024)
+                    # Make it readable wity byteio
+                    
+                    data = BytesIO(data)
+                    
+                    files=[
+                        ('file',(f'filename_{i}.dat',data,'application/octet-stream'))
+                    ]
+
+                    login_info: dict = login()
+
+                    if login_info is not None:
+
+                        # Must use token to use filetransfer
+                        token_headers = {'Authorization': 'OpenTera ' + login_info['user_token']}
+
+                        # Call the API
+                        response = requests.post(url=server_url + '/file/api/assets', headers=token_headers, files=files, 
+                                                data=payload, verify=False, timeout=5)
+
+                        if response.status_code == 200:
+                            asset = response.json()
+                            assets.append(asset)
+                    
+    return assets
 
 def create_participants(service_info: dict, project_info: dict) -> list:
     
@@ -286,4 +352,9 @@ if __name__ == '__main__':
             sessions: List[dict] = create_sessions(participants, session_type_info, service_info)
 
             # Create events
-            create_events_for_sessions(sessions, service_info)
+            events: List[dict] = create_events_for_sessions(sessions, service_info)
+
+            # Create assets
+            assets: List[dict] = create_assets(service_info, sessions)
+
+    print('Done!')
