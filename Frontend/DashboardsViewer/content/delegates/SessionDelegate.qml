@@ -21,7 +21,7 @@ BaseDelegate {
 
             Text {
                 id: text1
-                text: id_session + "(" + session_name + ")"
+                text: model.id_session + "(" + model.session_name + ")"
                 font.bold: true
                 font.pixelSize: 20
                 color: "black"
@@ -31,7 +31,7 @@ BaseDelegate {
 
             Text {
                 id: text2
-                text: session_start_datetime + " Duration: " + session_duration
+                text: model.session_start_datetime + " Duration: " + model.session_duration
                 font.bold: true
                 font.pixelSize: 20
                 color: "black"
