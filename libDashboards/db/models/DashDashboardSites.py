@@ -32,7 +32,7 @@ class DashDashboardSites(BaseModel):
         # Get the appropriate dashboard to jsonize
         if latest and not minimal:
             dashboard_json['versions'] = []
-            if self.dashboard_site_version:
+            if self.dashboard_site_version and self.dashboard_site_version > 0:
                 for version in self.dashboard_site_dashboard.dashboard_versions:
                     if version.dashboard_version == self.dashboard_site_version:
                         dashboard_json['versions'] = version.to_json(minimal=True)
