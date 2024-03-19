@@ -96,7 +96,7 @@ BaseWidget {
                 Text {
                     id: assetsText
                     text: "Assets:"
-                    height: 25
+                    height: 40
                     font.bold: true
                     font.pointSize: 20
                     anchors.top: parent.top
@@ -113,13 +113,14 @@ BaseWidget {
                     anchors.right: parent.right
                     delegate: Item {
                         width: assetsList.width
-                        height: 50
-                        Text {
-                            id: assetText
-                            text: model.asset_name + " [" + model.asset_uuid + "]"
+                        height: 40
+                        Button {
+                            id: singleAssetDownloadButton
                             anchors.fill: parent
-                            font.pointSize: 16
-                            wrapMode: Text.Wrap
+                            text: model.asset_name + " [" + model.asset_uuid + "]"
+                            onClicked: {
+                                console.log("Download button clicked for asset: " + model.asset_name + " [" + model.asset_uuid + "]");
+                            }
                         }
                     }
 
