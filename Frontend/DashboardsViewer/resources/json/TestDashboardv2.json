@@ -14,7 +14,7 @@
                     {
                        "type": "ClockWidget",
                        "id": "clock1",
-                       "properties": {                          
+                       "properties": {
                           "implicitWidth": {"type": "int", "value": 100},
                           "implicitHeight": {"type": "int", "value": 50}
                        }
@@ -31,7 +31,7 @@
                     {
                        "type": "ButtonWidget",
                        "id": "button",
-                       "properties": {                          
+                       "properties": {
                           "text": {"type": "string", "value": "Click Me To Refresh!"},
                           "implicitWidth": {"type": "int", "value": 200},
                           "implicitHeight": {"type": "int", "value": 50}
@@ -46,7 +46,7 @@
                     {
                        "type": "ListViewWidget",
                        "id": "participantList",
-                       "properties": {                           
+                       "properties": {
                            "dataSource": {"type": "raw", "value": "participantListData"},
                            "delegate": {"type": "delegate", "value": "ParticipantDelegate"},
                            "Layout.fillWidth": {"type": "bool", "value": "true"},
@@ -56,7 +56,7 @@
                     {
                        "type": "ListViewWidget",
                        "id": "participantSessionList",
-                       "properties": {                           
+                       "properties": {
                            "dataSource": {"type": "raw", "value": "participantSessionListData"},
                            "delegate": {"type": "delegate", "value": "SessionDelegate"},
                            "Layout.fillWidth": {"type": "bool", "value": "true"},
@@ -73,13 +73,17 @@
             "id": "participantListData",
             "properties": {
                 "id_project": {"type": "int", "value": 1},
-                "autoFetch": {"type": "bool", "value": "true"}
+                "enabledOnly": {"type": "bool", "value": "true"},
+                "autoFetch": {"type": "bool", "value": "true"},
+                "sortField": {"type": "string", "value": "participant_lastsession"},
+                "sortDesc": {"type": "bool", "value": "false"},
+                "sortType": {"type": "int", "value": 2}
             }
         },
         {
             "type": "ParticipantSessionListDataSource",
             "id": "participantSessionListData",
-            "properties": {                
+            "properties": {
                 "id_participant": {"type": "int", "value": -1}
             }
         }

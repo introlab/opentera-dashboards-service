@@ -25,6 +25,7 @@ QtObject {
     readonly property color lightBackgroundColor: "#415a77"
     readonly property color highlightColor: "#778da9"
     readonly property color textColor: "#e0e1dd"
+    readonly property color textAltColor: "#faf5ba"
 
     /*property StudioApplication application: StudioApplication {
         fontPath: Qt.resolvedUrl("../../content/" + relativeFontDirectory)

@@ -43,6 +43,10 @@ qt6_add_qml_module(content
         images/logos/LogoOpenTera.png
 
         images/icons/dashboard.png
+        images/icons/patient.png
+        images/icons/patient_green.png
+        images/icons/patient_yellow.png
+        images/icons/patient_red.png
         images/icons/project.png
         images/icons/site.png
 

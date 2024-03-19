@@ -295,7 +295,7 @@ QVariantList ConfigParser::processConfigByteArray(const QByteArray &data)
     // Write the root object, make sure it will fill parent
     textStream << "BaseWidget { //Begin root object \n";
     textStream << "    id: rootObject;\n";
-    textStream << "    anchors.fill: parent;\n";
+    //textStream << "    anchors.fill: parent;\n"; // Not needed - in stack view, object fill parent by default
 
     // Write Main Layout
     QJsonObject layout = json["layout"].toObject();

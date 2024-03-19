@@ -15,13 +15,18 @@ BaseWidget {
     ListView {
         id: myListView
         anchors.fill: parent
+        spacing: 1
+        clip: true
+        focus: true
         model: dataSource ? dataSource.model : null
+        currentIndex: -1
 
         property string fieldDisplayName: dataSource.fieldDisplayName
         property string fieldIdName: dataSource.fieldIdName
         property string iconPath: dataSource.iconPath
 
         ScrollBar.vertical: FlickableScrollBar {}
+
     }
 
 }

@@ -5,10 +5,13 @@ import QtQuick.Layouts
 import DashboardsViewer 1.0
 
 Item {
+    id: itemBase
     width: GridView.view.cellWidth - 10
     height: mainLayout.implicitHeight + 10 //GridView.view.cellHeight - 10
 
     signal itemClicked(var id, var definition)
+    enabled: model.enabled
+    opacity: enabled ? 1.0 : 0.5
 
     states: [
         State {
@@ -57,6 +60,7 @@ Item {
                 height: 64
             }
             MultiEffect{
+                enabled: itemBase.enabled
                 source: imgDashboard
                 anchors.fill: source
                 shadowEnabled: true

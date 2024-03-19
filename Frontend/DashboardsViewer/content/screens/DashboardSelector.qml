@@ -104,6 +104,7 @@ Item {
                                             "id": dashboard.id_dashboard,
                                             "name": name,
                                             "definition": definition,
+                                            "enabled": enabled,
                                             "color": "#7e57c2"
                                            })
             }
@@ -144,6 +145,7 @@ Item {
                                                 "id": dashboard.id_dashboard,
                                                 "name": name,
                                                 "definition": definition,
+                                                "enabled": enabled,
                                                 "color": "#4eadf0"
                                              })
             }

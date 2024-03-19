@@ -13,6 +13,10 @@ Item {
     property string iconPath: "qrc:/genericIcon"
     property bool autoFetch: false
 
+    property string sortField: ""
+    property int sortType: 0 // 0 = string, 1 = number, 2 = date
+    property bool sortDesc: false
+
     signal error(var errorMessage);
     signal itemSelected(var item);
 
@@ -27,6 +31,40 @@ Item {
 
             //Print number of elements
             //console.log("Number of elements: ", response.length);
+
+            // Sort items, if needed
+            if (sortField){
+                response.sort((a, b) => {
+                                  let valA, valB;
+                                  let orderMult = 1;
+                                  if (sortDesc)
+                                     orderMult = -1;
+                                  if (sortType == 0){
+                                        // String sort
+                                        valA = a[sortField];
+                                        valB = b[sortField];
+
+                                  }
+                                  if (sortType == 1){
+                                      valA = Number(a[sortField]);
+                                      valB = Number(b[sortField]);
+                                  }
+                                  if (sortType == 2){
+                                      valA = new Date(a[sortField]);
+                                      valB = new Date(b[sortField]);
+                                  }
+
+                                  if (valA < valB) {
+                                    return orderMult*-1;
+                                  }
+                                  if (valA > valB) {
+                                    return orderMult*1;
+                                  }
+                                  return 0;
+
+                              }
+                             )
+            }
 
             //Add session
             response.forEach(function(item) {

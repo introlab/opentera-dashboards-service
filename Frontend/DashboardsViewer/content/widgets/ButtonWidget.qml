@@ -9,6 +9,8 @@ BaseWidget {
 
     property alias text: control.text
 
+    property color hoverColor: "#047eff"
+
     Button {
         id: control
 
