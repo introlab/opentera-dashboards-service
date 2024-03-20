@@ -19,6 +19,10 @@ Item {
             console.log("Failed", errorString, statusCode);
         });
 
+        reply.finished.connect(function() {
+            console.log("Finished");
+        });
+
         reply.readyRead.connect(function() {
             console.log("ReadyRead ", reply.bytesAvailable());
             var data = reply.readAll();
