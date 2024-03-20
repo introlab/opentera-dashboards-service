@@ -125,7 +125,7 @@ BaseWidget {
                         }            
                         FileDownloadDataSource {
                             id: fileDownloadDataSource
-                            url: model.asset_url
+                            url: "/file/api/assets"
                             filename: model.asset_name
                             params: {"asset_uuid": model.asset_uuid, "access_token": model.access_token}
                         }

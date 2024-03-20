@@ -15,8 +15,13 @@ Item {
             console.log("Success", response, statusCode);
          });
 
+        reply.requestFailed.connect(function(errorString, statusCode) {
+            console.log("Failed", errorString, statusCode);
+        });
+
         reply.readyRead.connect(function() {
             console.log("ReadyRead ", reply.bytesAvailable());
+            var data = reply.readAll();
         });
 
         reply.downloadProgress.connect(function(bytesReceived, bytesTotal) {
