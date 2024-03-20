@@ -114,7 +114,7 @@ BaseWidget {
                     delegate: Item {
                         width: assetsList.width
                         height: 40
-                        Button {
+                        BasicButton {
                             id: singleAssetDownloadButton
                             anchors.fill: parent
                             text: model.asset_name + " [" + model.asset_uuid + "]"
@@ -143,7 +143,7 @@ BaseWidget {
                 Layout.alignment: Qt.AlignLeft
                 implicitWidth: 200
                 implicitHeight: 50
-                text: "Download Assets"
+                text: "Download Assets"                
                 onClicked: {
                     console.log("Download Assets button clicked")
 
