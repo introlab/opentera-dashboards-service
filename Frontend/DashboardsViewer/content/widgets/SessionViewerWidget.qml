@@ -120,14 +120,21 @@ BaseWidget {
                             text: model.asset_name + " [" + model.asset_uuid + "]"
                             onClicked: {
                                 console.log("Download button clicked for asset: " + model.asset_name + " [" + model.asset_uuid + "]");
+                                fileDownloadDataSource.downloadFile();
                             }
+                        }            
+                        FileDownloadDataSource {
+                            id: fileDownloadDataSource
+                            url: model.asset_url
+                            filename: model.asset_name
+                            params: {"asset_uuid": model.asset_uuid, "access_token": model.access_token}
                         }
                     }
 
                     BaseDataSource {
                         id: assetsDataSource
-                        url: "/api/user/assets"
-                        params: {"id_session": session.id_session}
+                        url: "/api/user/assets"                        
+                        params: {"id_session": session.id_session, "with_urls": true, "full": true}
                         autoFetch: true
                     }
                 }
