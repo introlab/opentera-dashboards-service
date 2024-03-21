@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 2.15
 import DashboardsViewer 1.0
+import QtQuick.Dialogs
+import QtCore
 import "../ui"
 import "../dataSources"
 
@@ -112,6 +114,7 @@ BaseWidget {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     delegate: Item {
+                        id: assetItemDelegate
                         width: assetsList.width
                         height: 40
                         BasicButton {
@@ -119,8 +122,8 @@ BaseWidget {
                             anchors.fill: parent
                             text: model.asset_name + " [" + model.asset_uuid + "]"
                             onClicked: {
-                                console.log("Download button clicked for asset: " + model.asset_name + " [" + model.asset_uuid + "]");
-                                fileDownloadDataSource.downloadFile();
+                                console.log("Download button clicked for asset: " + model.asset_name + " [" + model.asset_uuid + "]");                                
+                                saveFileDialog.open();
                             }
                         }            
                         FileDownloadDataSource {
@@ -129,7 +132,59 @@ BaseWidget {
                             filename: model.asset_name
                             params: {"asset_uuid": model.asset_uuid, "access_token": model.access_token}
                         }
-                    }
+
+                        //Download progress dialog
+                        Dialog {
+                            id: downloadProgressDialog
+                            title: "Downloading " + model.asset_name
+                            standardButtons: Dialog.Close
+                            anchors.centerIn: assetItemDelegate
+                            width: assetsList.width / 2
+                            height: assetsList.height / 2
+                            enabled: false
+
+                            ProgressBar {
+                                id: progressBar
+                                from: 0
+                                to: 100
+                                value: 0
+                                anchors.fill: parent
+                            }
+
+                            Connections
+                            {
+                                target: fileDownloadDataSource
+                                onDownloadProgress: function(bytesReceived, bytesTotal){
+                                    console.log("DownloadProgressDialog progress: ", bytesReceived, bytesTotal);
+                                    progressBar.value = bytesReceived / bytesTotal * 100;
+                                }
+                                onDownloadFinished: function() {
+                                    console.log("DownloadProgressDialog finished");
+                                    downloadProgressDialog.enabled = true;
+                                }
+                            }
+
+                            onAccepted: {
+                                console.log("DownloadProgressDialog accepted");
+                                saveFileDialog.open();
+                            }
+                        }
+
+                        FileDialog {
+                            id: saveFileDialog
+                            nameFilters: ["All files (*)"]
+                            fileMode: FileDialog.SaveFile
+                            //URL
+                            currentFolder: StandardPaths.writableLocation(StandardPaths.DownloadLocation)
+                            currentFile: model.asset_name
+                            onAccepted: function() {
+                                console.log("SaveFileDialog accepted");
+                                fileDownloadDataSource.filename = saveFileDialog.currentFile;
+                                downloadProgressDialog.open();
+                                fileDownloadDataSource.downloadFile();
+                            }
+                         }
+                    } // Item (delegate)
 
                     BaseDataSource {
                         id: assetsDataSource
@@ -137,7 +192,12 @@ BaseWidget {
                         params: {"id_session": session.id_session, "with_urls": true, "full": true}
                         autoFetch: true
                     }
-                }
+
+
+                }//ListView
+
+
+
             }
 
 

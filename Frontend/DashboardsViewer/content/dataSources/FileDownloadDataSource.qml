@@ -8,6 +8,12 @@ Item {
     property bool autoFetch: false
     property string filename: ""
 
+    signal downloadProgress(var bytesReceived, var bytesTotal);
+    signal downloadStarted();
+    signal downloadFinished();
+    signal downloadFailed();
+
+
     function downloadFile() {
         var reply = UserClient.download(url, params);
 
@@ -17,19 +23,23 @@ Item {
 
         reply.requestFailed.connect(function(errorString, statusCode) {
             console.log("Failed", errorString, statusCode);
+            downloadFailed();
         });
 
         reply.finished.connect(function() {
             console.log("Finished");
+            downloadFinished();
         });
 
         reply.readyRead.connect(function() {
             console.log("ReadyRead ", reply.bytesAvailable());
             var data = reply.readAll();
+
         });
 
         reply.downloadProgress.connect(function(bytesReceived, bytesTotal) {
             console.log("DownloadProgress ", bytesReceived, bytesTotal);
+            downloadProgress(bytesReceived, bytesTotal);
         });
     }
 }
