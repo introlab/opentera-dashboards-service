@@ -176,7 +176,7 @@ BaseWidget {
                             fileMode: FileDialog.SaveFile
                             //URL
                             currentFolder: StandardPaths.writableLocation(StandardPaths.DownloadLocation)
-                            currentFile: model.asset_name
+                            currentFile: model.asset_name           
                             onAccepted: function() {
                                 console.log("SaveFileDialog accepted");
                                 fileDownloadDataSource.filename = saveFileDialog.currentFile;

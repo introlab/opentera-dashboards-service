@@ -15,31 +15,25 @@ Item {
 
 
     function downloadFile() {
-        var reply = UserClient.download(url, params);
 
-        reply.requestSucceeded.connect(function(response, statusCode) {
-            console.log("Success", response, statusCode);
-         });
+        if (filename)
+        {
+            console.log("Should download file and save to: ", filename );
+            var fileDownloader = UserClient.downloadFile(filename, url, params);
 
-        reply.requestFailed.connect(function(errorString, statusCode) {
-            console.log("Failed", errorString, statusCode);
+            fileDownloader.finished.connect(function() {
+                console.log("Finished");
+                downloadFinished();
+            });
+
+            fileDownloader.downloadProgress.connect(function(bytesReceived, bytesTotal) {
+                console.log("DownloadProgress ", bytesReceived, bytesTotal);
+                downloadProgress(bytesReceived, bytesTotal);
+            });
+        }
+        else {
             downloadFailed();
-        });
+        }
 
-        reply.finished.connect(function() {
-            console.log("Finished");
-            downloadFinished();
-        });
-
-        reply.readyRead.connect(function() {
-            console.log("ReadyRead ", reply.bytesAvailable());
-            var data = reply.readAll();
-
-        });
-
-        reply.downloadProgress.connect(function(bytesReceived, bytesTotal) {
-            console.log("DownloadProgress ", bytesReceived, bytesTotal);
-            downloadProgress(bytesReceived, bytesTotal);
-        });
     }
 }
