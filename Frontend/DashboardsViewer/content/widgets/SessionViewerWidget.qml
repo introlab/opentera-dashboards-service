@@ -113,30 +113,47 @@ BaseWidget {
                     anchors.bottom: parent.bottom
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    delegate: Item {
+                    delegate: Item {                        
                         id: assetItemDelegate
-                        width: assetsList.width
+                        width: assetsList.width                        
                         height: 40
+
+                        function delegateModel() {
+                            return model
+                        }
+
                         BasicButton {
                             id: singleAssetDownloadButton
                             anchors.fill: parent
-                            text: model.asset_name + " [" + model.asset_uuid + "]"
+                            text: delegateModel().asset_name + " [" + delegateModel().asset_uuid + "]"
                             onClicked: {
-                                console.log("Download button clicked for asset: " + model.asset_name + " [" + model.asset_uuid + "]");                                
+                                console.log("Download button clicked for asset: " + delegateModel().asset_name + " [" + delegateModel().asset_uuid + "]");
                                 saveFileDialog.open();
                             }
                         }            
                         FileDownloadDataSource {
                             id: fileDownloadDataSource
                             url: "/file/api/assets"
-                            filename: model.asset_name
-                            params: {"asset_uuid": model.asset_uuid, "access_token": model.access_token}
+                            filename: delegateModel().asset_name
+                            params: {"asset_uuid": delegateModel().asset_uuid, "access_token": delegateModel().access_token}
+                        }
+
+                        BaseDataSource {
+                            id: assetInfoDataSource
+                            url: "/file/api/assets/infos"
+                            params: {"asset_uuid": delegateModel().asset_uuid, "access_token": delegateModel().access_token}
+                            autoFetch: true
+
+                            //Be careful, we are using model from BseDataSource not the delegate item
+                            model.onCountChanged: function() {
+                                console.log("infos count changed");
+                            }
                         }
 
                         //Download progress dialog
                         Dialog {
                             id: downloadProgressDialog
-                            title: "Downloading " + model.asset_name
+                            title: "Downloading " + delegateModel().asset_name
                             standardButtons: Dialog.Close
                             anchors.centerIn: assetItemDelegate
                             width: assetsList.width / 2
@@ -176,7 +193,7 @@ BaseWidget {
                             fileMode: FileDialog.SaveFile
                             //URL
                             currentFolder: StandardPaths.writableLocation(StandardPaths.DownloadLocation)
-                            currentFile: model.asset_name           
+                            currentFile: delegateModel().asset_name
                             onAccepted: function() {
                                 console.log("SaveFileDialog accepted");
                                 fileDownloadDataSource.filename = saveFileDialog.currentFile;

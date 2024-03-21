@@ -66,11 +66,22 @@ Item {
                              )
             }
 
-            //Add session
-            response.forEach(function(item) {
-               item.dataSource = baseDataSource;
-               myModel.append(item);
-            });
+            //Verify if response is an array
+            //Add List of items
+            if (Array.isArray(response))
+            {
+                //Insert all elements
+                response.forEach(function(item) {
+                   item.dataSource = baseDataSource;
+                   myModel.append(item);
+                });
+            }
+            else
+            {
+                //Insert response directly
+                response.dataSource = baseDataSource;
+                myModel.append(response);
+            }
         });
 
         reply.requestFailed.connect(function(response, statusCode) {
