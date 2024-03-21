@@ -152,7 +152,7 @@ BaseWidget {
                             params: {"asset_uuid": delegateModel().asset_uuid, "access_token": delegateModel().access_token}
                             autoFetch: true
 
-                            //Be careful, we are using model from BseDataSource not the delegate item
+                            //Be careful, we are using model from BaseDataSource not the delegate item
                             model.onCountChanged: function() {
                                 console.log("infos count changed");
                                 var assetInfo = model.get(0);
