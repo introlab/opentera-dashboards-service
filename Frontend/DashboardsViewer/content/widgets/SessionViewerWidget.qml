@@ -130,7 +130,15 @@ BaseWidget {
                                 console.log("Download button clicked for asset: " + delegateModel().asset_name + " [" + delegateModel().asset_uuid + "]");
                                 saveFileDialog.open();
                             }
-                        }            
+                        }
+                        Text {
+                            id: singleAssetInfoText
+                            anchors.right: singleAssetDownloadButton.right
+                            anchors.top: singleAssetDownloadButton.top
+                            anchors.bottom: singleAssetDownloadButton.bottom
+                            text: "Hello World!"
+                        }
+
                         FileDownloadDataSource {
                             id: fileDownloadDataSource
                             url: "/file/api/assets"
@@ -147,6 +155,8 @@ BaseWidget {
                             //Be careful, we are using model from BseDataSource not the delegate item
                             model.onCountChanged: function() {
                                 console.log("infos count changed");
+                                var assetInfo = model.get(0);
+                                singleAssetInfoText.text = "Size: " + (assetInfo.asset_file_size / (1024.0 * 1024.0)).toString() + " MB"
                             }
                         }
 
