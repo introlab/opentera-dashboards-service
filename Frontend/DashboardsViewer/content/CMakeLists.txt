@@ -31,6 +31,7 @@ qt6_add_qml_module(content
         dataSources/FetchDataSource.qml
         dataSources/ParticipantListDataSource.qml
         dataSources/ParticipantSessionListDataSource.qml
+        dataSources/FileDownloadDataSource.qml
         # Delegates
         delegates/BaseDelegate.qml
         delegates/DashboardDelegate.qml
@@ -40,9 +41,7 @@ qt6_add_qml_module(content
 
     RESOURCES
         fonts/Arimo-VariableFont_wght.ttf
-
         images/logos/LogoOpenTera.png
-
         images/icons/dashboard.png
         images/icons/patient.png
         images/icons/patient_green.png
@@ -50,5 +49,4 @@ qt6_add_qml_module(content
         images/icons/patient_red.png
         images/icons/project.png
         images/icons/site.png
-
     )
