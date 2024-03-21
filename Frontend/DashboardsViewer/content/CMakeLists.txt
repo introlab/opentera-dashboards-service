@@ -23,6 +23,7 @@ qt6_add_qml_module(content
 
         # Layouts
         layouts/BaseLayout.qml
+        layouts/CenteredColumnLayout.qml
         layouts/CenteredRowLayout.qml
         layouts/FlowLayout.qml
         # DataSources

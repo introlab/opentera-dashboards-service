@@ -9,38 +9,6 @@
         "layouts":[
             {
                 "type": "CenteredRowLayout",
-                "id": "layout3",
-                "widgets": [
-                    {
-                       "type": "ClockWidget",
-                       "id": "clock1",
-                       "properties": {
-                          "implicitWidth": {"type": "int", "value": 100},
-                          "implicitHeight": {"type": "int", "value": 50}
-                       }
-                    },
-                    {
-                       "type": "Rectangle",
-                       "id": "rect",
-                       "properties": {
-                          "implicitHeight": {"type": "int", "value": 50},
-                          "Layout.fillWidth": {"type": "bool", "value": "true"},
-                          "opacity": {"type": "real", "value": "0.0"}
-                       }
-                    },
-                    {
-                       "type": "ButtonWidget",
-                       "id": "button",
-                       "properties": {
-                          "text": {"type": "string", "value": "Click Me To Refresh!"},
-                          "implicitWidth": {"type": "int", "value": 200},
-                          "implicitHeight": {"type": "int", "value": 50}
-                       }
-                    }
-                ]
-            },
-            {
-                "type": "CenteredRowLayout",
                 "id": "layout4",
                 "widgets": [
                     {
@@ -52,18 +20,46 @@
                            "Layout.fillWidth": {"type": "bool", "value": "true"},
                            "Layout.fillHeight": {"type": "bool", "value": "true"}
                        }
-                    },
-                    {
-                       "type": "ListViewWidget",
-                       "id": "participantSessionList",
-                       "properties": {
-                           "dataSource": {"type": "raw", "value": "participantSessionListData"},
-                           "delegate": {"type": "delegate", "value": "SessionDelegate"},
-                           "Layout.fillWidth": {"type": "bool", "value": "true"},
-                           "Layout.fillHeight": {"type": "bool", "value": "true"}
-                       }
                     }
-                ]
+                ],
+               "layouts":[
+                   {
+                       "type": "CenteredColumnLayout",
+                       "id": "rightLayout",
+                       "properties": {
+                            "Layout.fillWidth": {"type": "bool", "value": "true"}
+                       },
+                       "widgets": [
+                           {
+                               "type": "Rectangle",
+                               "id": "wdgTimeline",
+                               "properties": {
+                                    "Layout.fillWidth": {"type": "bool", "value": "true"},
+                                    "height": {"type": "int", "value": 100}
+                               }
+                           }
+                        ],
+                        "layouts": [{
+                            "type": "CenteredRowLayout",
+                            "id": "rightBottomLayout",
+                            "widgets": [
+                                {
+                                   "type": "ListViewWidget",
+                                   "id": "participantSessionList",
+                                   "properties": {
+                                       "dataSource": {"type": "raw", "value": "participantSessionListData"},
+                                       "delegate": {"type": "delegate", "value": "SessionDelegate"},
+                                       "Layout.fillWidth": {"type": "bool", "value": "true"},
+                                       "Layout.fillHeight": {"type": "bool", "value": "true"}
+                                   }
+                                }
+                            ]
+                        }
+
+                       ]
+                   }
+               ]
+
             }
         ]
    },
@@ -89,10 +85,6 @@
         }
    ],
    "connections": [
-        {
-            "source": {"object": "button", "signal": "onClicked"},
-            "target": {"object": "participantListData", "slot": "update", "args": []}
-        },
         {
             "source": {"object": "participantListData", "signal": "onItemSelected"},
             "target": {"object": "participantSessionListData", "slot": "setParticipant", "args": ["id_participant"]}
