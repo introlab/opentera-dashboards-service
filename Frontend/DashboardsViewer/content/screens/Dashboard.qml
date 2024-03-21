@@ -5,11 +5,12 @@ import OpenTeraLibs.UserClient 1.0
 import DashboardsViewer.ConfigParser 1.0
 
 import DashboardsViewer
+import ".."
 
 Item {
-    width: 1024
-    height: 768
-    anchors.fill: parent
+    //width: 1024
+    //height: 768
+    //anchors.fill: parent
     property string definition: ""
 
     signal buttonClicked
@@ -18,10 +19,17 @@ Item {
         id: parser
     }
 
-    function loadDocument() {
+    function loadDocument(filename = undefined) {
         console.log("should load document", definition)
 
-        var dynamicQML = parser.parseConfigString(definition)
+        var dynamicQML;
+        if (filename){
+            dynamicQML = parser.parseConfigFile(filename);
+        }else{
+            dynamicQML = parser.parseConfigString(definition);
+        }
+
+
         console.log("dynamicQML", dynamicQML)
 
         if (dynamicQML.length > 0) {
@@ -71,6 +79,7 @@ Item {
         id: dashboardStackView
         anchors.top: dashboardText.bottom
         anchors.bottom: parent.bottom
-        width: parent.width
+        anchors.left: parent.left
+        anchors.right: parent.right
     }
 }

@@ -353,6 +353,20 @@ Item {
                     } // GridView 2
                 } //RowLayout (2)
             } // Rectangle 2
+            BasicButton{
+                text: qsTr("Test Mode")
+                onClicked: function(){
+                    let filename = ":/dashboards/DashboardsViewer/resources/json/TestDashboardv2.json";
+                    stackview.push("Dashboard.qml")
+
+                    // get current pushed element
+                    var currentElement = stackview.currentItem;
+
+                    // Set the element property
+                    currentElement.loadDocument(filename);
+                }
+
+            }
         } // ColumnLayout
     } // BasicDialog
 } // Item
