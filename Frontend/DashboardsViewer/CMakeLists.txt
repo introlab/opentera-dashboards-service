@@ -77,7 +77,7 @@ if(EMSCRIPTEN)
         # TODO Replace logo with something else
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/qtlogo.svg ${PROJECT_SOURCE_DIR}/../../static
         # This file is only present if we use threaded webassembly
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.worker.js ${PROJECT_SOURCE_DIR}/../../static
+        # COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.worker.js ${PROJECT_SOURCE_DIR}/../../static
 
     )
 else()

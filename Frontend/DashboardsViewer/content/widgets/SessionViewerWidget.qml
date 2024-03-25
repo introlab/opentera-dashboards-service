@@ -7,6 +7,7 @@ import QtCore
 import "../ui"
 import "../dataSources"
 
+
 BaseWidget {
     id:mySessionViewerWidget
     property var session: null
