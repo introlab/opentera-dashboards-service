@@ -7,13 +7,17 @@ function fileDownloadFromBrowser(jsonDocumentString)
         "url": "full url with params",
         "method": "GET/POST",
         "headers":  Object with key-value pairs
+        "filename": "original file name"
     }
     */
-
+   
 
     try {
         //Convert string to JSON object
         var jsonDocument = JSON.parse(jsonDocumentString);
+
+        // do something
+        console.log("fileDownloadFromBrowser() called with", jsonDocument);
 
         //Create AJAX request with the given method, url and headers
         var xhr = new XMLHttpRequest();
@@ -31,7 +35,7 @@ function fileDownloadFromBrowser(jsonDocumentString)
                 var url = URL.createObjectURL(blob);
                 var a = document.createElement('a');
                 a.href = url;
-                a.download = "downloaded_file";
+                a.download = jsonDocument.filename;
                 a.click();
                 window.URL.revokeObjectURL(url);
             }
@@ -43,8 +47,6 @@ function fileDownloadFromBrowser(jsonDocumentString)
         //Send the request
         xhr.send();
 
-        // do something
-        console.log("fileDownloadFromBrowser() called with", jsonDocument);
     }
     catch (e) {
         console.error("fileDownloadFromBrowser() failed with", e);
