@@ -16,9 +16,6 @@ Window {
     visible: true
     title: "DashboardsViewer"
     id: mainWindow
-
-
-
     Rectangle{
         id: background
         anchors.fill: parent

@@ -3,6 +3,12 @@ C++ project. */
 
 import QtQuick
 import content
+import OpenTeraLibs.UserClient 1.0
 
 App {
+    id: dashboardViewerApp
+    function isWebAssembly() {
+        return UserClient.isWebAssembly();
+    }
+
 }

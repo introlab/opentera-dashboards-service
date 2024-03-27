@@ -129,7 +129,19 @@ BaseWidget {
                             text: delegateModel().asset_name + " [" + delegateModel().asset_uuid + "]"
                             onClicked: {
                                 console.log("Download button clicked for asset: " + delegateModel().asset_name + " [" + delegateModel().asset_uuid + "]");
-                                saveFileDialog.open();
+
+                                if (dashboardViewerApp.isWebAssembly()) {
+                                    console.log("WebAssembly is supported...")
+                                    //This will use the browser download function. Download UI is provided by browser.
+                                    fileDownloadDataSource.filename = delegateModel().asset_name
+
+                                    //DownloadFile returnes a null object in WebASM
+                                    fileDownloadDataSource.downloadFile();
+                                } else {
+                                    console.log('WebAssembly is not supported');
+                                    saveFileDialog.open();
+                                }
+
                             }
                         }
                         Text {
