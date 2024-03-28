@@ -5,6 +5,7 @@ import OpenTeraLibs.UserClient 1.0
 BaseDataSource {
     id: fetch
     property int id_participant: 0 // Empty Project
+    property bool withSessionTypes: false
 
     params: {"id_participant": id_participant}
     url: "/api/user/sessions"
@@ -14,6 +15,10 @@ BaseDataSource {
 
     function setParticipant(id_participant) {
         fetch.id_participant = id_participant;
+        params = {"id_participant": id_participant};
+        if (withSessionTypes){
+            params["with_session_type"] = true;
+        }
         getAll();
     }
 

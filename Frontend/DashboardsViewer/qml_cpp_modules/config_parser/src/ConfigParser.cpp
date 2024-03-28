@@ -25,7 +25,7 @@ ConfigParser::~ConfigParser()
 
 
 bool ConfigParser::isValidString(const QString &input) {
-    QRegularExpression regex("^[a-zA-Z0-9. |]+$");
+    QRegularExpression regex("^[a-zA-Z0-9. //|]+$");
     return regex.match(input).hasMatch();
 }
 

@@ -17,11 +17,12 @@
                        "properties": {
                            "dataSource": {"type": "raw", "value": "participantListData"},
                            "delegate": {"type": "delegate", "value": "ParticipantDelegate"},
-                           "Layout.fillWidth": {"type": "bool", "value": "true"},
+                           "Layout.maximumWidth": {"type": "raw", "value": "Screen.width/5"},
                            "Layout.fillHeight": {"type": "bool", "value": "true"}
                        }
                     }
                 ],
+
                "layouts":[
                    {
                        "type": "CenteredColumnLayout",
@@ -31,11 +32,12 @@
                        },
                        "widgets": [
                            {
-                               "type": "Rectangle",
+                               "type": "TimeLineWidget",
                                "id": "wdgTimeline",
                                "properties": {
+                                    "dataSource": {"type": "raw", "value": "participantSessionListData"},
                                     "Layout.fillWidth": {"type": "bool", "value": "true"},
-                                    "height": {"type": "int", "value": 100}
+                                    "implicitHeight": {"type": "int", "value": 100}
                                }
                            }
                         ],
@@ -80,7 +82,8 @@
             "type": "ParticipantSessionListDataSource",
             "id": "participantSessionListData",
             "properties": {
-                "id_participant": {"type": "int", "value": -1}
+                "id_participant": {"type": "int", "value": -1},
+                "withSessionTypes": {"type": "bool", "value": "true"}
             }
         }
    ],

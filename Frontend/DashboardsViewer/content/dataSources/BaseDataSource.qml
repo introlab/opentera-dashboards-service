@@ -28,6 +28,7 @@ Item {
 
             //Make sure model is empty
             myModel.clear();
+            modelChanged();
 
             //Print number of elements
             //console.log("Number of elements: ", response.length);
@@ -82,12 +83,14 @@ Item {
                 response.dataSource = baseDataSource;
                 myModel.append(response);
             }
+            modelChanged();
         });
 
         reply.requestFailed.connect(function(response, statusCode) {
             error(response);
             console.log("Failed", response, statusCode);
         });
+
     }
 
     function update() {

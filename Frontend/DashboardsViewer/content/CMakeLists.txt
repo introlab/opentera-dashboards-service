@@ -16,10 +16,11 @@ qt6_add_qml_module(content
         ui/FlickableScrollBar.qml
         # Widgets
         widgets/BaseWidget.qml
-        widgets/ClockWidget.qml
         widgets/ButtonWidget.qml
+        widgets/ClockWidget.qml
         widgets/ListViewWidget.qml
         widgets/SessionViewerWidget.qml
+        widgets/TimeLineWidget.qml
 
         # Layouts
         layouts/BaseLayout.qml

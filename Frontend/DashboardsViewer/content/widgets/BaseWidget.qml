@@ -10,6 +10,6 @@ Item {
     property Item stackView: dashboardStackView ? dashboardStackView : null
 
     Component.onCompleted: {
-        console.log("Using StackView: ", stackView)
+       // console.log("Using StackView: ", stackView)
     }
 }
