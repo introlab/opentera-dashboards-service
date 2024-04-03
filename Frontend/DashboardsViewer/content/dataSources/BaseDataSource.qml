@@ -69,7 +69,7 @@ Item {
 
             //Verify if response is an array
             //Add List of items
-            if (Array.isArray(response))
+            if (response.length)
             {
                 //Insert all elements
                 response.forEach(function(item) {
