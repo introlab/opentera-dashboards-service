@@ -37,7 +37,7 @@
                                "properties": {
                                     "dataSource": {"type": "raw", "value": "participantSessionListData"},
                                     "Layout.fillWidth": {"type": "bool", "value": "true"},
-                                    "implicitHeight": {"type": "int", "value": 100}
+                                    "implicitHeight": {"type": "int", "value": 130}
                                }
                            }
                         ],
