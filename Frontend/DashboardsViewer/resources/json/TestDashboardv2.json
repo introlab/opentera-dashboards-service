@@ -17,6 +17,7 @@
                        "properties": {
                            "dataSource": {"type": "raw", "value": "participantListData"},
                            "delegate": {"type": "delegate", "value": "ParticipantDelegate"},
+                           "title": {"type": "string", "value": "Participants"},
                            "Layout.maximumWidth": {"type": "raw", "value": "Screen.width/5"},
                            "Layout.fillHeight": {"type": "bool", "value": "true"}
                        }
@@ -28,16 +29,17 @@
                        "type": "CenteredColumnLayout",
                        "id": "rightLayout",
                        "properties": {
-                            "Layout.fillWidth": {"type": "bool", "value": "true"}
+                            "Layout.fillWidth": {"type": "bool", "value": "true"},
+                            "Layout.leftMargin": {"type": "int", "value": 10}
                        },
                        "widgets": [
                            {
                                "type": "TimeLineWidget",
                                "id": "wdgTimeline",
                                "properties": {
-                                    "dataSource": {"type": "raw", "value": "participantSessionListData"},
-                                    "Layout.fillWidth": {"type": "bool", "value": "true"},
-                                    "implicitHeight": {"type": "int", "value": 130}
+                                    "dataSource": {"type": "raw", "value": "participantSessionListTimeline"},
+                                    "title": {"type": "string", "value": "Sessions"},
+                                    "Layout.fillWidth": {"type": "bool", "value": "true"}
                                }
                            }
                         ],
@@ -85,12 +87,26 @@
                 "id_participant": {"type": "int", "value": -1},
                 "withSessionTypes": {"type": "bool", "value": "true"}
             }
+        },
+        {
+            "type": "ParticipantSessionListDataSource",
+            "id": "participantSessionListTimeline",
+            "properties": {
+                "id_participant": {"type": "int", "value": -1},
+                "sortField": {"type": "string", "value": "session_start_datetime"},
+                "sortDesc": {"type": "bool", "value": "false"},
+                "sortType": {"type": "int", "value": 2}
+            }
         }
    ],
    "connections": [
         {
             "source": {"object": "participantListData", "signal": "onItemSelected"},
             "target": {"object": "participantSessionListData", "slot": "setParticipant", "args": ["id_participant"]}
+        },
+        {
+            "source": {"object": "participantListData", "signal": "onItemSelected"},
+            "target": {"object": "participantSessionListTimeline", "slot": "setParticipant", "args": ["id_participant"]}
         }
     ]
 }

@@ -4,18 +4,20 @@ import OpenTeraLibs.UserClient 1.0
 Item {
     id: baseDataSource
     property string url: "" // Empty URL
+
     property ListModel model: ListModel {
         id: myModel
     }
-    property var params: Object()
+
+    property var    params: Object()
     property string fieldIdName: "id_"
     property string fieldDisplayName: "disp_"
     property string iconPath: "qrc:/genericIcon"
-    property bool autoFetch: false
+    property bool   autoFetch: false
 
     property string sortField: ""
-    property int sortType: 0 // 0 = string, 1 = number, 2 = date
-    property bool sortDesc: false
+    property int    sortType: 0 // 0 = string, 1 = number, 2 = date
+    property bool   sortDesc: false
 
     signal error(var errorMessage);
     signal itemSelected(var item);

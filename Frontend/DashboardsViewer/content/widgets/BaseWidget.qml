@@ -9,6 +9,8 @@ Item {
     implicitWidth: 400
     property Item stackView: dashboardStackView ? dashboardStackView : null
 
+    property string title: ""
+
     Component.onCompleted: {
        // console.log("Using StackView: ", stackView)
     }

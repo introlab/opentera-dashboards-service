@@ -71,24 +71,24 @@ BaseDelegate {
 
                 // Difference less than a day ?
                 if (diff < 1000 * 60 * 60 * 24) {
-                    console.log("Less than a day")
+                    //console.log("Less than a day")
                     myRectangle.color = "green"
                 }
                 else {
-                    console.log("More than a day")
+                    //console.log("More than a day")
                     // Less than a week ?
                     if (diff < 1000 * 60 * 60 * 24 * 7) {
-                        console.log("Less than a week")
+                        //console.log("Less than a week")
                         myRectangle.color = "orange"
                     }
                     else {
-                        console.log("More than a week")
+                        //console.log("More than a week")
                         myRectangle.color = "red"
                     }
                 }
             }
             else {
-                console.log("Invalid date")
+                //console.log("Invalid date")
                 myRectangle.color = "red"
             }
         }
