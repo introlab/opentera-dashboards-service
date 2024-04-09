@@ -105,7 +105,7 @@ Item {
                                             "name": name,
                                             "definition": definition,
                                             "enabled": enabled,
-                                            "color": "#7e57c2"
+                                            "color": "#cb42f5"
                                            })
             }
         }

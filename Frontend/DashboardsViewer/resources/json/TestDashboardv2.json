@@ -93,6 +93,7 @@
             "id": "participantSessionListTimeline",
             "properties": {
                 "id_participant": {"type": "int", "value": -1},
+                "withSessionTypes": {"type": "bool", "value": "true"},
                 "sortField": {"type": "string", "value": "session_start_datetime"},
                 "sortDesc": {"type": "bool", "value": "false"},
                 "sortType": {"type": "int", "value": 2}

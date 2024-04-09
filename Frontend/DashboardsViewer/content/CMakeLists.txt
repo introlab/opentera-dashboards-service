@@ -11,6 +11,7 @@ qt6_add_qml_module(content
         screens/DashboardSelector.qml
         screens/Login.qml
         # Uis
+        ui/Badge.qml
         ui/BasicButton.ui.qml
         ui/BasicDialog.qml
         ui/FlickableScrollBar.qml
@@ -49,5 +50,6 @@ qt6_add_qml_module(content
         images/icons/patient_yellow.png
         images/icons/patient_red.png
         images/icons/project.png
+        images/icons/session.png
         images/icons/site.png
     )

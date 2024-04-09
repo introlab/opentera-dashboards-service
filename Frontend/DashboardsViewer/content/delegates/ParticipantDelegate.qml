@@ -7,7 +7,7 @@ import DashboardsViewer
 BaseDelegate {
     id: myDelegate
     height: parent ? Math.min(100, mainLayout.implicitHeight + mainLayout.anchors.margins*2) : 0
-    width: parent ? parent.width : 0
+    width: parent ? (parent.interactive ? parent.width - 20 : parent.width) : 0
 
     property int daysWarningThreshold: 2
     property int daysErrorThreshold: 4

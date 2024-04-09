@@ -43,6 +43,8 @@ BaseWidget {
         model: dataSource ? dataSource.model : null
         currentIndex: -1
 
+        interactive: contentHeight > height
+
         property string fieldDisplayName: dataSource.fieldDisplayName
         property string fieldIdName: dataSource.fieldIdName
         property string iconPath: dataSource.iconPath

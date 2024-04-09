@@ -80,7 +80,6 @@ BaseWidget {
         ignoreUnknownSignals: true
         target: dataSource
         onModelChanged: function() {
-            console.log("*** Model changed");
             if (dataSource.model.count < 1){
                 repeaterSessions.model = [];
                 repeaterDays.model = [];
