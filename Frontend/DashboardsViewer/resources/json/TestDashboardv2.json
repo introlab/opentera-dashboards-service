@@ -56,6 +56,18 @@
                                        "Layout.fillWidth": {"type": "bool", "value": "true"},
                                        "Layout.fillHeight": {"type": "bool", "value": "true"}
                                    }
+                                },
+                                {
+                                   "type": "ListViewWidget",
+                                   "id": "sessionEventsList",
+                                   "properties": {
+                                       "title": {"type": "string", "value": "Events"},
+                                       "dataSource": {"type": "raw", "value": "sessionEventsListData"},
+                                       "delegate": {"type": "delegate", "value": "SessionEventDelegate"},
+                                       "Layout.fillWidth": {"type": "bool", "value": "true"},
+                                       "Layout.fillHeight": {"type": "bool", "value": "true"},
+                                       "visible": {"type": "raw", "value": "dataSource.model.count"}
+                                   }
                                 }
                             ]
                         }
@@ -98,6 +110,13 @@
                 "sortDesc": {"type": "bool", "value": "false"},
                 "sortType": {"type": "int", "value": 2}
             }
+        },
+        {
+            "type": "SessionEventListDataSource",
+            "id": "sessionEventsListData",
+            "properties": {
+                "id_session": {"type": "int", "value": -1}
+            }
         }
    ],
    "connections": [
@@ -108,6 +127,10 @@
         {
             "source": {"object": "participantListData", "signal": "onItemSelected"},
             "target": {"object": "participantSessionListTimeline", "slot": "setParticipant", "args": ["id_participant"]}
+        },
+        {
+            "source": {"object": "participantSessionListData", "signal": "onItemSelected"},
+            "target": {"object": "sessionEventsListData", "slot": "setSession", "args": ["id_session"]}
         }
     ]
 }

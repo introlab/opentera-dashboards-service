@@ -237,5 +237,12 @@ BaseDelegate {
             }
 
         }
+        onClicked: {
+            onClicked: {
+                if (myDelegate.ListView)
+                    myDelegate.ListView.view.currentIndex = index;
+                model.dataSource.itemSelected(model[model.dataSource.fieldIdName])
+            }
+        }
     }
 } // Item
