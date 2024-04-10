@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="fr_CA" sourcelanguage="en_US">
+<context>
+    <name>App</name>
+    <message>
+        <location filename="../content/App.qml" line="52"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/App.qml" line="52"/>
+        <source>Back</source>
+        <translation>Retour</translation>
+    </message>
+    <message>
+        <location filename="../content/App.qml" line="90"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/App.qml" line="90"/>
+        <source>Logout</source>
+        <translation>Déconnexion</translation>
+    </message>
+</context>
+<context>
+    <name>BaseComManager</name>
+    <message>
+        <location filename="../submodules/opentera-libraries/cpp/clients/common/src/BaseComManager.cpp" line="627"/>
+        <location filename="../submodules/opentera-libraries/cpp/clients/common/src/BaseComManager.cpp" line="651"/>
+        <source>Impossible de créer la requête</source>
+        <translation>Impossible de créer la requête</translation>
+    </message>
+</context>
+<context>
+    <name>DashboardSelector</name>
+    <message>
+        <location filename="../content/screens/DashboardSelector.qml" line="157"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/screens/DashboardSelector.qml" line="157"/>
+        <source>Select dashboard to display</source>
+        <translation>Sélection du tableau de bord</translation>
+    </message>
+    <message>
+        <location filename="../content/screens/DashboardSelector.qml" line="207"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/screens/DashboardSelector.qml" line="207"/>
+        <source>Site</source>
+        <translation>Site</translation>
+    </message>
+    <message>
+        <location filename="../content/screens/DashboardSelector.qml" line="250"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/screens/DashboardSelector.qml" line="250"/>
+        <source>Project</source>
+        <translation>Projet</translation>
+    </message>
+    <message>
+        <location filename="../content/screens/DashboardSelector.qml" line="359"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/screens/DashboardSelector.qml" line="359"/>
+        <source>Test Mode</source>
+        <translation>Mode de test</translation>
+    </message>
+    <message>
+        <location filename="../content/screens/DashboardSelector.qml" line="363"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/screens/DashboardSelector.qml" line="363"/>
+        <source>TestMode</source>
+        <translation>Mode de test</translation>
+    </message>
+</context>
+<context>
+    <name>DownloadingFile</name>
+    <message>
+        <location filename="../submodules/opentera-libraries/cpp/clients/common/src/DownloadingFile.cpp" line="81"/>
+        <source>Impossible de déterminer le nom du fichier à télécharger.</source>
+        <translation>Impossible de déterminer le nom du fichier à télécharger.</translation>
+    </message>
+    <message>
+        <location filename="../submodules/opentera-libraries/cpp/clients/common/src/DownloadingFile.cpp" line="87"/>
+        <source>Mauvaise en-tête pour le téléchargement du fichier.</source>
+        <translation>Mauvaise en-tête pour le téléchargement du fichier.</translation>
+    </message>
+    <message>
+        <location filename="../submodules/opentera-libraries/cpp/clients/common/src/DownloadingFile.cpp" line="114"/>
+        <source>Impossible d&apos;ouvrir le fichier &apos;</source>
+        <translation>Impossible d&apos;ouvrir le fichier</translation>
+    </message>
+</context>
+<context>
+    <name>EventSimulator</name>
+    <message>
+        <location filename="../../../../build-opentera-dashboards-debug/_deps/ds-src/src/imports/tools/eventsimulator/EventSimulator.qml" line="119"/>
+        <location filename="../../../../build-opentera-dashboards-debug/_deps/ds-src/src/imports/tools/eventsimulator/EventSimulator.qml" line="144"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/QtQuick/Studio/EventSimulator/EventSimulator.qml" line="119"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/QtQuick/Studio/EventSimulator/EventSimulator.qml" line="144"/>
+        <source>Filter...</source>
+        <translation>Filtrer...</translation>
+    </message>
+</context>
+<context>
+    <name>FlowDecision</name>
+    <message>
+        <location filename="../../../../build-opentera-dashboards-debug/_deps/ds-src/src/imports/flowview/FlowDecision.qml" line="41"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/FlowView/FlowDecision.qml" line="41"/>
+        <source>Title</source>
+        <translation>Titre</translation>
+    </message>
+</context>
+<context>
+    <name>Login</name>
+    <message>
+        <location filename="../content/screens/Login.qml" line="19"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/screens/Login.qml" line="19"/>
+        <source>Logging in...</source>
+        <translation>Connexion en cours...</translation>
+    </message>
+    <message>
+        <location filename="../content/screens/Login.qml" line="37"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/screens/Login.qml" line="37"/>
+        <source>Welcome!</source>
+        <translation>Bienvenue!</translation>
+    </message>
+    <message>
+        <location filename="../content/screens/Login.qml" line="147"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/screens/Login.qml" line="147"/>
+        <source>Username</source>
+        <translation>Code utilisateur</translation>
+    </message>
+    <message>
+        <location filename="../content/screens/Login.qml" line="181"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/screens/Login.qml" line="181"/>
+        <source>Password</source>
+        <translation>Mot de passe</translation>
+    </message>
+    <message>
+        <location filename="../content/screens/Login.qml" line="225"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/screens/Login.qml" line="225"/>
+        <source>Login</source>
+        <translation>Connexion</translation>
+    </message>
+    <message>
+        <location filename="../content/screens/Login.qml" line="238"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/screens/Login.qml" line="238"/>
+        <source>Welcome! Please login.</source>
+        <translation>Bienvenue! Veuillez vous identifier.</translation>
+    </message>
+</context>
+<context>
+    <name>ParticipantDelegate</name>
+    <message>
+        <location filename="../content/delegates/ParticipantDelegate.qml" line="121"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/ParticipantDelegate.qml" line="121"/>
+        <source>Last session</source>
+        <translation>Dernière séance</translation>
+    </message>
+</context>
+<context>
+    <name>SessionDelegate</name>
+    <message>
+        <location filename="../content/delegates/SessionDelegate.qml" line="154"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="154"/>
+        <source>Completed</source>
+        <translation>Complétée</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionDelegate.qml" line="160"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="160"/>
+        <source>Cancelled</source>
+        <translation>Annulée</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionDelegate.qml" line="166"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="166"/>
+        <source>Terminated</source>
+        <translation>Terminée</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionDelegate.qml" line="172"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="172"/>
+        <source>In progress</source>
+        <translation>En cours</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionDelegate.qml" line="178"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="178"/>
+        <source>Planned</source>
+        <translation>Planifiée</translation>
+    </message>
+</context>
+<context>
+    <name>SessionEventDelegate</name>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="51"/>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="54"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="51"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="54"/>
+        <source>Error</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="56"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="56"/>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="58"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="58"/>
+        <source>Session started</source>
+        <translation>Séance démarrée</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="60"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="60"/>
+        <source>Session stopped</source>
+        <translation>Séance arrêtée</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="62"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="62"/>
+        <source>Battery charging started</source>
+        <translation>Batterie - En recharge</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="64"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="64"/>
+        <source>Battery charging stopped</source>
+        <translation>Batterie - Fin de la recharge</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="66"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="66"/>
+        <source>Battery low</source>
+        <translation>Batterie faible</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="68"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="68"/>
+        <source>Storage low</source>
+        <translation>Stockage faible</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="70"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="70"/>
+        <source>Storage full</source>
+        <translation>Stockage plein</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="72"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="72"/>
+        <source>Device event</source>
+        <translation>Événement appareil</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="74"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="74"/>
+        <source>User event</source>
+        <translation>Événement utilisateur</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="76"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="76"/>
+        <source>Session joined</source>
+        <translation>Séance - Rejointe</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="78"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="78"/>
+        <source>Session left</source>
+        <translation>Séance - Quittée</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="80"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="80"/>
+        <source>Session refused</source>
+        <translation>Séance - Refusée</translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionEventDelegate.qml" line="82"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionEventDelegate.qml" line="82"/>
+        <source>Other</source>
+        <translation>Autre</translation>
+    </message>
+</context>
+<context>
+    <name>SessionViewerWidget</name>
+    <message>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="46"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/SessionViewerWidget.qml" line="46"/>
+        <source>Completed</source>
+        <translation>Complétée</translation>
+    </message>
+    <message>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="53"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/SessionViewerWidget.qml" line="53"/>
+        <source>Cancelled</source>
+        <translation>Annulée</translation>
+    </message>
+    <message>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="60"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/SessionViewerWidget.qml" line="60"/>
+        <source>Terminated</source>
+        <translation>Terminée</translation>
+    </message>
+    <message>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="67"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/SessionViewerWidget.qml" line="67"/>
+        <source>In progress</source>
+        <translation>En cours</translation>
+    </message>
+    <message>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="74"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/SessionViewerWidget.qml" line="74"/>
+        <source>Planned</source>
+        <translation>Planifiée</translation>
+    </message>
+    <message>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="189"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/SessionViewerWidget.qml" line="189"/>
+        <source>Assets</source>
+        <translation>Données</translation>
+    </message>
+    <message>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="197"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/SessionViewerWidget.qml" line="197"/>
+        <source>No assets</source>
+        <translation>Aucune donnée</translation>
+    </message>
+</context>
+<context>
+    <name>TimeLineWidget</name>
+    <message>
+        <location filename="../content/widgets/TimeLineWidget.qml" line="112"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/TimeLineWidget.qml" line="112"/>
+        <source>All</source>
+        <translation>Tout</translation>
+    </message>
+    <message>
+        <location filename="../content/widgets/TimeLineWidget.qml" line="117"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/TimeLineWidget.qml" line="117"/>
+        <source>Week</source>
+        <translation>Semaine</translation>
+    </message>
+    <message>
+        <location filename="../content/widgets/TimeLineWidget.qml" line="277"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/TimeLineWidget.qml" line="277"/>
+        <source>No data for that period</source>
+        <translation>Aucune donnée pour cette période</translation>
+    </message>
+</context>
+<context>
+    <name>TransferringFile</name>
+    <message>
+        <location filename="../submodules/opentera-libraries/cpp/clients/common/src/TransferringFile.cpp" line="79"/>
+        <source>Transfert annulé</source>
+        <translation>Transfert annulé</translation>
+    </message>
+</context>
+<context>
+    <name>UploadingFile</name>
+    <message>
+        <location filename="../submodules/opentera-libraries/cpp/clients/common/src/UploadingFile.cpp" line="30"/>
+        <source>Impossible d&apos;envoyer le fichier</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../submodules/opentera-libraries/cpp/clients/common/src/UploadingFile.cpp" line="30"/>
+        <source>le fichier est introuvable.</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>UserComManager</name>
+    <message>
+        <location filename="../submodules/opentera-libraries/cpp/clients/user/src/UserComManager.cpp" line="217"/>
+        <source>Invalid username or password.</source>
+        <translation>Utilisateur ou mot de passe invalide.</translation>
+    </message>
+</context>
+</TS>
