@@ -46,16 +46,40 @@
                         "layouts": [{
                             "type": "CenteredRowLayout",
                             "id": "rightBottomLayout",
-                            "widgets": [
+                            "properties":{
+                                "Layout.fillWidth": {"type": "bool", "value": "true"},
+                                "Layout.fillHeight": {"type": "bool", "value": "true"}
+                            },
+                            "layouts": [
                                 {
-                                   "type": "ListViewWidget",
-                                   "id": "participantSessionList",
-                                   "properties": {
-                                       "dataSource": {"type": "raw", "value": "participantSessionListData"},
-                                       "delegate": {"type": "delegate", "value": "SessionDelegate"},
-                                       "Layout.fillWidth": {"type": "bool", "value": "true"},
-                                       "Layout.fillHeight": {"type": "bool", "value": "true"}
-                                   }
+                                    "type": "CenteredColumnLayout",
+                                    "id": "leftBottomLayout",
+                                    "widgets":[
+                                        {
+                                            "type": "ListViewWidget",
+                                            "id": "participantSessionList",
+                                            "properties": {
+                                                "dataSource": {"type": "raw", "value": "participantSessionListData"},
+                                                "delegate": {"type": "delegate", "value": "SessionDelegate"},
+                                                "Layout.fillWidth": {"type": "bool", "value": "true"},
+                                                "Layout.fillHeight": {"type": "bool", "value": "true"}
+                                            }
+                                        },
+                                        {
+                                            "type": "ButtonWidget",
+                                            "id": "btnDownloadAssets",
+                                            "properties": {
+                                                 "text": {"type": "string", "value": "Download assets"},
+                                                 "visible": {"type": "raw", "value": "participantSessionList.dataSource.model.count"}
+                                            }
+                                        }
+                                    ],
+                                    "properties":{
+                                        "Layout.fillWidth": {"type": "bool", "value": "true"},
+                                        "Layout.fillHeight": {"type": "bool", "value": "true"},
+                                        "spacing": {"type": "int", "value": 10}
+                                    }
+
                                 },
                                 {
                                    "type": "ListViewWidget",
@@ -66,7 +90,7 @@
                                        "delegate": {"type": "delegate", "value": "SessionEventDelegate"},
                                        "Layout.fillWidth": {"type": "bool", "value": "true"},
                                        "Layout.fillHeight": {"type": "bool", "value": "true"},
-                                       "visible": {"type": "raw", "value": "dataSource.model.count"}
+                                       "visible": {"type": "raw", "value": "participantSessionList.itemSelected && dataSource.model.count"}
                                    }
                                 }
                             ]

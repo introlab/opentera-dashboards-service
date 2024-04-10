@@ -82,8 +82,9 @@ Item {
             else
             {
                 //Insert response directly
-                response.dataSource = baseDataSource;
-                myModel.append(response);
+                //response.dataSource = baseDataSource;
+                //myModel.append(response);
+                myModel.clear();
             }
             modelChanged();
         });

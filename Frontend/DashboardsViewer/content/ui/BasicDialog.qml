@@ -12,7 +12,9 @@ Item {
     id: baseItem
 
     property string title: ""
-    property bool   showCloseButton: true
+    property bool   showCloseButton: false
+
+    property Item stackView: null
 
     default property alias  contentItem: mainItem.data
     property int            contentItemHeight: mainItem.implicitHeight
@@ -95,7 +97,7 @@ Item {
             height: 40
             color: "#7da4cf"
 
-            ColumnLayout{
+            RowLayout{
                 anchors.fill: parent
                 Text{
                     id: txtTitle
@@ -107,6 +109,25 @@ Item {
                     font.bold: true
                     color: Constants.textColor
                     font.pixelSize: Constants.largeFontSize
+                }
+                Image{
+                    id: imgClose
+                    visible: showCloseButton
+                    source: "../images/icons/x.png"
+                    height: 32
+                    width: height
+                    sourceSize.height: height
+                    sourceSize.width: width
+                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                    MouseArea{
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: {
+                            if (stackView) {
+                                stackView.pop();
+                            }
+                        }
+                    }
                 }
             }
 

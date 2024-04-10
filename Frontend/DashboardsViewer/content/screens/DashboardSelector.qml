@@ -306,7 +306,8 @@ Item {
                         delegate: DashboardDelegate {
                             id: siteProjectDelegateSite
 
-                            onItemClicked: function (id, definition) {
+                            onItemClicked: function (id, name, definition) {
+                                mainWindow.contextText = name;
                                 stackview.push("Dashboard.qml")
 
                                 // Get the current pushed element (the Dashboard)
@@ -339,8 +340,9 @@ Item {
                         delegate: DashboardDelegate {
                             id: siteProjectDelegateProject
 
-                            onItemClicked: function (id, definition) {
-                                stackview.push("Dashboard.qml")
+                            onItemClicked: function (id, name, definition) {
+                                mainWindow.contextText = name;
+                                stackview.push("Dashboard.qml");
 
                                 // Get the current pushed element (the Dashboard)
                                 var currentElement = stackview.currentItem
@@ -357,6 +359,8 @@ Item {
                 text: qsTr("Test Mode")
                 onClicked: function(){
                     let filename = ":/dashboards/DashboardsViewer/resources/json/TestDashboardv2.json";
+
+                    mainWindow.contextText = qsTr("TestMode");
                     stackview.push("Dashboard.qml")
 
                     // get current pushed element

@@ -53,7 +53,7 @@ Item {
         }
     }
 
-    Text {
+    /*Text {
         id: dashboardText
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
@@ -73,13 +73,14 @@ Item {
         onClicked: function () {
             stackview.pop()
         }
-    }
+    }*/
 
     StackView {
         id: dashboardStackView
-        anchors.top: dashboardText.bottom
+        anchors.fill: parent
+        /*anchors.top: dashboardText.bottom
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        anchors.right: parent.right
+        anchors.right: parent.right*/
     }
 }

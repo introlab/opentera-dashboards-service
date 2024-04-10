@@ -10,6 +10,8 @@ BaseDelegate {
     width: parent ? (parent.interactive ? parent.width - 20 : parent.width) : 0
 
     function getEventIcon(){
+        if (model.id_session_event_type === undefined)
+            return "../images/icons/error.png";
         switch(id_session_event_type){
         case 0: // Error
             return "../images/icons/error.png";
@@ -45,6 +47,8 @@ BaseDelegate {
     }
 
     function getEventName(){
+        if (model.id_session_event_type === undefined)
+            return qsTr("Error");
         switch(id_session_event_type){
         case 0: // Error
             return qsTr("Error");

@@ -11,6 +11,9 @@ BaseWidget {
 
     property color hoverColor: "#047eff"
 
+    implicitHeight: control.implicitHeight
+    implicitWidth: control.implicitWidth + 10
+
     Button {
         id: control
 

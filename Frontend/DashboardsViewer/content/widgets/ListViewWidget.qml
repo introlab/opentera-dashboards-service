@@ -13,6 +13,16 @@ BaseWidget {
     property alias delegate: myListView.delegate
     property var dataSource: null
 
+    readonly property bool itemSelected: myListView.currentIndex >= 0
+
+    Connections{
+        ignoreUnknownSignals: true
+        target: dataSource
+        onModelChanged: function() {
+            myListView.currentIndex = -1;
+        }
+    }
+
     Rectangle{
         anchors.fill: parent
         color: "#88000000"

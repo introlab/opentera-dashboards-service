@@ -9,9 +9,9 @@ Item {
     width: GridView.view.cellWidth - 10
     height: mainLayout.implicitHeight + 10 //GridView.view.cellHeight - 10
 
-    signal itemClicked(var id, var definition)
+    signal itemClicked(var id, var name, var definition)
     enabled: model.enabled
-    opacity: enabled ? 1.0 : 0.5
+    opacity: enabled ? 1.0 : 0.2
 
     states: [
         State {
@@ -32,7 +32,7 @@ Item {
         cursorShape: Qt.PointingHandCursor
         onClicked: function(){
             //console.log("Click! " + model.id + " - " + model.definition);
-            itemClicked(model.id, model.definition);
+            itemClicked(model.id, model.name, model.definition);
         }
     }
     Rectangle{

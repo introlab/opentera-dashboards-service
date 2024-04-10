@@ -1,6 +1,6 @@
 import QtQuick 6.2
-import QtQuick.VirtualKeyboard 6.2
 import QtQuick.Controls 6.2
+import QtQuick.Layouts
 
 import DashboardsViewer
 import "screens"
@@ -16,6 +16,9 @@ Window {
     visible: true
     title: "DashboardsViewer"
     id: mainWindow
+
+    property string contextText: ""
+
     Rectangle{
         id: background
         anchors.fill: parent
@@ -41,28 +44,57 @@ Window {
                 GradientStop { position: 1.0; color: Constants.backgroundColor }
         }
 
-        //Login username
-        Text {
-            id: username
-            text: "username"
-            anchors.centerIn: parent
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            color: "white"
-        }
+        RowLayout{
+            anchors.fill: parent
+            //Back button
+            BasicButton {
+                id: btnBack
+                text: qsTr("Back")
+                /*color: "darkred"
+                hoverColor: "red"*/
 
-        //Logout button
-        BasicButton {
-            id: logoutButton
-            text: "Logout"
-            anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
-            color: "darkred"
-            hoverColor: "red"
-            width: 100
-            //height: parent.height
-            onClicked: {
-                UserClient.disconnect();
+                visible: stackview.depth > 2
+
+                //height: parent.height
+                onClicked: function () {
+                    stackview.pop()
+                }
+            }
+            Text {
+                id: txtContext
+                Layout.leftMargin: 10
+                text: contextText
+                visible: stackview.depth > 2 && contextText
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
+                color: Constants.textAltColor
+            }
+
+            Item{
+                Layout.fillWidth: true
+            }
+
+            //Login username
+            Text {
+                id: username
+                Layout.rightMargin: 10
+                text: "username"
+                horizontalAlignment: Text.AlignRight
+                verticalAlignment: Text.AlignVCenter
+                color: "white"
+            }
+
+            //Logout button
+            BasicButton {
+                id: logoutButton
+                text: qsTr("Logout")
+                color: "darkred"
+                hoverColor: "red"
+
+
+                onClicked: {
+                    UserClient.disconnect();
+                }
             }
         }
     }
