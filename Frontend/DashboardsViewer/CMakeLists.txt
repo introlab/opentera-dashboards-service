@@ -71,12 +71,17 @@ install(TARGETS DashboardsViewerApp
 if(EMSCRIPTEN)
     add_custom_target(deploy-to-opentera-dashboards-service ALL
         DEPENDS DashboardsViewerApp
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.html ${PROJECT_SOURCE_DIR}/../../static
+        # COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.html ${PROJECT_SOURCE_DIR}/../../static
+        COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/wasm/DashboardsViewerApp.html ${PROJECT_SOURCE_DIR}/../../static
+        COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/wasm/DashboardsViewerApp.html ${CMAKE_CURRENT_BINARY_DIR}
+
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.js ${PROJECT_SOURCE_DIR}/../../static
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.wasm ${PROJECT_SOURCE_DIR}/../../static
         COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/qtloader.js ${PROJECT_SOURCE_DIR}/../../static
         # TODO Replace logo with something else
-        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/qtlogo.svg ${PROJECT_SOURCE_DIR}/../../static
+        # COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/qtlogo.svg ${PROJECT_SOURCE_DIR}/../../static
+        COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/wasm/loading_logo.png ${PROJECT_SOURCE_DIR}/../../static
+        COMMAND ${CMAKE_COMMAND} -E copy ${PROJECT_SOURCE_DIR}/wasm/loading_logo.png ${CMAKE_CURRENT_BINARY_DIR}
         # This file is only present if we use threaded webassembly
         # COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/DashboardsViewerApp.worker.js ${PROJECT_SOURCE_DIR}/../../static
 

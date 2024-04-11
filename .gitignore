@@ -166,3 +166,4 @@ cython_debug/
 #.idea/
 .idea
 Frontend/DashboardsViewer/imports/generated
+/static
