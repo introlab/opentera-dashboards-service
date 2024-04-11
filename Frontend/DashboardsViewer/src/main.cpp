@@ -3,15 +3,14 @@
 #include <QQmlContext>
 #include <QFontDatabase>
 #include <QDebug>
+#include <QTranslator>
 
 #include "app_environment.h"
 #include "import_qml_components_plugins.h"
 #include "import_qml_plugins.h"
-#include "ConfigParser.h"
 
 #ifdef WEBASSEMBLY
 #include <emscripten.h>
-
 #endif
 
 void setupFonts(const QGuiApplication* app){
@@ -67,6 +66,13 @@ int main(int argc, char *argv[])
 
     // Setup fonts
     setupFonts(&app);
+
+    // Setup translator
+    QTranslator appTranslator;
+    if (!appTranslator.load(QLocale::system(), "DashboardsViewerApp", "_")){
+        qWarning() << "Unable to load translations for locale " << QLocale::system().uiLanguages().first();
+    }
+    app.installTranslator(&appTranslator);
 
     engine.load(url);
 

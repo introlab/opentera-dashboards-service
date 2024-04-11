@@ -21,7 +21,7 @@
     <message>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/BaseComManager.cpp" line="627"/>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/BaseComManager.cpp" line="651"/>
-        <source>Impossible de créer la requête</source>
+        <source>Unable to create network request</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -62,17 +62,17 @@
     <name>DownloadingFile</name>
     <message>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/DownloadingFile.cpp" line="81"/>
-        <source>Impossible de déterminer le nom du fichier à télécharger.</source>
+        <source>Unable to get filename to download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/DownloadingFile.cpp" line="87"/>
-        <source>Mauvaise en-tête pour le téléchargement du fichier.</source>
+        <source>Bad header set in file download request</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/DownloadingFile.cpp" line="114"/>
-        <source>Impossible d&apos;ouvrir le fichier &apos;</source>
+        <source>Unable to open file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -342,7 +342,7 @@
     <name>TransferringFile</name>
     <message>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/TransferringFile.cpp" line="79"/>
-        <source>Transfert annulé</source>
+        <source>Transfer cancelled</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -350,12 +350,12 @@
     <name>UploadingFile</name>
     <message>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/UploadingFile.cpp" line="30"/>
-        <source>Impossible d&apos;envoyer le fichier</source>
+        <source>Unable to upload file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/UploadingFile.cpp" line="30"/>
-        <source>le fichier est introuvable.</source>
+        <source>file not found</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -19,9 +19,13 @@
 <context>
     <name>BaseComManager</name>
     <message>
+        <source>Impossible de créer la requête</source>
+        <translation type="vanished">Impossible de créer la requête</translation>
+    </message>
+    <message>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/BaseComManager.cpp" line="627"/>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/BaseComManager.cpp" line="651"/>
-        <source>Impossible de créer la requête</source>
+        <source>Unable to create network request</source>
         <translation>Impossible de créer la requête</translation>
     </message>
 </context>
@@ -61,18 +65,30 @@
 <context>
     <name>DownloadingFile</name>
     <message>
-        <location filename="../submodules/opentera-libraries/cpp/clients/common/src/DownloadingFile.cpp" line="81"/>
         <source>Impossible de déterminer le nom du fichier à télécharger.</source>
-        <translation>Impossible de déterminer le nom du fichier à télécharger.</translation>
+        <translation type="vanished">Impossible de déterminer le nom du fichier à télécharger.</translation>
+    </message>
+    <message>
+        <source>Mauvaise en-tête pour le téléchargement du fichier.</source>
+        <translation type="vanished">Mauvaise en-tête pour le téléchargement du fichier.</translation>
+    </message>
+    <message>
+        <source>Impossible d&apos;ouvrir le fichier &apos;</source>
+        <translation type="vanished">Impossible d&apos;ouvrir le fichier</translation>
+    </message>
+    <message>
+        <location filename="../submodules/opentera-libraries/cpp/clients/common/src/DownloadingFile.cpp" line="81"/>
+        <source>Unable to get filename to download</source>
+        <translation>Impossible de déterminer le nom du fichier à télécharger</translation>
     </message>
     <message>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/DownloadingFile.cpp" line="87"/>
-        <source>Mauvaise en-tête pour le téléchargement du fichier.</source>
-        <translation>Mauvaise en-tête pour le téléchargement du fichier.</translation>
+        <source>Bad header set in file download request</source>
+        <translation>Mauvaise en-tête pour le téléchargement du fichier</translation>
     </message>
     <message>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/DownloadingFile.cpp" line="114"/>
-        <source>Impossible d&apos;ouvrir le fichier &apos;</source>
+        <source>Unable to open file</source>
         <translation>Impossible d&apos;ouvrir le fichier</translation>
     </message>
 </context>
@@ -341,8 +357,12 @@
 <context>
     <name>TransferringFile</name>
     <message>
-        <location filename="../submodules/opentera-libraries/cpp/clients/common/src/TransferringFile.cpp" line="79"/>
         <source>Transfert annulé</source>
+        <translation type="vanished">Transfert annulé</translation>
+    </message>
+    <message>
+        <location filename="../submodules/opentera-libraries/cpp/clients/common/src/TransferringFile.cpp" line="79"/>
+        <source>Transfer cancelled</source>
         <translation>Transfert annulé</translation>
     </message>
 </context>
@@ -350,13 +370,13 @@
     <name>UploadingFile</name>
     <message>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/UploadingFile.cpp" line="30"/>
-        <source>Impossible d&apos;envoyer le fichier</source>
-        <translation></translation>
+        <source>Unable to upload file</source>
+        <translation>Impossible de téléverser le fichier</translation>
     </message>
     <message>
         <location filename="../submodules/opentera-libraries/cpp/clients/common/src/UploadingFile.cpp" line="30"/>
-        <source>le fichier est introuvable.</source>
-        <translation></translation>
+        <source>file not found</source>
+        <translation>Fichier non-trouvé</translation>
     </message>
 </context>
 <context>

@@ -30,10 +30,9 @@ add_subdirectory(resources)
 add_subdirectory(submodules)
 add_subdirectory(qml_cpp_modules)
 
+qt_add_translations(TARGETS DashboardsViewerApp TS_FILE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/translations)
 
 qt_add_executable(DashboardsViewerApp src/main.cpp)
-
-qt_add_translations(TARGETS DashboardsViewerApp TS_FILE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/translations)
 
 qt_add_resources(DashboardsViewerApp "configuration"
     PREFIX "/"
