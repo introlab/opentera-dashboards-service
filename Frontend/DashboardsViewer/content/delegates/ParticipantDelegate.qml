@@ -14,6 +14,8 @@ BaseDelegate {
     property int daysWarningThreshold: 2
     property int daysErrorThreshold: 4
 
+    property bool showDownloadAssets: true
+
     property bool isCurrentItem: ListView ? ListView.isCurrentItem : false
 
     states: [
@@ -88,6 +90,16 @@ BaseDelegate {
         border.color: isCurrentItem ? "lightgrey" : "black"
         border.width: isCurrentItem ? 5 : 1
         radius: 5
+
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            onClicked: {
+                if (myDelegate.ListView)
+                    myDelegate.ListView.view.currentIndex = index;
+                model.dataSource.itemSelected(model[model.dataSource.fieldIdName])
+            }
+        }
     }
 
     RowLayout{
@@ -134,10 +146,12 @@ BaseDelegate {
                 }
             }
         }
-        ButtonWidget{
+        ImageButtonWidget{
             id: btnDownload
-            text: qsTr("Download")
+            visible: showDownloadAssets
+            imgPath: "../images/icons/data.png"
             onClicked: {
+                console.log("Download");
                 fileDownloader.downloadParticipantArchive(model[model.dataSource.fieldIdName])
             }
         }
@@ -147,14 +161,6 @@ BaseDelegate {
         id: fileDownloader
     }
 
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        onClicked: {
-            if (myDelegate.ListView)
-                myDelegate.ListView.view.currentIndex = index;
-            model.dataSource.itemSelected(model[model.dataSource.fieldIdName])
-        }
-    }
+
 
 }

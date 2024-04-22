@@ -22,6 +22,7 @@ qt6_add_qml_module(content
         widgets/BaseWidget.qml
         widgets/ButtonWidget.qml
         widgets/ClockWidget.qml
+        widgets/ImageButtonWidget.qml
         widgets/ListViewWidget.qml
         widgets/SessionViewerWidget.qml
         widgets/TimeLineWidget.qml
@@ -57,6 +58,7 @@ qt6_add_qml_module(content
         images/icons/battery_full.png
         images/icons/battery_low.png
         images/icons/dashboard.png
+        images/icons/data.png
         images/icons/device.png
         images/icons/error.png
         images/icons/flag.png
