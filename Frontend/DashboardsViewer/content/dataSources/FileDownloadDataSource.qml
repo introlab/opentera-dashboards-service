@@ -36,4 +36,19 @@ Item {
         }
 
     }
+
+    function downloadParticipantArchive(id_participant) {
+
+        if (id_participant)
+        {
+            // Step #1, Call the Archive API
+            params = {"id_participant": id_participant}
+            var reply = UserClient.get("/api/user/assets/archive", params)
+
+            reply.requestSucceeded.connect(function(response, statusCode) {
+                console.log(response, statusCode);
+            });
+        }
+    }
+
 }

@@ -116,5 +116,12 @@ Window {
             menu.visible = false;
         }
     }
+
+    Connections {
+        target: UserClient
+        onUserEvent: function(event) {
+            console.log("UserEvent: ", event)
+        }
+    }
 }
 
