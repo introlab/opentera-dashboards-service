@@ -14,12 +14,16 @@ BaseWidget {
     property var dataSource: null
 
     readonly property bool itemSelected: myListView.currentIndex >= 0
+    property int selectedId: -1
 
     Connections{
         ignoreUnknownSignals: true
         target: dataSource
         onModelChanged: function() {
             myListView.currentIndex = -1;
+        }
+        onItemSelected: function(item_id){
+            selectedId = item_id;
         }
     }
 
