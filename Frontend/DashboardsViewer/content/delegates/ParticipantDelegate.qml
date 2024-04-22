@@ -3,6 +3,8 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 2.15
 
 import DashboardsViewer
+import "../widgets"
+import "../dataSources"
 
 BaseDelegate {
     id: myDelegate
@@ -130,9 +132,19 @@ BaseDelegate {
                     style: Text.Outline
                     wrapMode: Text.Wrap
                 }
-
             }
         }
+        ButtonWidget{
+            id: btnDownload
+            text: qsTr("Download")
+            onClicked: {
+                fileDownloader.downloadParticipantArchive(model[model.dataSource.fieldIdName])
+            }
+        }
+    }
+
+    FileDownloadDataSource{
+        id: fileDownloader
     }
 
     MouseArea {
