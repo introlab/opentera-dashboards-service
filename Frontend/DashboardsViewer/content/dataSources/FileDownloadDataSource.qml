@@ -7,6 +7,8 @@ Item {
     property var params: Object()
     property bool autoFetch: false
     property string filename: ""
+    property string archiveUuid: ""
+    property bool downloading: false
 
     signal downloadProgress(var bytesReceived, var bytesTotal);
     signal downloadStarted();
@@ -16,14 +18,21 @@ Item {
 
     function downloadFile() {
 
+        if (downloading){
+            console.log("Already downloading file... Ignoring another download.")
+            return;
+        }
+
         if (filename)
         {
-            console.log("Should download file and save to: ", filename );
+            downloading = true;
+            console.log("Should download file " + url + " and save to: ", filename );
             var fileDownloader = UserClient.downloadFile(filename, url, params);
 
             fileDownloader.finished.connect(function() {
                 console.log("Finished");
                 downloadFinished();
+                downloading = false;
             });
 
             fileDownloader.downloadProgress.connect(function(bytesReceived, bytesTotal) {
@@ -33,6 +42,7 @@ Item {
         }
         else {
             downloadFailed();
+             downloading = false;
         }
 
     }
@@ -48,6 +58,18 @@ Item {
             reply.requestSucceeded.connect(function(response, statusCode) {
                 console.log(response, statusCode);
             });
+        }
+    }
+
+    Connections {
+        target: UserClient
+        onArchiveEvent: function(event) {
+            console.log("ArchiveEvent: ", event)
+            if (event.status === 2){
+                // Completed - start download!
+                url = event.archiveUrl;
+                downloadFile();
+            }
         }
     }
 

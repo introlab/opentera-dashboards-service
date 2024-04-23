@@ -117,11 +117,11 @@ Window {
         }
     }
 
-    Connections {
+    /*Connections {
         target: UserClient
         onUserEvent: function(event) {
             console.log("UserEvent: ", event)
         }
-    }
+    }*/
 }
 

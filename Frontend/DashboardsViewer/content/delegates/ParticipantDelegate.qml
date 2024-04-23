@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 2.15
+import QtQuick.Dialogs
+import QtCore
 
 import DashboardsViewer
 import "../widgets"
@@ -151,8 +153,17 @@ BaseDelegate {
             visible: showDownloadAssets
             imgPath: "../images/icons/data.png"
             onClicked: {
-                console.log("Download");
-                fileDownloader.downloadParticipantArchive(model[model.dataSource.fieldIdName])
+                if (dashboardViewerApp.isWebAssembly()) {
+                    //This will use the browser download function. Download UI is provided by browser.
+                    fileDownloader.filename = model[model.dataSource.fieldName]
+
+                    //DownloadFile returnes a null object in WebASM
+                    fileDownloader.downloadParticipantArchive(model[model.dataSource.fieldIdName])
+                } else {
+                    //console.log('WebAssembly is not supported');
+                    saveFileDialog.open();
+                }
+
             }
         }
     }
@@ -161,6 +172,19 @@ BaseDelegate {
         id: fileDownloader
     }
 
+    FileDialog {
+        id: saveFileDialog
+        nameFilters: ["Zip files (*.zip)"]
+        defaultSuffix: ".zip"
+        fileMode: FileDialog.SaveFile
+        //URL
+        currentFolder: StandardPaths.writableLocation(StandardPaths.DownloadLocation)
+        selectedFile: currentFolder + "/participant.zip" //model[model.dataSource.fieldDisplayName] + ".zip"
+        onAccepted: function() {
+            fileDownloader.filename = saveFileDialog.currentFile;
+            fileDownloader.downloadParticipantArchive(model[model.dataSource.fieldIdName])
+        }
+     }
 
 
 }
