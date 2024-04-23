@@ -67,7 +67,9 @@ Item {
             console.log("ArchiveEvent: ", event)
             if (event.status === 2){
                 // Completed - start download!
-                url = event.archiveUrl;
+                let url_parts = event.archiveUrl.split("?")
+                url = url_parts[0];
+                params = {"archive_uuid": event.archiveUuid};
                 downloadFile();
             }
         }
