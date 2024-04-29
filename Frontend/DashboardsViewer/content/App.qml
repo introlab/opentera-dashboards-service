@@ -115,6 +115,10 @@ Window {
             stackview.pop(null)
             menu.visible = false;
         }
+        onWebsocketDisconnected: function() {
+            stackview.pop(null)
+            menu.visible = false;
+        }
     }
 
     /*Connections {
