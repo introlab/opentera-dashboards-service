@@ -1,6 +1,8 @@
 import QtQuick 2.15
 import OpenTeraLibs.UserClient 1.0
 
+import DashboardsViewer
+
 Item {
     id: fileDownloadDataSource
     property string url: "" // Empty URL
@@ -9,12 +11,12 @@ Item {
     property string filename: ""
     property string archiveUuid: ""
     property bool downloading: false
+    property bool compressing: false
 
     signal downloadProgress(var bytesReceived, var bytesTotal);
     signal downloadStarted();
     signal downloadFinished();
     signal downloadFailed();
-
 
     function downloadFile() {
 
@@ -30,7 +32,7 @@ Item {
             var fileDownloader = UserClient.downloadFile(filename, url, params);
 
             fileDownloader.finished.connect(function() {
-                console.log("Finished");
+                //console.log("Finished");
                 downloadFinished();
                 downloading = false;
             });
@@ -42,7 +44,7 @@ Item {
         }
         else {
             downloadFailed();
-             downloading = false;
+            downloading = false;
         }
 
     }
@@ -55,10 +57,40 @@ Item {
             params = {"id_participant": id_participant}
             var reply = UserClient.get("/api/user/assets/archive", params)
 
+            compressing = true;
+
             reply.requestSucceeded.connect(function(response, statusCode) {
-                console.log(response, statusCode);
+                //console.log(response, statusCode);
             });
         }
+    }
+
+    function downloadSessionArchive(id_session) {
+
+        if (id_session)
+        {
+            // Step #1, Call the Archive API
+            params = {"id_session": id_session}
+            var reply = UserClient.get("/api/user/assets/archive", params)
+
+            compressing = true;
+
+            reply.requestSucceeded.connect(function(response, statusCode) {
+                //console.log(response, statusCode);
+            });
+        }
+    }
+
+    function downloadSpecificAsset(asset_uuid){
+        params = {"asset_uuid": asset_uuid, "with_urls": true}
+        var reply = UserClient.get("/api/user/assets", params)
+        reply.requestSucceeded.connect(function(response, statusCode) {
+            // Download file
+            params = {"asset_uuid": asset_uuid, "access_token": response[0].access_token};
+            url = response[0].asset_url.replace(UserClient.url, "")
+            downloadFile();
+        });
+
     }
 
     Connections {
@@ -71,6 +103,7 @@ Item {
                 url = url_parts[0];
                 params = {"archive_uuid": event.archiveUuid};
                 downloadFile();
+                compressing = false;
             }
         }
     }

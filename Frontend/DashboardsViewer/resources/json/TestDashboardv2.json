@@ -64,14 +64,6 @@
                                                 "Layout.fillWidth": {"type": "bool", "value": "true"},
                                                 "Layout.fillHeight": {"type": "bool", "value": "true"}
                                             }
-                                        },
-                                        {
-                                            "type": "ButtonWidget",
-                                            "id": "btnDownloadAssets",
-                                            "properties": {
-                                                 "text": {"type": "string", "value": "Download assets"},
-                                                 "visible": {"type": "raw", "value": "participantSessionList.dataSource.model.count"}
-                                            }
                                         }
                                     ],
                                     "properties":{

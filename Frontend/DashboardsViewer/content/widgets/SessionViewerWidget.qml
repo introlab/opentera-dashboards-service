@@ -130,13 +130,14 @@ Item {
                 Rectangle {
                     id: sessionComments
                     Layout.fillWidth: true
-                    implicitHeight: layoutComments.implicitHeight
+                    implicitHeight: layoutComments.implicitHeight + layoutComments.anchors.margins * 2
                     color: Constants.highlightColor
                     radius: 5
                     visible: session.session_comments
                     ColumnLayout{
                         id: layoutComments
                         anchors.fill: parent
+                        anchors.margins: 10
                         Text {
                             id: sessionCommentsText
                             text: session.session_comments
@@ -213,7 +214,9 @@ Item {
                             clip: true
                             visible: count > 0
 
-                            interactive: contentHeight < height
+                            interactive: contentHeight > height
+                            ScrollBar.vertical: FlickableScrollBar {}
+
                             spacing: 2
 
                             delegate: Item {
@@ -225,40 +228,29 @@ Item {
                                     return model
                                 }
 
-                                BasicButton {
+                                ImageButtonWidget{
                                     id: singleAssetDownloadButton
-                                    anchors.fill: parent
-                                    text: delegateModel().asset_name + " [" + delegateModel().asset_uuid + "]"
+                                    text: delegateModel().asset_name
+                                    imgPath: "../images/icons/data.png"
+                                    textControl.color: "black"
+                                    textControl.style: Text.Normal
                                     onClicked: {
-                                        //console.log("Download button clicked for asset: " + delegateModel().asset_name + " [" + delegateModel().asset_uuid + "]");
-
                                         if (dashboardViewerApp.isWebAssembly()) {
-                                            //console.log("WebAssembly is supported...")
                                             //This will use the browser download function. Download UI is provided by browser.
                                             fileDownloadDataSource.filename = delegateModel().asset_name
 
                                             //DownloadFile returnes a null object in WebASM
-                                            fileDownloadDataSource.downloadFile();
+                                            fileDownloadDataSource.downloadSpecificAsset(delegateModel().asset_uuid)
                                         } else {
-                                            //console.log('WebAssembly is not supported');
                                             saveFileDialog.open();
                                         }
 
                                     }
                                 }
-                                Text {
-                                    id: singleAssetInfoText
-                                    anchors.right: singleAssetDownloadButton.right
-                                    anchors.top: singleAssetDownloadButton.top
-                                    anchors.bottom: singleAssetDownloadButton.bottom
-                                    //text: "Hello World!"
-                                }
 
                                 FileDownloadDataSource {
                                     id: fileDownloadDataSource
-                                    url: "/file/api/assets"
                                     filename: delegateModel().asset_name
-                                    params: {"asset_uuid": delegateModel().asset_uuid, "access_token": delegateModel().access_token}
                                 }
 
                                 BaseDataSource {
@@ -297,17 +289,18 @@ Item {
                                     {
                                         target: fileDownloadDataSource
                                         onDownloadProgress: function(bytesReceived, bytesTotal){
-                                            console.log("DownloadProgressDialog progress: ", bytesReceived, bytesTotal);
+                                            //console.log("DownloadProgressDialog progress: ", bytesReceived, bytesTotal);
                                             progressBar.value = bytesReceived / bytesTotal * 100;
                                         }
                                         onDownloadFinished: function() {
-                                            console.log("DownloadProgressDialog finished");
+                                            //console.log("DownloadProgressDialog finished");
                                             downloadProgressDialog.enabled = true;
+                                            downloadProgressDialog.close();
                                         }
                                     }
 
                                     onAccepted: {
-                                        console.log("DownloadProgressDialog accepted");
+                                        //console.log("DownloadProgressDialog accepted");
                                         saveFileDialog.open();
                                     }
                                 }
@@ -320,10 +313,10 @@ Item {
                                     currentFolder: StandardPaths.writableLocation(StandardPaths.DownloadLocation)
                                     currentFile: delegateModel().asset_name
                                     onAccepted: function() {
-                                        console.log("SaveFileDialog accepted");
+                                        //console.log("SaveFileDialog accepted");
                                         fileDownloadDataSource.filename = saveFileDialog.currentFile;
                                         downloadProgressDialog.open();
-                                        fileDownloadDataSource.downloadFile();
+                                        fileDownloadDataSource.downloadSpecificAsset(delegateModel().asset_uuid)
                                     }
                                  }
                             } // Item (delegate)
@@ -340,10 +333,8 @@ Item {
                     }
                 }
 
-
-
                 // Download Assets button
-                BasicButton {
+                /* BasicButton {
                     id: downloadAssetsButton
                     Layout.fillWidth: false
                     Layout.fillHeight: false
@@ -355,7 +346,7 @@ Item {
                         console.log("Download Assets button clicked")
 
                     }
-                }
+                }*/
 
             }
         }

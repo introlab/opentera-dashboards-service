@@ -10,6 +10,7 @@ qt6_add_qml_module(content
         # Screens
         screens/Dashboard.qml
         screens/DashboardSelector.qml
+        screens/LoadingScreen.qml
         screens/Login.qml
 
         # Uis

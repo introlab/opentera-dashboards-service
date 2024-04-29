@@ -9,6 +9,7 @@ BaseWidget {
 
     property alias text: control.text
     required property string imgPath
+    property alias textControl: textItem
 
     implicitHeight: control.implicitHeight
     implicitWidth: control.implicitWidth + 10

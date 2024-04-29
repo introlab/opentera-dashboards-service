@@ -1,9 +1,13 @@
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 2.15
+import QtQuick.Dialogs
+import QtCore
 
 import DashboardsViewer
 import "../ui"
+import "../widgets"
+import "../dataSources"
 
 BaseDelegate {
     id: myDelegate
@@ -12,6 +16,8 @@ BaseDelegate {
 
     property int daysWarningThreshold: 7
     property int daysErrorThreshold: 14
+
+    property bool showDownloadAssets: true
 
     property bool isCurrentItem: ListView ? ListView.isCurrentItem : false
 
@@ -113,6 +119,31 @@ BaseDelegate {
         border.color: isCurrentItem ? "lightgrey" : "black"
         border.width: isCurrentItem ? 5 : 1
         radius: 5
+        MouseArea {
+            id: mouseArea
+            anchors.fill: parent
+            onDoubleClicked: {
+                //console.log("SessionDelegate clicked");
+                if (stackView) {
+                    stackView.push("../widgets/SessionViewerWidget.qml", {"session": model})
+                }
+            }
+            onPressAndHold: {
+                //console.log("SessionDelegate long pressed");
+
+                if (stackView) {
+                    stackView.push("../widgets/SessionViewerWidget.qml", {"session": model})
+                }
+
+            }
+            onClicked: {
+                onClicked: {
+                    if (myDelegate.ListView)
+                        myDelegate.ListView.view.currentIndex = index;
+                    model.dataSource.itemSelected(model[model.dataSource.fieldIdName])
+                }
+            }
+        }
     }
 
     RowLayout {
@@ -190,17 +221,16 @@ BaseDelegate {
                 Item{
                     Layout.fillWidth: true
                 }
+            }
 
-                Text{
-                    id: txtName
-                    Layout.fillWidth: true
-                    text: model.session_name
-                    font.pixelSize: Constants.baseFontSize
-                    wrapMode: Text.WordWrap
-                    style: Text.Outline
-                    color: Constants.textColor
-                }
-
+            Text{
+                id: txtName
+                Layout.fillWidth: true
+                text: model.session_name
+                font.pixelSize: Constants.baseFontSize
+                wrapMode: Text.WordWrap
+                style: Text.Outline
+                color: Constants.textColor
             }
 
             Text{
@@ -218,31 +248,59 @@ BaseDelegate {
             }
 
         }
-    }
-
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        onDoubleClicked: {
-            console.log("SessionDelegate clicked");
-            if (stackView) {
-                stackView.push("../widgets/SessionViewerWidget.qml", {"session": model})
-            }
-        }
-        onPressAndHold: {
-            console.log("SessionDelegate long pressed");
-
-            if (stackView) {
-                stackView.push("../widgets/SessionViewerWidget.qml", {"session": model})
-            }
-
-        }
-        onClicked: {
+        ImageButtonWidget{
+            id: btnDownload
+            visible: model.session_assets_count > 0 && showDownloadAssets
+            imgPath: "../images/icons/data.png"
             onClicked: {
-                if (myDelegate.ListView)
-                    myDelegate.ListView.view.currentIndex = index;
-                model.dataSource.itemSelected(model[model.dataSource.fieldIdName])
+                if (dashboardViewerApp.isWebAssembly()) {
+                    //This will use the browser download function. Download UI is provided by browser.
+                    fileDownloader.filename = model[model.dataSource.fieldName]
+
+                    //DownloadFile returnes a null object in WebASM
+                    fileDownloader.downloadParticipantArchive(model[model.dataSource.fieldIdName])
+                } else {
+                    //console.log('WebAssembly is not supported');
+                    saveFileDialog.open();
+                }
+
             }
         }
     }
+
+    FileDownloadDataSource{
+        id: fileDownloader
+        onCompressingChanged:{
+            if (screenLoading !== undefined){
+                screenLoading.text = qsTr("Compressing data...");
+                screenLoading.visible = compressing;
+                screenLoading.progressValue = -1;
+            }
+        }
+        onDownloadingChanged: {
+            if (screenLoading !== undefined){
+                screenLoading.text = qsTr("Downloading...");
+                screenLoading.visible = downloading;
+                screenLoading.progressValue = 0;
+            }
+        }
+        onDownloadProgress: function(bytesReceived, bytesTotal){
+            if (screenLoading !== undefined){
+                screenLoading.progressValue = (bytesReceived / bytesTotal) * 100
+            }
+        }
+    }
+    FileDialog {
+        id: saveFileDialog
+        nameFilters: ["Zip files (*.zip)"]
+        defaultSuffix: ".zip"
+        fileMode: FileDialog.SaveFile
+        //URL
+        currentFolder: StandardPaths.writableLocation(StandardPaths.DownloadLocation)
+        selectedFile: currentFolder + "/" + model[model.dataSource.fieldDisplayName] + ".zip"
+        onAccepted: function() {
+            fileDownloader.filename = saveFileDialog.currentFile;
+            fileDownloader.downloadSessionArchive(model[model.dataSource.fieldIdName])
+        }
+     }
 } // Item

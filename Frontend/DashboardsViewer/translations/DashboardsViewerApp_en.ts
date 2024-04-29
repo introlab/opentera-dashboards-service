@@ -97,6 +97,15 @@
     </message>
 </context>
 <context>
+    <name>LoadingScreen</name>
+    <message>
+        <location filename="../content/screens/LoadingScreen.qml" line="23"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/screens/LoadingScreen.qml" line="23"/>
+        <source>Loading...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Login</name>
     <message>
         <location filename="../content/screens/Login.qml" line="19"/>
@@ -138,42 +147,66 @@
 <context>
     <name>ParticipantDelegate</name>
     <message>
-        <location filename="../content/delegates/ParticipantDelegate.qml" line="121"/>
-        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/ParticipantDelegate.qml" line="121"/>
+        <location filename="../content/delegates/ParticipantDelegate.qml" line="137"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/ParticipantDelegate.qml" line="137"/>
         <source>Last session</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/ParticipantDelegate.qml" line="175"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/ParticipantDelegate.qml" line="175"/>
+        <source>Compressing data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/ParticipantDelegate.qml" line="182"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/ParticipantDelegate.qml" line="182"/>
+        <source>Downloading...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SessionDelegate</name>
     <message>
-        <location filename="../content/delegates/SessionDelegate.qml" line="154"/>
-        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="154"/>
+        <location filename="../content/delegates/SessionDelegate.qml" line="185"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="185"/>
         <source>Completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/delegates/SessionDelegate.qml" line="160"/>
-        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="160"/>
+        <location filename="../content/delegates/SessionDelegate.qml" line="191"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="191"/>
         <source>Cancelled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/delegates/SessionDelegate.qml" line="166"/>
-        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="166"/>
+        <location filename="../content/delegates/SessionDelegate.qml" line="197"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="197"/>
         <source>Terminated</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/delegates/SessionDelegate.qml" line="172"/>
-        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="172"/>
+        <location filename="../content/delegates/SessionDelegate.qml" line="203"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="203"/>
         <source>In progress</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/delegates/SessionDelegate.qml" line="178"/>
-        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="178"/>
+        <location filename="../content/delegates/SessionDelegate.qml" line="209"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="209"/>
         <source>Planned</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionDelegate.qml" line="275"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="275"/>
+        <source>Compressing data...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../content/delegates/SessionDelegate.qml" line="282"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/delegates/SessionDelegate.qml" line="282"/>
+        <source>Downloading...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -305,14 +338,14 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/widgets/SessionViewerWidget.qml" line="189"/>
-        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/SessionViewerWidget.qml" line="189"/>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="190"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/SessionViewerWidget.qml" line="190"/>
         <source>Assets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/widgets/SessionViewerWidget.qml" line="197"/>
-        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/SessionViewerWidget.qml" line="197"/>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="198"/>
+        <location filename="../../../../build-opentera-dashboards-debug/qml/content/widgets/SessionViewerWidget.qml" line="198"/>
         <source>No assets</source>
         <translation type="unfinished"></translation>
     </message>
@@ -362,7 +395,7 @@
 <context>
     <name>UserComManager</name>
     <message>
-        <location filename="../submodules/opentera-libraries/cpp/clients/user/src/UserComManager.cpp" line="217"/>
+        <location filename="../submodules/opentera-libraries/cpp/clients/user/src/UserComManager.cpp" line="231"/>
         <source>Invalid username or password.</source>
         <translation type="unfinished"></translation>
     </message>

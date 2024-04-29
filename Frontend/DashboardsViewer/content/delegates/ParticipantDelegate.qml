@@ -170,6 +170,25 @@ BaseDelegate {
 
     FileDownloadDataSource{
         id: fileDownloader
+        onCompressingChanged:{
+            if (screenLoading !== undefined){
+                screenLoading.text = qsTr("Compressing data...");
+                screenLoading.visible = compressing;
+                screenLoading.progressValue = -1;
+            }
+        }
+        onDownloadingChanged: {
+            if (screenLoading !== undefined){
+                screenLoading.text = qsTr("Downloading...");
+                screenLoading.visible = downloading;
+                screenLoading.progressValue = 0;
+            }
+        }
+        onDownloadProgress: function(bytesReceived, bytesTotal){
+            if (screenLoading !== undefined){
+                screenLoading.progressValue = (bytesReceived / bytesTotal) * 100
+            }
+        }
     }
 
     FileDialog {
@@ -179,7 +198,7 @@ BaseDelegate {
         fileMode: FileDialog.SaveFile
         //URL
         currentFolder: StandardPaths.writableLocation(StandardPaths.DownloadLocation)
-        selectedFile: currentFolder + "/participant.zip" //model[model.dataSource.fieldDisplayName] + ".zip"
+        selectedFile: currentFolder + "/" + model[model.dataSource.fieldDisplayName] + ".zip" //"participant.zip" //model[model.dataSource.fieldDisplayName] + ".zip"
         onAccepted: function() {
             fileDownloader.filename = saveFileDialog.currentFile;
             fileDownloader.downloadParticipantArchive(model[model.dataSource.fieldIdName])

@@ -53,34 +53,14 @@ Item {
         }
     }
 
-    /*Text {
-        id: dashboardText
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        text: qsTr("DASHBOARD")
-        font.pixelSize: 60
-        height: 60
-        horizontalAlignment: Text.AlignHCenter
+    LoadingScreen{
+        id: screenLoading
+        visible: false
+        z: 3
     }
-
-    Button {
-        id: closeButton
-        anchors.left: parent.left
-        anchors.top: parent.top
-        width: 150
-        height: 60
-        text: qsTr("Close")
-        onClicked: function () {
-            stackview.pop()
-        }
-    }*/
 
     StackView {
         id: dashboardStackView
         anchors.fill: parent
-        /*anchors.top: dashboardText.bottom
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right*/
     }
 }
