@@ -255,7 +255,7 @@ BaseDelegate {
             onClicked: {
                 if (dashboardViewerApp.isWebAssembly()) {
                     //This will use the browser download function. Download UI is provided by browser.
-                    fileDownloader.filename = model[model.dataSource.fieldName]
+                    fileDownloader.filename = model[model.dataSource.fieldDisplayName]
 
                     //DownloadFile returnes a null object in WebASM
                     fileDownloader.downloadParticipantArchive(model[model.dataSource.fieldIdName])
