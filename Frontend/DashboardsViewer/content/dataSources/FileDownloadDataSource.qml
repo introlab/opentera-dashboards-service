@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import OpenTeraLibs.UserClient 1.0
+import OpenTeraLibs.Protobuf
 
 import DashboardsViewer
 
@@ -63,6 +64,7 @@ Item {
 
             reply.requestSucceeded.connect(function(response, statusCode) {
                 //console.log(response, statusCode);
+                archiveUuid = response.archive_uuid
             });
         }
     }
@@ -79,6 +81,7 @@ Item {
 
             reply.requestSucceeded.connect(function(response, statusCode) {
                 //console.log(response, statusCode);
+                archiveUuid = response.archive_uuid
             });
         }
     }
@@ -98,14 +101,22 @@ Item {
     Connections {
         target: UserClient
         onArchiveEvent: function(event) {
-            console.log("ArchiveEvent: ", event)
-            if (event.status === 2){
-                // Completed - start download!
-                let url_parts = event.archiveUrl.split("?")
-                url = url_parts[0];
-                params = {"archive_uuid": event.archiveUuid};
-                downloadFile();
-                compressing = false;
+            if (compressing){
+                //console.log("ArchiveEvent: ", event)
+                if (event.archiveUuid === archiveUuid){
+                    if (event.status === ArchiveEvent.STATUS_COMPLETED){
+                        // Completed - start download!
+                        //console.log("Starting download...");
+                        let url_parts = event.archiveUrl.split("?")
+                        url = url_parts[0];
+                        params = {"archive_uuid": event.archiveUuid};
+                        downloadFile();
+                        compressing = false;
+                    }
+                    else{
+
+                    }
+                }
             }
         }
     }
