@@ -239,7 +239,7 @@ BaseDelegate {
                 id: txtDate
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 property date sessionDate: new Date(model.session_start_datetime)
-                text: sessionDate.toLocaleDateString() +" - " + sessionDate.toLocaleTimeString()
+                text: sessionDate.toLocaleDateString() +" - " + sessionDate.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
                 font.pixelSize: Constants.baseFontSize
                 style: Text.Outline
                 font.bold: true

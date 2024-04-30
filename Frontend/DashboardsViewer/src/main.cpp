@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 
     // Setup translator
     QTranslator appTranslator;
-    if (!appTranslator.load(QLocale::system(), "DashboardsViewerApp", "_")){
+    if (!appTranslator.load(QLocale::system(), "DashboardsViewerApp", "_", ":/i18n")){
         qWarning() << "Unable to load translations for locale " << QLocale::system().uiLanguages().first();
     }
     app.installTranslator(&appTranslator);

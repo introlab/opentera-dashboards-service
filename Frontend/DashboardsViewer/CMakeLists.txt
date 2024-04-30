@@ -16,8 +16,10 @@ find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Websockets)
 
 qt_policy(SET QTP0001 NEW)
 
-if (Qt6_VERSION VERSION_GREATER_EQUAL 6.3)
+if (Qt6_VERSION VERSION_GREATER_EQUAL 6.7)
     qt_standard_project_setup(I18N_TRANSLATED_LANGUAGES en fr)
+else()
+    qt_standard_project_setup()
 endif()
 
 
@@ -30,9 +32,15 @@ add_subdirectory(resources)
 add_subdirectory(submodules)
 add_subdirectory(qml_cpp_modules)
 
-qt_add_translations(TARGETS DashboardsViewerApp TS_FILE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/translations)
-
 qt_add_executable(DashboardsViewerApp src/main.cpp)
+
+if (Qt6_VERSION VERSION_GREATER_EQUAL 6.7)
+    qt_add_translations(TARGETS DashboardsViewerApp TS_FILE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/translations)
+else()
+    qt_add_translations(DashboardsViewerApp ${CMAKE_CURRENT_SOURCE_DIR}/translations/DashboardsViewerApp_en.ts
+                        ${CMAKE_CURRENT_SOURCE_DIR}/translations/DashboardsViewerApp_fr.ts
+                        )
+endif()
 
 qt_add_resources(DashboardsViewerApp "configuration"
     PREFIX "/"
