@@ -189,6 +189,11 @@ BaseDelegate {
                 screenLoading.progressValue = (bytesReceived / bytesTotal) * 100
             }
         }
+        onDownloadFinished: {
+            if (screenLoading !== undefined){
+                screenLoading.visible = false;
+            }
+        }
     }
 
     FileDialog {
