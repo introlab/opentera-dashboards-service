@@ -77,6 +77,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignTop
             wrapMode: Text.WordWrap
+            elide: Text.ElideMiddle
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             style: Text.Outline
             font.bold: true
