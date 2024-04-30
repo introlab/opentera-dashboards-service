@@ -31,16 +31,18 @@ Item {
             console.log("Should download file " + url + " and save to: ", filename );
             var fileDownloader = UserClient.downloadFile(filename, url, params);
 
-            fileDownloader.finished.connect(function() {
-                //console.log("Finished");
-                downloadFinished();
-                downloading = false;
-            });
+            if (!UserClient.isWebAssembly()){
+                fileDownloader.finished.connect(function() {
+                    //console.log("Finished");
+                    downloadFinished();
+                    downloading = false;
+                });
 
-            fileDownloader.downloadProgress.connect(function(bytesReceived, bytesTotal) {
-                console.log("DownloadProgress ", bytesReceived, bytesTotal);
-                downloadProgress(bytesReceived, bytesTotal);
-            });
+                fileDownloader.downloadProgress.connect(function(bytesReceived, bytesTotal) {
+                    console.log("DownloadProgress ", bytesReceived, bytesTotal);
+                    downloadProgress(bytesReceived, bytesTotal);
+                });
+            }
         }
         else {
             downloadFailed();

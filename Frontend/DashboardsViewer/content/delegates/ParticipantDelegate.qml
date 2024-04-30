@@ -5,6 +5,8 @@ import QtQuick.Dialogs
 import QtCore
 
 import DashboardsViewer
+import OpenTeraLibs.UserClient 1.0
+
 import "../widgets"
 import "../dataSources"
 
@@ -181,7 +183,10 @@ BaseDelegate {
             if (screenLoading !== undefined){
                 screenLoading.text = qsTr("Downloading...");
                 screenLoading.visible = downloading;
-                screenLoading.progressValue = 0;
+                if (!UserClient.isWebAssembly())
+                    screenLoading.progressValue = 0;
+                else
+                    screenLoading.visible = false;
             }
         }
         onDownloadProgress: function(bytesReceived, bytesTotal){
@@ -190,6 +195,7 @@ BaseDelegate {
             }
         }
         onDownloadFinished: {
+            console.log("onDownloadFinished");
             if (screenLoading !== undefined){
                 screenLoading.visible = false;
             }
