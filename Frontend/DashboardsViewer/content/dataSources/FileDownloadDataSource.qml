@@ -1,6 +1,6 @@
 import QtQuick 2.15
 import OpenTeraLibs.UserClient 1.0
-import OpenTeraLibs.Protobuf
+//import OpenTeraLibs.Protobuf
 
 import DashboardsViewer
 
@@ -104,7 +104,7 @@ Item {
             if (compressing){
                 //console.log("ArchiveEvent: ", event)
                 if (event.archiveUuid === archiveUuid){
-                    if (event.status === ArchiveEvent.STATUS_COMPLETED){
+                    if (event.status === 2 /*ArchiveEvent.STATUS_COMPLETED*/){
                         // Completed - start download!
                         //console.log("Starting download...");
                         let url_parts = event.archiveUrl.split("?")

@@ -273,16 +273,15 @@ BaseDelegate {
     FileDownloadDataSource{
         id: fileDownloader
         onCompressingChanged:{
-            if (screenLoading !== undefined){
+            if (screenLoading !== undefined && compressing){
                 screenLoading.text = qsTr("Compressing data...");
-                screenLoading.visible = compressing;
+                screenLoading.visible = true;
                 screenLoading.progressValue = -1;
             }
         }
         onDownloadingChanged: {
-            if (screenLoading !== undefined){
+            if (screenLoading !== undefined && downloading){
                 screenLoading.text = qsTr("Downloading...");
-                screenLoading.visible = downloading;
                 if (!UserClient.isWebAssembly())
                     screenLoading.progressValue = 0;
                 else

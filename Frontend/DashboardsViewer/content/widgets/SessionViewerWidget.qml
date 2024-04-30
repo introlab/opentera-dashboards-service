@@ -311,7 +311,7 @@ Item {
                                     fileMode: FileDialog.SaveFile
                                     //URL
                                     currentFolder: StandardPaths.writableLocation(StandardPaths.DownloadLocation)
-                                    currentFile: delegateModel().asset_name
+                                    selectedFile: currentFolder + "/" + delegateModel().asset_name
                                     onAccepted: function() {
                                         //console.log("SaveFileDialog accepted");
                                         fileDownloadDataSource.filename = saveFileDialog.currentFile;
