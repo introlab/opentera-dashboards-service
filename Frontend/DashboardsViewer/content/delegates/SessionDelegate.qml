@@ -260,7 +260,7 @@ BaseDelegate {
                     fileDownloader.filename = model[model.dataSource.fieldDisplayName]
 
                     //DownloadFile returnes a null object in WebASM
-                    fileDownloader.downloadParticipantArchive(model[model.dataSource.fieldIdName])
+                    fileDownloader.downloadSessionArchive(model[model.dataSource.fieldIdName])
                 } else {
                     //console.log('WebAssembly is not supported');
                     saveFileDialog.open();
