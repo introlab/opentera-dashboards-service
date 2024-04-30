@@ -22,14 +22,14 @@ Item {
     function downloadFile() {
 
         if (downloading){
-            console.log("Already downloading file... Ignoring another download.")
+            console.log("Already downloading file... Ignoring another download.");
             return;
         }
 
         if (filename)
         {
             downloading = true;
-            console.log("Should download file " + url + " and save to: ", filename );
+            console.log("Should download file " + url + " and save to: ", filename);
             var fileDownloader = UserClient.downloadFile(filename, url, params);
 
             if (!UserClient.isWebAssembly()){
@@ -57,14 +57,14 @@ Item {
         if (id_participant)
         {
             // Step #1, Call the Archive API
-            params = {"id_participant": id_participant}
-            var reply = UserClient.get("/api/user/assets/archive", params)
+            params = {"id_participant": id_participant};
+            var reply = UserClient.get("/api/user/assets/archive", params);
 
             compressing = true;
 
             reply.requestSucceeded.connect(function(response, statusCode) {
                 //console.log(response, statusCode);
-                archiveUuid = response.archive_uuid
+                archiveUuid = response.archive_uuid;
             });
         }
     }
@@ -74,25 +74,26 @@ Item {
         if (id_session)
         {
             // Step #1, Call the Archive API
-            params = {"id_session": id_session}
-            var reply = UserClient.get("/api/user/assets/archive", params)
+            params = {"id_session": id_session};
+            var reply = UserClient.get("/api/user/assets/archive", params);
 
             compressing = true;
 
             reply.requestSucceeded.connect(function(response, statusCode) {
                 //console.log(response, statusCode);
-                archiveUuid = response.archive_uuid
+                archiveUuid = response.archive_uuid;
             });
         }
     }
 
     function downloadSpecificAsset(asset_uuid){
-        params = {"asset_uuid": asset_uuid, "with_urls": true}
-        var reply = UserClient.get("/api/user/assets", params)
+        params = {"asset_uuid": asset_uuid, "with_urls": true};
+        var reply = UserClient.get("/api/user/assets", params);
         reply.requestSucceeded.connect(function(response, statusCode) {
             // Download file
             params = {"asset_uuid": asset_uuid, "access_token": response[0].access_token};
-            url = response[0].asset_url.replace(UserClient.url, "")
+            let my_url = new URL(response[0].asset_url)
+            fileDownloadDataSource.url = my_url.pathname;
             downloadFile();
         });
 
@@ -107,7 +108,7 @@ Item {
                     if (event.status === 2 /*ArchiveEvent.STATUS_COMPLETED*/){
                         // Completed - start download!
                         //console.log("Starting download...");
-                        let url_parts = event.archiveUrl.split("?")
+                        let url_parts = event.archiveUrl.split("?");
                         url = url_parts[0];
                         params = {"archive_uuid": event.archiveUuid};
                         downloadFile();
