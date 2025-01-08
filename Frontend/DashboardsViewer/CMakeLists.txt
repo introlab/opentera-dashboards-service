@@ -53,7 +53,7 @@ target_link_libraries(DashboardsViewerApp PRIVATE
     Qt6::Gui
     Qt6::Qml
     Qt6::Quick
-    opentera_libs_client_user_qmlplugin
+    openteralibs_user_qmlplugin
     dashboardviewer_qml_cpp_modules_config_parser_qmlplugin
     dashboardsviewer_resources
 )
