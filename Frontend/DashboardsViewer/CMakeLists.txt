@@ -12,7 +12,7 @@ endif()
 
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick Websockets)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick WebSockets)
 
 qt_policy(SET QTP0001 NEW)
 
