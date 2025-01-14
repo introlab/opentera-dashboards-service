@@ -1,3 +1,6 @@
+import redis
+import datetime
+
 # Flask
 from flask import Flask, request, g, url_for
 from flask_restx import Api
@@ -142,7 +145,7 @@ authorizations = {
 
 # API
 api = CustomAPI(flask_app, version='1.0.0', title='DashboardsService API',
-                description='DasiboardsService API Documentation', doc='/doc', prefix='/api',
+                description='DashboardsService API Documentation', doc='/doc', prefix='/api',
                 authorizations=authorizations)
 
 # Namespaces (will be routed to /dashboards/api/)
@@ -160,8 +163,6 @@ class FlaskModule(BaseModule):
 
         self.service = service
         flask_app.debug = config.service_config['debug_mode']
-        flask_app.config.update({'SESSION_TYPE': 'redis'})
-        import redis
         redis_url = redis.from_url('redis://%(username)s:%(password)s@%(hostname)s:%(port)s/%(db)s'
                                    % self.config.redis_config)
 
@@ -171,6 +172,8 @@ class FlaskModule(BaseModule):
         flask_app.config.update({'SESSION_TYPE': 'redis'})
         flask_app.config.update({'BABEL_DEFAULT_LOCALE': 'fr'})
         flask_app.config.update({'SESSION_COOKIE_SECURE': True})
+        flask_app.config.update({'SESSION_COOKIE_SAMESITE': 'Strict'})
+        flask_app.config.update({'PERMANENT_SESSION_LIFETIME': datetime.timedelta(minutes=5)})
 
         # Init API
         self.init_service_api(self, self.service, service_api_ns)
@@ -178,7 +181,7 @@ class FlaskModule(BaseModule):
         self.init_participant_api(self, self.service, participant_api_ns)
 
         # Init Views
-        self.init_views()
+        self.init_views(self, self.service)
 
     def create_service(self):
         # create a Twisted Web WSGI resource for our Flask server
@@ -243,10 +246,11 @@ class FlaskModule(BaseModule):
 
         pass
 
-    def init_views(self):
+    @staticmethod
+    def init_views(module: object, service: object):
         # Default arguments
         args = []
-        kwargs = {'flaskModule': self}
+        kwargs = {'flaskModule': module, 'service': service}
 
         # Add views
         from views.Index import Index
