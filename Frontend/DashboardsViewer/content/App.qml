@@ -102,7 +102,7 @@ Window {
 
     StackView {
         id: stackview
-        initialItem: Login {}
+        initialItem: LoginWithToken {}
         anchors.top: menu.bottom
         anchors.left: parent.left
         anchors.right: parent.right

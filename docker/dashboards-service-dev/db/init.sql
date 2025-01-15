@@ -7,3 +7,5 @@ create database openterafiles;
 grant all privileges on database openterafiles to TeraAgent;
 create database opentera_dashboards;
 grant all privileges on database opentera_dashboards to TeraAgent;
+create database openteraemails;
+grant all privileges on database openteraemails to TeraAgent;

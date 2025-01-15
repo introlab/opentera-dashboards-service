@@ -12,6 +12,7 @@ qt6_add_qml_module(content
         screens/DashboardSelector.qml
         screens/LoadingScreen.qml
         screens/Login.qml
+        screens/LoginWithToken.qml
 
         # Uis
         ui/Badge.qml
