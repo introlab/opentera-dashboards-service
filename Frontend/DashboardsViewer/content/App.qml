@@ -114,6 +114,7 @@ Window {
         onLogoutSucceeded: function() {
             stackview.pop(null)
             menu.visible = false;
+            stackview.push("screens/Logout.qml");
         }
         onWebsocketDisconnected: function() {
             stackview.pop(null)

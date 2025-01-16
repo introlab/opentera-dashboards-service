@@ -19,7 +19,10 @@ class Index(MethodView):
             auth_code = request.args['auth_code']
             redis_auth_data = self.flaskModule.redisGet('service_auth_code_' + auth_code)
             if not redis_auth_data:
-                return gettext('Invalid auth code'), 403
+                # User has likely hit the refresh button on the browser
+                # We will reload the page and get a new auth code and start the login process.
+                # return gettext('Invalid auth code'), 403
+                return redirect('/dashboards')
             auth_data = json.loads(redis_auth_data)
             if 'service_uuid' not in auth_data or auth_data['service_uuid'] != self.service.service_uuid:
                 return gettext('Invalid auth code'), 403
