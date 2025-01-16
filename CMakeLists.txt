@@ -48,7 +48,7 @@ if(NOT PYTHON_ENV_DIRECTORY)
     endif(WIN32)
 
     # Install requirements
-    message(STATUS "Installing python requirements")
+    message(STATUS "Installing python requirements with python executable : ${PYTHON_EXECUTABLE}")
     execute_process(COMMAND ${PYTHON_EXECUTABLE} -m pip install -r ${CMAKE_CURRENT_SOURCE_DIR}/requirements.txt)
 endif()
 
@@ -110,7 +110,7 @@ add_custom_target(
 
 # Build this target if you want to update translations too...
 add_custom_target(dashboards-service-python-all-with-translations
-    DEPENDS dashboards-service-python-translations)
+    DEPENDS dashboards-service-python-translations-update)
 
 # Build this target if you want to compile translations only
 add_custom_target(dashboards-service-python-all-with-translations-compile-only ALL

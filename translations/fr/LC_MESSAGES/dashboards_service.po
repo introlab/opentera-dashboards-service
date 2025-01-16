@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-01-17 15:21-0500\n"
+"POT-Creation-Date: 2025-01-16 20:32+0000\n"
 "PO-Revision-Date: 2024-01-17 15:21-0500\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -16,5 +16,85 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.14.0\n"
+"Generated-By: Babel 2.16.0\n"
 
+#: API/user/QueryDashboard.py:56 API/user/QueryDashboard.py:134
+#: API/user/QueryDashboard.py:354
+msgid "Only users can use this API."
+msgstr "Cet API est disponible aux usagers seulement."
+
+#: API/user/QueryDashboard.py:71 API/user/QueryDashboard.py:78
+#: API/user/QueryDashboard.py:85 API/user/QueryDashboard.py:90
+#: API/user/QueryDashboard.py:96 API/user/QueryDashboard.py:102
+#: API/user/QueryDashboard.py:108 API/user/QueryDashboard.py:165
+#: API/user/QueryDashboard.py:226 API/user/QueryDashboard.py:371
+#: API/user/QueryDashboard.py:384 API/user/QueryDashboard.py:389
+#: API/user/QueryDashboard.py:393
+msgid "Forbidden"
+msgstr "Accès interdit"
+
+#: API/user/QueryDashboard.py:137
+msgid "Missing dashboard"
+msgstr "Tableau de bord manquant"
+
+#: API/user/QueryDashboard.py:156
+msgid "Can't change uuid when updating with id"
+msgstr "Impossible de mettre à jour le uuid avec le id"
+
+#: API/user/QueryDashboard.py:162
+msgid "Can't change id when updating with uuid"
+msgstr "Impossible de mettre à jour le id avec le uuid"
+
+#: API/user/QueryDashboard.py:174 API/user/QueryDashboard.py:179
+#: API/user/QueryDashboard.py:183
+msgid "No access to dashboard to update"
+msgstr "Accès interdit"
+
+#: API/user/QueryDashboard.py:189
+msgid "Trying to update an older dashboard version - this is not allowed."
+msgstr "Tentative de mise à jour d'une ancienne version du tableau de bord - ceci n'est pas permis."
+
+#: API/user/QueryDashboard.py:196
+msgid "Missing definition for new dashboard"
+msgstr "Définition manquante pour le nouveau tableau de bord"
+
+#: API/user/QueryDashboard.py:209 API/user/QueryDashboard.py:218
+msgid "No admin access to that dashboard"
+msgstr "Pas d'accès administrateur au tableau de bord"
+
+#: API/user/QueryDashboard.py:212
+msgid "At least one site isn't accessible"
+msgstr "Au moins un site n'est pas accessible"
+
+#: API/user/QueryDashboard.py:221
+msgid "At least one project isn't accessible"
+msgstr "Au moins un projet n'est pas accessible"
+
+#: API/user/QueryDashboard.py:229
+msgid "A dashboard can't be associated to both sites and projects"
+msgstr "Un tableau de bord ne peut être associé à la fois au site et au projet"
+
+#: API/user/QueryDashboard.py:247 API/user/QueryDashboard.py:267
+#: API/user/QueryDashboard.py:401
+msgid "Database error"
+msgstr "Erreur de tableau de bord"
+
+#: API/user/QueryDashboard.py:253
+msgid "Missing fields"
+msgstr "Champs manquants"
+
+#: API/user/QueryDashboard.py:339
+msgid "Invalid version definition - json not valid"
+msgstr "Version invalide - json invalide"
+
+#: API/user/QueryDashboard.py:341
+msgid "Unable to update dashboard version"
+msgstr "Impossible de mettre à jour la version du tableau de bord"
+
+#: API/user/QueryDashboard.py:359
+msgid "Missing parameter"
+msgstr "Paramètre manquant"
+
+#: API/user/QueryDashboard.py:362
+msgid "Can't specify both id and uuid"
+msgstr "Vous pouvez spécifier soit id ou uuid, mais pas les deux"
