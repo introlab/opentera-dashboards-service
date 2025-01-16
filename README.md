@@ -42,14 +42,14 @@ python3 utils/setup_dashboards_service_run_once.py
 
 ### Compiling the FrontEnd
 
-#### Requirements
+#### Frontend Requirements
 
 * Qt 6.7 or later with WebAssembly
 
 #### Build steps
 
 * Follow the Qt [instructions](https://doc.qt.io/qt-6/wasm.html) to setup WebAssembly.
-* Open the [Frontend/DashboardsViewer/CMakeLists.txt](Frontend/DashboardsViewer/CMakeLists.txt) and use the WebAssembly kit.
+* Open the [Frontend/DashboardsViewer/CMakeLists.txt](Frontend/DashboardsViewer/CMakeLists.txt) in QtCreator and use the WebAssembly kit.
 * Build the project in "Release"
 
 Copy the following files (found in the build directory) to the [static](static/) directory :
