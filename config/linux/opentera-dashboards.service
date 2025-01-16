@@ -1,0 +1,21 @@
+[Unit]
+Description=OpenTeraDashboardsService
+After=opentera.service
+Requires=opentera.service
+PartOf=opentera.service
+
+[Service]
+User=<YOUR USER HERE>
+Group=<YOUR GROUP HERE>
+Environment=PYTHONPATH=<PATH WHERE YOUR DASHBOARDS SERVICE PROJECT IS >
+ExecStart=<PATH WHERE YOUR DASHBOARDS SERVICE PROJECT IS>/venv/bin/python3 <PATH WHERE YOUR DASHBOARDS SERVICE PROJECT IS>/DashboardsService.py
+WorkingDirectory=<PATH WHERE YOUR DASHBOARDS SERVICE PROJECT IS>
+StandardOutput=syslog+console
+StandardError=syslog+console
+Restart=always
+RestartSec=10s
+KillMode=process
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target opentera.service
