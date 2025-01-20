@@ -102,11 +102,23 @@ Window {
 
     StackView {
         id: stackview
-        initialItem: LoginWithToken {}
+        initialItem: Item{}
         anchors.top: menu.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+
+
+        Component.onCompleted: {
+            if (UserClient.isWebAssembly())
+            {
+                stackview.push("screens/LoginWithToken.qml");
+            }
+            else
+            {
+                stackview.push("screens/Login.qml");
+            }
+        }
     }
 
     Connections {
@@ -114,7 +126,14 @@ Window {
         onLogoutSucceeded: function() {
             stackview.pop(null)
             menu.visible = false;
-            stackview.push("screens/Logout.qml");
+            if (UserClient.isWebAssembly())
+            {
+                stackview.push("screens/Logout.qml");
+            }
+            else
+            {
+                stackview.push("screens/Login.qml");
+            }
         }
         onWebsocketDisconnected: function() {
             stackview.pop(null)
