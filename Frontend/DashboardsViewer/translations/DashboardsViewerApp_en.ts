@@ -40,16 +40,6 @@
         <source>Project</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <location filename="../content/screens/DashboardSelector.qml" line="359"/>
-        <source>Test Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../content/screens/DashboardSelector.qml" line="363"/>
-        <source>TestMode</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>DownloadingFile</name>
