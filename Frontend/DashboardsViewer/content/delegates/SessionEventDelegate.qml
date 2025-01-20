@@ -111,7 +111,7 @@ BaseDelegate {
                 id: txtDate
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 property date eventDate: new Date(model.session_event_datetime)
-                text: eventDate.toLocaleTimeString()
+                text: eventDate.toLocaleTimeString(Locale.ShortFormat)
                 font.pixelSize: Constants.smallFontSize
                 style: Text.Outline
                 font.bold: true

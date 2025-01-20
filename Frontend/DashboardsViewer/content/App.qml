@@ -102,17 +102,16 @@ Window {
 
     StackView {
         id: stackview
-        initialItem: Item{}
+        initialItem: null
         anchors.top: menu.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-
         Component.onCompleted: {
             if (UserClient.isWebAssembly())
             {
-                stackview.push("screens/LoginWithToken.qml");
+                stackview.push("screens/LoginWithToken.qml", {}, StackView.Immediate);
             }
             else
             {

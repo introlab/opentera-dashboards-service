@@ -14,7 +14,16 @@ Item {
     Component.onCompleted: {
         //Doing something
         console.log("connecting to ", AppURL);
-        UserClient.connectWithTokenUrl(AppURL);
+        timerLoading.start();
+    }
+
+    Timer{
+        id: timerLoading
+        running: false
+        interval: 0
+        onTriggered: function() {
+            UserClient.connectWithTokenUrl(AppURL);
+        }
     }
 
     Connections {
