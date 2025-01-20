@@ -315,7 +315,7 @@ Item {
 
                                 // Set the Actual definition
                                 currentElement.definition = definition;
-                                currentElement.loadDocumentForSite(id);
+                                currentElement.loadDocumentForSite(sitesDashboardDataSource.id_site);
                             }
                         }
                     } // GridView 1
@@ -349,7 +349,7 @@ Item {
 
                                 // Set the Actual definition
                                 currentElement.definition = definition;
-                                currentElement.loadDocumentForProject(id);
+                                currentElement.loadDocumentForProject(projectsDashboardDataSource.id_project);
                             }
                         }
                     } // GridView 2

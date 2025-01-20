@@ -20,12 +20,12 @@ Item {
     }
 
     function loadDocumentForProject(id_project){
-        definition = definition.replace(new RegExp("$id_project$","g"),id_definition);
+        definition = definition.replace(new RegExp('"\\$id_project\\$"', "g"), id_project);
         loadDocument();
     }
 
     function loadDocumentForSite(id_site){
-        definition = definition.replace(new RegExp("$id_site$","g"), id_site);
+        definition = definition.replace(new RegExp('"\\$id_site\\$"', "g"), id_site);
         loadDocument();
     }
 

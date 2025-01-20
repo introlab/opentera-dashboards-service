@@ -31,7 +31,7 @@ Item {
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
         onClicked: function(){
-            //console.log("Click! " + model.id + " - " + model.definition);
+            //console.log("Click! " + model.id + " - " + model.name);
             itemClicked(model.id, model.name, model.definition);
         }
     }
