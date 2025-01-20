@@ -21,11 +21,18 @@ Use cmake to generate the venv and the translations.
 # Create a build directory
 mkdir build
 cd build
-# Launch cmake, you can specify an existing environment
-cmake ../ -DPYTHON_ENV_DIRECTORY="optional python venv path"
+# Launch cmake, you can specify an existing environment (mostly for Docker)
+cmake ../ [-DPYTHON_ENV_DIRECTORY="optional python venv path"]
 # CMake will create the venv if needed and install the requirements
 # It will also build the translations
 make
+# You can update the translations (optional)
+make dashboards-service-python-all-with-translations
+```
+
+### Updating translations (optional)
+
+```bash
 # You can update the translations (optional)
 make dashboards-service-python-all-with-translations
 ```
@@ -39,6 +46,10 @@ conda activate ./venv
 # Service will be created in the system with roles.
 python3 utils/setup_dashboards_service_run_once.py
 ```
+
+### Setting up NGINX
+
+Add the [config/nginx/opentera-dashboards-service.conf] to your current NGINX setup.
 
 ### Compiling the FrontEnd
 
