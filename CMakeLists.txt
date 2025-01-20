@@ -101,7 +101,7 @@ add_custom_target(
 add_custom_target(
     dashboards-service-python-translations-compile-only
     COMMAND ${PYBABEL_EXECUTABLE} extract -F babel.cfg -o ${translation_pot_file} .
-    COMMAND ${PYBABEL_EXECUTABLE} compile -d translations -D dashboards_services
+    COMMAND ${PYBABEL_EXECUTABLE} compile -d translations -D dashboards_service
     DEPENDS ${PYBABEL_EXECUTABLE}
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/babel.cfg
