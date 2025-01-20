@@ -308,14 +308,14 @@ Item {
 
                             onItemClicked: function (id, name, definition) {
                                 mainWindow.contextText = name;
-                                stackview.push("Dashboard.qml")
+                                stackview.push("Dashboard.qml");
 
                                 // Get the current pushed element (the Dashboard)
-                                var currentElement = stackview.currentItem
+                                var currentElement = stackview.currentItem;
 
                                 // Set the Actual definition
-                                currentElement.definition = definition
-                                currentElement.loadDocument()
+                                currentElement.definition = definition;
+                                currentElement.loadDocumentForSite(id);
                             }
                         }
                     } // GridView 1
@@ -345,17 +345,17 @@ Item {
                                 stackview.push("Dashboard.qml");
 
                                 // Get the current pushed element (the Dashboard)
-                                var currentElement = stackview.currentItem
+                                var currentElement = stackview.currentItem;
 
                                 // Set the Actual definition
-                                currentElement.definition = definition
-                                currentElement.loadDocument()
+                                currentElement.definition = definition;
+                                currentElement.loadDocumentForProject(id);
                             }
                         }
                     } // GridView 2
                 } //RowLayout (2)
             } // Rectangle 2
-            BasicButton{
+            /*BasicButton{
                 text: qsTr("Test Mode")
                 onClicked: function(){
                     let filename = ":/dashboards/DashboardsViewer/resources/json/TestDashboardv2.json";
@@ -370,7 +370,7 @@ Item {
                     currentElement.loadDocument(filename);
                 }
 
-            }
+            }*/
         } // ColumnLayout
     } // BasicDialog
 } // Item

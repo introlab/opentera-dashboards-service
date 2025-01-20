@@ -93,7 +93,7 @@ if __name__ == '__main__':
             Globals.db_man.open_local(None, echo=True)
         else:
             Globals.db_man.open(POSTGRES, Globals.config_man.service_config['debug_mode'])
-        Globals.db_man.create_defaults(True)
+        Globals.db_man.create_defaults(test=args.enable_tests)
     except OperationalError as e:
         print("Unable to connect to database - please check settings in config file!", e)
         quit()
