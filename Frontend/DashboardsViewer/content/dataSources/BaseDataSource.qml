@@ -22,69 +22,82 @@ Item {
     signal error(var errorMessage);
     signal itemSelected(var item);
 
+    function filterNullFields(item) {
+        for (const key in item)
+        {
+            if(item[key] === null) {
+                delete item[key];
+            }
+        }
+        return item;
+    }
+
+
     function getAll() {
         var reply = UserClient.get(url, params);
 
         reply.requestSucceeded.connect(function(response, statusCode) {
-            //console.log("Success", response, statusCode);
+            //console.log("Success", url, params,  response, statusCode);
 
             //Make sure model is empty
             myModel.clear();
-            modelChanged();
 
-            //Print number of elements
-            //console.log("Number of elements: ", response.length);
-
-            // Sort items, if needed
-            if (sortField){
-                response.sort((a, b) => {
-                                  let valA, valB;
-                                  let orderMult = 1;
-                                  if (sortDesc)
-                                     orderMult = -1;
-                                  if (sortType == 0){
-                                        // String sort
-                                        valA = a[sortField];
-                                        valB = b[sortField];
-
-                                  }
-                                  if (sortType == 1){
-                                      valA = Number(a[sortField]);
-                                      valB = Number(b[sortField]);
-                                  }
-                                  if (sortType == 2){
-                                      valA = new Date(a[sortField]);
-                                      valB = new Date(b[sortField]);
-                                  }
-
-                                  if (valA < valB) {
-                                    return orderMult*-1;
-                                  }
-                                  if (valA > valB) {
-                                    return orderMult*1;
-                                  }
-                                  return 0;
-
-                              }
-                             )
-            }
+            //modelChanged();
 
             //Verify if response is an array
-            //Add List of items
-            if (response.length)
+            if (response instanceof Array)
             {
+                //Print number of elements for debug
+                //console.log("Number of elements: ", response.length);
+
+                // Sort items, if needed
+                if (sortField){
+                    response.sort((a, b) => {
+                                      let valA, valB;
+                                      let orderMult = 1;
+                                      if (sortDesc)
+                                         orderMult = -1;
+                                      if (sortType == 0){
+                                            // String sort
+                                            valA = a[sortField];
+                                            valB = b[sortField];
+
+                                      }
+                                      if (sortType == 1){
+                                          valA = Number(a[sortField]);
+                                          valB = Number(b[sortField]);
+                                      }
+                                      if (sortType == 2){
+                                          valA = new Date(a[sortField]);
+                                          valB = new Date(b[sortField]);
+                                      }
+
+                                      if (valA < valB) {
+                                        return orderMult*-1;
+                                      }
+                                      if (valA > valB) {
+                                        return orderMult*1;
+                                      }
+                                      return 0;
+
+                                  }
+                                 )
+                }
+
+
                 //Insert all elements
                 response.forEach(function(item) {
                    item.dataSource = baseDataSource;
+                   filterNullFields(item);
                    myModel.append(item);
                 });
             }
             else
             {
                 //Insert response directly
-                //response.dataSource = baseDataSource;
-                //myModel.append(response);
-                myModel.clear();
+                response.dataSource = baseDataSource;
+                filterNullFields(response);
+                myModel.append(response);
             }
             modelChanged();
         });

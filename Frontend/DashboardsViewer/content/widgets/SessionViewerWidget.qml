@@ -133,14 +133,15 @@ Item {
                     implicitHeight: layoutComments.implicitHeight + layoutComments.anchors.margins * 2
                     color: Constants.highlightColor
                     radius: 5
-                    visible: session.session_comments
+                    visible: session.session_comments ?? false
+
                     ColumnLayout{
                         id: layoutComments
                         anchors.fill: parent
                         anchors.margins: 10
                         Text {
                             id: sessionCommentsText
-                            text: session.session_comments
+                            text: session.session_comments ?? "No comments available"
                             color: "white"
                             Layout.fillWidth: true
                             wrapMode: Text.Wrap
@@ -263,7 +264,18 @@ Item {
                                     model.onCountChanged: function() {
                                         //console.log("infos count changed");
                                         var assetInfo = model.get(0);
-                                        singleAssetInfoText.text = "Size: " + (assetInfo.asset_file_size / (1024.0 * 1024.0)).toString() + " MB"
+                                        //singleAssetInfoText.text = "Size: " + (assetInfo.asset_file_size / (1024.0 * 1024.0)).toString() + " MB"
+
+                                        function pretty_display(bytes)
+                                        {
+                                            const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+                                            if (bytes === 0) return "0 Bytes";
+                                            const i = Math.floor(Math.log(bytes) / Math.log(1024));
+                                            const size = bytes / Math.pow(1024, i);
+                                            return `${size.toFixed(2)} ${sizes[i]}`;
+                                        }
+
+                                        singleAssetDownloadButton.text += " [ " + pretty_display(assetInfo.asset_file_size) + " ]"
                                     }
                                 }
 

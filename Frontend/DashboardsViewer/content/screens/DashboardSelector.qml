@@ -96,7 +96,9 @@ Item {
                 var description = dashboard.dashboard_description
                 var enabled = dashboard.dashboard_enabled
                 var name = dashboard.dashboard_name
-                var definition = dashboard.versions.dashboard_definition
+                var definition = "";
+                if (dashboard.versions)
+                    definition = dashboard.versions.dashboard_definition
 
                 //console.log(description, enabled, name, definition)
 
