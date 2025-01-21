@@ -19,7 +19,7 @@ Item {
         var reply = UserClient.get(url, params);
 
         reply.requestSucceeded.connect(function(response, statusCode) {
-            console.log("Success", response, statusCode);
+            //console.log("Success", response, statusCode);
             dataReady(response);
             //textOutput.text = JSON.stringify(response);
         });

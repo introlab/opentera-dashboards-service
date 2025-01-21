@@ -26,17 +26,17 @@
 <context>
     <name>DashboardSelector</name>
     <message>
-        <location filename="../content/screens/DashboardSelector.qml" line="157"/>
+        <location filename="../content/screens/DashboardSelector.qml" line="159"/>
         <source>Select dashboard to display</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/screens/DashboardSelector.qml" line="207"/>
+        <location filename="../content/screens/DashboardSelector.qml" line="209"/>
         <source>Site</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/screens/DashboardSelector.qml" line="250"/>
+        <location filename="../content/screens/DashboardSelector.qml" line="252"/>
         <source>Project</source>
         <translation type="unfinished"></translation>
     </message>
@@ -284,12 +284,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/widgets/SessionViewerWidget.qml" line="190"/>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="191"/>
         <source>Assets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/widgets/SessionViewerWidget.qml" line="198"/>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="199"/>
         <source>No assets</source>
         <translation type="unfinished"></translation>
     </message>

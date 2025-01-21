@@ -194,7 +194,7 @@ BaseDelegate {
             }
         }
         onDownloadFinished: {
-            console.log("onDownloadFinished");
+            //console.log("onDownloadFinished");
             if (screenLoading !== undefined){
                 screenLoading.visible = false;
             }

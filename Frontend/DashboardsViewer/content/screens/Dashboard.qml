@@ -30,7 +30,7 @@ Item {
     }
 
     function loadDocument(filename = undefined) {
-        console.log("should load document", definition)
+        //console.log("should load document", definition)
 
         var dynamicQML;
         if (filename){
@@ -40,7 +40,7 @@ Item {
         }
 
 
-        console.log("dynamicQML", dynamicQML)
+        //console.log("dynamicQML", dynamicQML)
 
         if (dynamicQML.length > 0) {
             for (var i = 0; i < dynamicQML.length; i++) {

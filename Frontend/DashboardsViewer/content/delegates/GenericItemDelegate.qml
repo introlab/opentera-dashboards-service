@@ -53,7 +53,7 @@ BaseDelegate {
             id: mouseArea
             anchors.fill: parent
             onClicked: {
-                console.log("GenericItemDelegate clicked.")
+                //console.log("GenericItemDelegate clicked.")
                 model.dataSource.itemSelected(model[model.dataSource.fieldIdName])
             }
         }

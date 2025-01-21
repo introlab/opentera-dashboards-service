@@ -30,29 +30,27 @@
 <context>
     <name>DashboardSelector</name>
     <message>
-        <location filename="../content/screens/DashboardSelector.qml" line="157"/>
+        <location filename="../content/screens/DashboardSelector.qml" line="159"/>
         <source>Select dashboard to display</source>
         <translation>Sélection du tableau de bord</translation>
     </message>
     <message>
-        <location filename="../content/screens/DashboardSelector.qml" line="207"/>
+        <location filename="../content/screens/DashboardSelector.qml" line="209"/>
         <source>Site</source>
         <translation>Site</translation>
     </message>
     <message>
-        <location filename="../content/screens/DashboardSelector.qml" line="250"/>
+        <location filename="../content/screens/DashboardSelector.qml" line="252"/>
         <source>Project</source>
         <translation>Projet</translation>
     </message>
     <message>
-        <location filename="../content/screens/DashboardSelector.qml" line="359"/>
         <source>Test Mode</source>
-        <translation>Mode de test</translation>
+        <translation type="vanished">Mode de test</translation>
     </message>
     <message>
-        <location filename="../content/screens/DashboardSelector.qml" line="363"/>
         <source>TestMode</source>
-        <translation>Mode de test</translation>
+        <translation type="vanished">Mode de test</translation>
     </message>
 </context>
 <context>
@@ -145,7 +143,7 @@
     <message>
         <location filename="../content/screens/Logout.qml" line="23"/>
         <source>Disconnected. Reload page to login again.</source>
-        <translation>Déconnecté. Recharger la page pour vous connecter de nouveau.</translation>
+        <translation>Déconnecté. Rechargez la page pour vous connecter de nouveau.</translation>
     </message>
 </context>
 <context>
@@ -324,12 +322,12 @@
         <translation>Planifiée</translation>
     </message>
     <message>
-        <location filename="../content/widgets/SessionViewerWidget.qml" line="190"/>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="191"/>
         <source>Assets</source>
         <translation>Données</translation>
     </message>
     <message>
-        <location filename="../content/widgets/SessionViewerWidget.qml" line="198"/>
+        <location filename="../content/widgets/SessionViewerWidget.qml" line="199"/>
         <source>No assets</source>
         <translation>Aucune donnée</translation>
     </message>

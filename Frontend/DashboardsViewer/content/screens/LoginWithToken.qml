@@ -29,8 +29,7 @@ Item {
     Connections {
         target: UserClient
         onLoginSucceeded: function() {
-            console.log("onLoginSucceeded");
-
+            //console.log("onLoginSucceeded");
             //Query user information
             var reply = UserClient.get("/api/user/users", {"self": true});
 
