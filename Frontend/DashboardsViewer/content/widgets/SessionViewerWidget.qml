@@ -238,7 +238,7 @@ Item {
                                     onClicked: {
                                         if (dashboardViewerApp.isWebAssembly()) {
                                             //This will use the browser download function. Download UI is provided by browser.
-                                            fileDownloadDataSource.filename = delegateModel().asset_name
+                                            fileDownloadDataSource.filename = delegateModel().asset_original_filename ?? delegateModel().asset_name
 
                                             //DownloadFile returnes a null object in WebASM
                                             fileDownloadDataSource.downloadSpecificAsset(delegateModel().asset_uuid)
@@ -274,15 +274,16 @@ Item {
                                             const size = bytes / Math.pow(1024, i);
                                             return `${size.toFixed(2)} ${sizes[i]}`;
                                         }
-
-                                        singleAssetDownloadButton.text += " [ " + pretty_display(assetInfo.asset_file_size) + " ]"
+                                        // Assign real name to file
+                                        delegateModel().asset_original_filename = assetInfo.asset_original_filename
+                                        singleAssetDownloadButton.text = assetInfo.asset_original_filename + " [ " + pretty_display(assetInfo.asset_file_size) + " ]"
                                     }
                                 }
 
                                 //Download progress dialog
                                 Dialog {
                                     id: downloadProgressDialog
-                                    title: "Downloading " + delegateModel().asset_name
+                                    title: "Downloading " + delegateModel().asset_original_filename ?? delegateModel().asset_name
                                     standardButtons: Dialog.Close
                                     anchors.centerIn: assetItemDelegate
                                     width: lstAssets.width / 2
@@ -323,7 +324,7 @@ Item {
                                     fileMode: FileDialog.SaveFile
                                     //URL
                                     currentFolder: StandardPaths.writableLocation(StandardPaths.DownloadLocation)
-                                    selectedFile: currentFolder + "/" + delegateModel().asset_name
+                                    selectedFile: currentFolder + "/" + delegateModel().asset_original_filename ?? delegateModel().asset_name
                                     onAccepted: function() {
                                         //console.log("SaveFileDialog accepted");
                                         fileDownloadDataSource.filename = saveFileDialog.currentFile;
