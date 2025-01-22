@@ -120,7 +120,8 @@ BaseWidget {
                 current_week += 1;
             }
             cmbWeeks.model = weeks;
-            cmbWeeks.currentIndex = cmbWeeks.count - 1;
+            //cmbWeeks.currentIndex = cmbWeeks.count - 1;
+            cmbWeeks.currentIndex = 0;
 
             // Update current timeline display
             updateTimeline();

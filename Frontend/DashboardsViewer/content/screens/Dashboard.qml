@@ -50,7 +50,7 @@ Item {
                     var dynamicObject = Qt.createQmlObject(dynamicQML[i],
                                                            dashboardStackView)
 
-                    console.log("dynamicObject", dynamicObject)
+                    //console.log("dynamicObject", dynamicObject)
 
                     // Push to stackView
                     if (dynamicObject) {

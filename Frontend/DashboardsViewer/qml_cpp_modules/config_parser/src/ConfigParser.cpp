@@ -322,7 +322,7 @@ QVariantList ConfigParser::processConfigByteArray(const QByteArray &data)
     // Read the buffer contents into a string
     QString qmlString = buffer.readAll();
 
-    qDebug() << "qmlString: " << qmlString;
+    //qDebug() << "qmlString: " << qmlString;
 
     // Add the string to the output list
     output.append(QVariant(qmlString));

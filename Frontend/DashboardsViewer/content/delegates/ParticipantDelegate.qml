@@ -19,6 +19,7 @@ BaseDelegate {
     property int daysErrorThreshold: 4
 
     property bool showDownloadAssets: true
+    property bool hasAssets: false
 
     property bool isCurrentItem: ListView ? ListView.isCurrentItem : false
 
@@ -82,6 +83,18 @@ BaseDelegate {
             else {
                 console.log("Invalid date")
 
+            }
+        }
+    }
+
+    BaseDataSource {
+        id: statsDataSource
+        url: "/api/user/stats"
+        params: {"id_participant": id_participant}
+        autoFetch: true
+        onModelChanged: {
+            if (model.count > 0){
+               hasAssets = model.get(0).assets_total_count > 0;
             }
         }
     }
@@ -152,7 +165,7 @@ BaseDelegate {
         }
         ImageButtonWidget{
             id: btnDownload
-            visible: showDownloadAssets
+            visible: showDownloadAssets && hasAssets
             imgPath: "../images/icons/data.png"
             onClicked: {
                 if (dashboardViewerApp.isWebAssembly()) {

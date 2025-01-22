@@ -195,7 +195,7 @@ Item {
 
                         Text{
                             id: txtNoAssets
-                            visible: !lstAssets.visible
+                            visible: lstAssets.count === 0//!lstAssets.visible
                             text: qsTr("No assets")
                             verticalAlignment: Text.AlignTop
                             color: "darkred"
@@ -213,7 +213,7 @@ Item {
                             Layout.leftMargin: 10
                             Layout.rightMargin: 10
                             clip: true
-                            visible: count > 0
+                            //visible: count > 0
 
                             interactive: contentHeight > height
                             ScrollBar.vertical: FlickableScrollBar {}
@@ -262,7 +262,6 @@ Item {
 
                                     //Be careful, we are using model from BaseDataSource not the delegate item
                                     model.onCountChanged: function() {
-                                        //console.log("infos count changed");
                                         var assetInfo = model.get(0);
                                         //singleAssetInfoText.text = "Size: " + (assetInfo.asset_file_size / (1024.0 * 1024.0)).toString() + " MB"
 
@@ -302,18 +301,15 @@ Item {
                                     {
                                         target: fileDownloadDataSource
                                         onDownloadProgress: function(bytesReceived, bytesTotal){
-                                            //console.log("DownloadProgressDialog progress: ", bytesReceived, bytesTotal);
                                             progressBar.value = bytesReceived / bytesTotal * 100;
                                         }
                                         onDownloadFinished: function() {
-                                            //console.log("DownloadProgressDialog finished");
                                             downloadProgressDialog.enabled = true;
                                             downloadProgressDialog.close();
                                         }
                                     }
 
                                     onAccepted: {
-                                        //console.log("DownloadProgressDialog accepted");
                                         saveFileDialog.open();
                                     }
                                 }
@@ -324,7 +320,7 @@ Item {
                                     fileMode: FileDialog.SaveFile
                                     //URL
                                     currentFolder: StandardPaths.writableLocation(StandardPaths.DownloadLocation)
-                                    selectedFile: currentFolder + "/" + delegateModel().asset_original_filename ?? delegateModel().asset_name
+                                    selectedFile: currentFolder + "/" +  delegateModel() ? (delegateModel().asset_original_filename !== undefined ? delegateModel().asset_original_filename : delegateModel().asset_name) : ""
                                     onAccepted: function() {
                                         //console.log("SaveFileDialog accepted");
                                         fileDownloadDataSource.filename = saveFileDialog.currentFile;
