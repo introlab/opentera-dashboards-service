@@ -135,7 +135,10 @@ Window {
             }
         }
         onWebsocketDisconnected: function() {
-            stackview.pop(null)
+            if (!UserClient.isWebAssembly())
+            {
+                stackview.pop(null)
+            }
             menu.visible = false;
         }
     }
