@@ -103,7 +103,7 @@
 <context>
     <name>Logout</name>
     <message>
-        <location filename="../content/screens/Logout.qml" line="23"/>
+        <location filename="../content/screens/Logout.qml" line="24"/>
         <source>Disconnected. Reload page to login again.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -124,17 +124,17 @@
 <context>
     <name>ParticipantDelegate</name>
     <message>
-        <location filename="../content/delegates/ParticipantDelegate.qml" line="139"/>
+        <location filename="../content/delegates/ParticipantDelegate.qml" line="152"/>
         <source>Last session</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/delegates/ParticipantDelegate.qml" line="177"/>
+        <location filename="../content/delegates/ParticipantDelegate.qml" line="190"/>
         <source>Compressing data...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/delegates/ParticipantDelegate.qml" line="184"/>
+        <location filename="../content/delegates/ParticipantDelegate.qml" line="197"/>
         <source>Downloading...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -307,7 +307,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../content/widgets/TimeLineWidget.qml" line="277"/>
+        <location filename="../content/widgets/TimeLineWidget.qml" line="278"/>
         <source>No data for that period</source>
         <translation type="unfinished"></translation>
     </message>

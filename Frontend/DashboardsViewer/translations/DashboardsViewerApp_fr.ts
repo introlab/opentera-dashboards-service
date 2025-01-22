@@ -141,7 +141,7 @@
 <context>
     <name>Logout</name>
     <message>
-        <location filename="../content/screens/Logout.qml" line="23"/>
+        <location filename="../content/screens/Logout.qml" line="24"/>
         <source>Disconnected. Reload page to login again.</source>
         <translation>Déconnecté. Rechargez la page pour vous connecter de nouveau.</translation>
     </message>
@@ -162,17 +162,17 @@
 <context>
     <name>ParticipantDelegate</name>
     <message>
-        <location filename="../content/delegates/ParticipantDelegate.qml" line="139"/>
+        <location filename="../content/delegates/ParticipantDelegate.qml" line="152"/>
         <source>Last session</source>
         <translation>Dernière séance</translation>
     </message>
     <message>
-        <location filename="../content/delegates/ParticipantDelegate.qml" line="177"/>
+        <location filename="../content/delegates/ParticipantDelegate.qml" line="190"/>
         <source>Compressing data...</source>
         <translation>Compression des données...</translation>
     </message>
     <message>
-        <location filename="../content/delegates/ParticipantDelegate.qml" line="184"/>
+        <location filename="../content/delegates/ParticipantDelegate.qml" line="197"/>
         <source>Downloading...</source>
         <translation>Téléchargement...</translation>
     </message>
@@ -345,7 +345,7 @@
         <translation>Semaine</translation>
     </message>
     <message>
-        <location filename="../content/widgets/TimeLineWidget.qml" line="277"/>
+        <location filename="../content/widgets/TimeLineWidget.qml" line="278"/>
         <source>No data for that period</source>
         <translation>Aucune donnée pour cette période</translation>
     </message>

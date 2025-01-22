@@ -13,7 +13,7 @@ Item {
 
     Component.onCompleted: {
         //Doing something
-        console.log("connecting to ", AppURL);
+        //console.log("connecting to ", AppURL);
         timerLoading.start();
     }
 

@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    QUrl app_url("https://127.0.0.1:40100");
+    QUrl app_url("https://127.0.0.1:");
 
 #ifdef WEBASSEMBLY
     char* urlCStr = (char*)EM_ASM_PTR({ return stringToNewUTF8(window.location.href); });
@@ -43,11 +43,11 @@ int main(int argc, char *argv[])
     app_url = QUrl(urlCStr);
     std::free(urlCStr);
 
-    qDebug() << "WebAssembly App running with window.location.href : " << app_url;
+    //qDebug() << "WebAssembly App running with window.location.href : " << app_url;
 #endif
 
     QQmlApplicationEngine engine;
-    const QUrl url(u"qrc:/qt/qml/Main/main.qml"_qs);
+    const QUrl url("qrc:/qt/qml/Main/main.qml");
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreated,

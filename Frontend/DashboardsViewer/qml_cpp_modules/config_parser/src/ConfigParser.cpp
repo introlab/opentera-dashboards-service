@@ -38,7 +38,7 @@ QVariantList ConfigParser::parseConfigString(const QString &configString)
 
 QVariantList ConfigParser::parseConfigFile(const QString &configPath)
 {
-    qDebug() << "ConfigParser::parseConfig() called with configPath: " << configPath;
+    //qDebug() << "ConfigParser::parseConfig() called with configPath: " << configPath;
 
     //Load JSON file
     QFile file(configPath);
@@ -72,7 +72,7 @@ void ConfigParser::writeLayout(const QJsonObject &layout, QTextStream &stream)
     }
     else
     {
-        qDebug() << "No properties found in layout " << type;
+        //qDebug() << "No properties found in layout " << type;
     }
 
     //Verify if layout contain widgets
@@ -80,7 +80,7 @@ void ConfigParser::writeLayout(const QJsonObject &layout, QTextStream &stream)
     {
         // Write widgets
         QJsonArray layoutWidgets = layout["widgets"].toArray();
-        qDebug() << "widgets array size: " << layoutWidgets.size();
+        //qDebug() << "widgets array size: " << layoutWidgets.size();
         for (int i = 0; i < layoutWidgets.size(); i++)
         {
             QJsonObject myWidget = layoutWidgets[i].toObject();
@@ -89,7 +89,7 @@ void ConfigParser::writeLayout(const QJsonObject &layout, QTextStream &stream)
     }
     else
     {
-        qDebug() << "No widgets found in layout " << type;
+        //qDebug() << "No widgets found in layout " << type;
     }
 
     //Verify if layout contain layouts
@@ -97,7 +97,7 @@ void ConfigParser::writeLayout(const QJsonObject &layout, QTextStream &stream)
     {
         // Write layouts
         QJsonArray layoutLayouts = layout["layouts"].toArray();
-        qDebug() << "layouts array size: " << layoutLayouts.size();
+        //qDebug() << "layouts array size: " << layoutLayouts.size();
         for (int i = 0; i < layoutLayouts.size(); i++)
         {
             QJsonObject myLayout = layoutLayouts[i].toObject();
@@ -106,7 +106,7 @@ void ConfigParser::writeLayout(const QJsonObject &layout, QTextStream &stream)
     }
     else
     {
-        qDebug() << "No layouts found in layout " << type;
+        //qDebug() << "No layouts found in layout " << type;
     }
 
     // End layout
@@ -125,7 +125,7 @@ void ConfigParser::writeWidget(const QJsonObject &widget, QTextStream &stream)
 
     // Get Properties
     QJsonObject properties = widget["properties"].toObject();
-    qDebug() << "properties size for widget: " << properties.size();
+    //qDebug() << "properties size for widget: " << properties.size();
     writeProperties(properties, stream);
 
     // End widget
@@ -269,7 +269,7 @@ QVariantList ConfigParser::processConfigByteArray(const QByteArray &data)
     QJsonParseError error;
     QJsonDocument doc = QJsonDocument::fromJson(data, &error);
 
-    qDebug() << "loading document with error : " << error.errorString();
+    //qDebug() << "loading document with error : " << error.errorString();
     if (error.error != QJsonParseError::NoError)
     {
         qDebug() << "Error: Unable to parse json data" << data;
@@ -303,12 +303,12 @@ QVariantList ConfigParser::processConfigByteArray(const QByteArray &data)
 
     // Write dataSources
     QJsonArray dataSources = json["dataSources"].toArray();
-    qDebug() << "data-sources array size: " << dataSources.size();
+    //qDebug() << "data-sources array size: " << dataSources.size();
     writeDataSources(dataSources, textStream);
 
     // Write connections
     QJsonArray connections = json["connections"].toArray();
-    qDebug() << "connections array size: " << connections.size();
+    //qDebug() << "connections array size: " << connections.size();
     writeConnections(connections, textStream);
 
     // End root object

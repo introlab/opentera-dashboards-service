@@ -51,7 +51,7 @@ Item {
         if (!btnLogin.enabled)
             return
 
-        console.log("Initating login to ", AppURL)
+        //console.log("Initating login to ", AppURL)
 
         state = "logging"
         UserClient.connect(AppURL, inputUsername.text, inputPassword.text)
