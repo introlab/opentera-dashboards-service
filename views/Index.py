@@ -52,15 +52,14 @@ class Index(MethodView):
                                    backend_hostname=quote(backend_hostname),
                                    backend_port=quote(backend_port),
                                    user_token=user_data['user_token'],
-                                   user_name=user_data['user_fullname'],
-                                   websocket_url=user_data['websocket_url'])
+                                   user_name=user_data['user_fullname'])
 
         else:
             if self.service:
                 response = self.service.get_from_opentera('/api/service/auth/code', params={'endpoint_url': '/'})
                 if response.status_code == 200:
                     auth_code = response.json()['auth_code']
-                    return redirect('/login?auth_code=' + auth_code)
+                    return redirect('/login?auth_code=' + auth_code + '&with_websocket=false')
 
         return gettext('Forbidden'), 403
 
