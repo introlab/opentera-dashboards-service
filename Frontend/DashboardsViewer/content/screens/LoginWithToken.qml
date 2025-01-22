@@ -22,7 +22,7 @@ Item {
         running: false
         interval: 0
         onTriggered: function() {
-            UserClient.connectWithTokenUrl(AppURL);
+            UserClient.connectWithTokenUrl(AppURL, false);
         }
     }
 
